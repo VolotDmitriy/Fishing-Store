@@ -1,0 +1,19 @@
+{
+    "name": "fishing-app",
+    "version": "1.0.0",
+    "main": "index.js",
+    "license": "MIT",
+    "private": true,
+    "workspaces": [
+        "client",
+        "server"
+    ],
+    "devDependencies": {
+        "prettier": "^3.5.1"
+    },
+    "scripts": {
+        "format": "prettier --write 'client/**/*.{js,ts,jsx,tsx,css}' 'server/**/*.{js,ts}'",
+        "client": "yarn workspace client dev",
+        "server": "yarn workspace server dev"
+    }
+}
