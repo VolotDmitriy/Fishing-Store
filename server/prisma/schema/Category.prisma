@@ -1,0 +1,9 @@
+model Category {
+  id          String        @id @default(cuid()) // "cat001"
+  name        String // "Смартфоны"
+  parentId    String? // null (если это главная категория)
+  parent      Category?     @relation("CategoryToCategory", fields: [parentId], references: [id])
+  children    Category[]    @relation("CategoryToCategory")
+  products    Product[]
+  VariantType VariantType[]
+}
