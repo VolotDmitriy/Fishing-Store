@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-type RouterHandler = (req: Request, res: Response) => void;
+type RouterHandler = (req: Request, res: Response) => Promise<Response>;
 
 const ErrorHandler = (error: any, res: Response) => {
     const errorMessage =
@@ -41,7 +41,7 @@ export const getCategoryById: RouterHandler = async (req, res) => {
 
 export const createCategory: RouterHandler = async (req, res) => {
     try {
-        const { id, name, parentId } = req.body;
+        const { name, parentId } = req.body;
 
         if (parentId) {
             const parentExists = await prisma.category.findUnique({
@@ -57,7 +57,6 @@ export const createCategory: RouterHandler = async (req, res) => {
 
         const newCategory = await prisma.category.create({
             data: {
-                id,
                 name,
                 parentId,
             },
@@ -96,14 +95,19 @@ export const updateCategoryById: RouterHandler = async (req, res) => {
 
 export const deleteCategoryById: RouterHandler = async (req, res) => {
     try {
-        const { id } = req.body;
-        const category = await prisma.category.delete({
+        const { id } = req.params;
+
+        const category = await prisma.category.findUnique({
             where: { id },
         });
 
         if (!category) {
-            return res.status(404).json({ message: 'Category not found' }); // Статус 404 для ошибки, если категория не найдена
+            return res.status(404).json({ message: 'Category not found' }); // Статус 404 для отсутствующей категории
         }
+
+        await prisma.category.delete({
+            where: { id },
+        });
 
         return res
             .status(200)
