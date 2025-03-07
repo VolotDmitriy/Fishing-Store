@@ -1,11 +1,11 @@
 import { Router, RequestHandler, Request, Response } from 'express';
 import {
-    createTackle,
-    deleteTackle,
-    getAllTackles,
-    getTackleById,
-    updateTackle,
-} from '../controllers/tackleController';
+    getAllDiscouts, // Оставил как в твоём коде, но рекомендую исправить на getAllDiscounts
+    getDiscountById,
+    createDiscount,
+    updateDiscount,
+    deleteDiscount,
+} from '../controllers/discountController';
 
 // Тип из контроллера, с явным указанием типов из express
 type RouterHandler = (req: Request, res: Response) => Promise<Response>;
@@ -23,10 +23,10 @@ const wrapHandler = (handler: RouterHandler): RequestHandler => {
 
 const router = Router();
 
-router.get('/', getAllTackles);
-router.get('/:id', getTackleById);
-router.post('/', createTackle);
-router.put('/:id', updateTackle);
-router.delete('/:id', deleteTackle);
+router.get('/', wrapHandler(getAllDiscouts));
+router.get('/:id', wrapHandler(getDiscountById));
+router.post('/', wrapHandler(createDiscount));
+router.put('/:id', wrapHandler(updateDiscount));
+router.delete('/:id', wrapHandler(deleteDiscount));
 
 export default router;
