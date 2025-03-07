@@ -1,24 +1,25 @@
-import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
+import { Request, Response } from 'express';
 
 const prisma = new PrismaClient();
 
-type RouterHandler = (req: Request, res: Response) => Promise<Response>;
+type RouterHandler = (req: Request, res: Response) => Promise<void>;
 
 const ErrorHandler = (error: any, res: Response) => {
     const errorMessage =
         error instanceof Error ? error.message : 'Unknown error';
-    return res
-        .status(500)
-        .json({ error: 'Internal Server Error', details: errorMessage });
+    res.status(500).json({
+        error: 'Internal Server Error',
+        details: errorMessage,
+    });
 };
 
 export const getAllCategories: RouterHandler = async (req, res) => {
     try {
         const categories = await prisma.category.findMany();
-        return res.status(200).json(categories);
+        res.status(200).json(categories);
     } catch (error) {
-        return ErrorHandler(error, res);
+        ErrorHandler(error, res);
     }
 };
 
@@ -30,12 +31,13 @@ export const getCategoryById: RouterHandler = async (req, res) => {
         });
 
         if (!category) {
-            return res.status(404).json({ message: 'Category not found' }); // Статус 404, если категория не найдена
+            res.status(404).json({ message: 'Category not found' });
+            return;
         }
 
-        return res.status(200).json(category); // Статус 200 для успешного получения категории
+        res.status(200).json(category);
     } catch (error) {
-        return ErrorHandler(error, res);
+        ErrorHandler(error, res);
     }
 };
 
@@ -49,9 +51,8 @@ export const createCategory: RouterHandler = async (req, res) => {
             });
 
             if (!parentExists) {
-                return res
-                    .status(400)
-                    .json({ error: 'Parent category not found' }); // Статус 400 для ошибки с родительской категорией
+                res.status(400).json({ error: 'Parent category not found' });
+                return;
             }
         }
 
@@ -62,12 +63,12 @@ export const createCategory: RouterHandler = async (req, res) => {
             },
         });
 
-        return res.status(201).json({
+        res.status(201).json({
             message: 'Category created successfully',
             data: newCategory,
         });
     } catch (error) {
-        return ErrorHandler(error, res);
+        ErrorHandler(error, res);
     }
 };
 
@@ -84,12 +85,13 @@ export const updateCategoryById: RouterHandler = async (req, res) => {
         });
 
         if (!category) {
-            return res.status(404).json({ message: 'Category not found' }); // Статус 404 для ошибки, если категория не найдена
+            res.status(404).json({ message: 'Category not found' });
+            return;
         }
 
-        return res.status(200).json(category); // Статус 200 для успешного обновления категории
+        res.status(200).json(category);
     } catch (error) {
-        return ErrorHandler(error, res);
+        ErrorHandler(error, res);
     }
 };
 
@@ -102,17 +104,19 @@ export const deleteCategoryById: RouterHandler = async (req, res) => {
         });
 
         if (!category) {
-            return res.status(404).json({ message: 'Category not found' }); // Статус 404 для отсутствующей категории
+            res.status(404).json({ message: 'Category not found' });
+            return;
         }
 
         await prisma.category.delete({
             where: { id },
         });
 
-        return res
-            .status(200)
-            .json({ message: 'Category deleted successfully', data: category }); // Статус 200 или 204 для успешного удаления
+        res.status(200).json({
+            message: 'Category deleted successfully',
+            data: category,
+        });
     } catch (error) {
-        return ErrorHandler(error, res);
+        ErrorHandler(error, res);
     }
 };

@@ -1,7 +1,7 @@
-import { Router, Response, Request } from 'express';
-import tackleRoutes from './tackle';
+import { Request, Response, Router } from 'express';
 import categoryRoutes from './categoryRouter';
 import discountRouter from './discountRouter';
+import tackleRoutes from './tackle';
 
 const router = Router();
 type RouterHandler = (req: Request, res: Response) => void;

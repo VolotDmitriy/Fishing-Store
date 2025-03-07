@@ -1,4 +1,4 @@
-import { Router, RequestHandler, Request, Response } from 'express';
+import { Request, RequestHandler, Response, Router } from 'express';
 import {
     createTackle,
     deleteTackle,

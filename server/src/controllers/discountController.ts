@@ -1,51 +1,51 @@
-import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
+import { Request, Response } from 'express';
 
 const prisma = new PrismaClient();
 
-type RouterHandler = (req: Request, res: Response) => Promise<Response>;
+type RouterHandler = (req: Request, res: Response) => Promise<void>;
 
-// add include:{}
-
-export const getAllDiscouts: RouterHandler = async (req, res) => {  
+export const getAllDiscounts: RouterHandler = async (req, res) => {
     try {
-        const {active} = req.query;
+        const { active } = req.query;
         const now = new Date();
 
         const discounts = await prisma.discount.findMany({
-            where: active 
-            ?{
-                startDate: { lte: now },
-                endDate: { gte: now },
-            }
-            : undefined,      
+            where: active
+                ? {
+                      startDate: { lte: now },
+                      endDate: { gte: now },
+                  }
+                : undefined,
         });
 
-        return res.status(200).json(discounts);
+        res.status(200).json(discounts);
     } catch (error) {
-        return res.status(500).json({message: 'Ошибка при получении скидок', error});
+        res.status(500).json({ message: 'Ошибка при получении скидок', error });
     }
 };
 
-export const getDiscountById: RouterHandler = async (req, res) =>{
+export const getDiscountById: RouterHandler = async (req, res) => {
     try {
         const { id } = req.params;
         const discount = await prisma.discount.findUnique({
             where: { id },
-        })
-        if(discount){
-            return res.status(200).json(discount);
+        });
+        if (discount) {
+            res.status(200).json(discount);
         } else {
-            return res.status(404).json({ message: 'Скидка не найдена' });
+            res.status(404).json({ message: 'Скидка не найдена' });
+            return;
         }
     } catch (error) {
-        return res.status(500).json({ message: 'Ошибка при получении скидки', error });
+        res.status(500).json({ message: 'Ошибка при получении скидки', error });
     }
 };
 
-export const createDiscount: RouterHandler = async (req, res) =>{
+export const createDiscount: RouterHandler = async (req, res) => {
     try {
-        const {name, percentage, startDate, endDate, products, variants } = req.body;
+        const { name, percentage, startDate, endDate, products, variants } =
+            req.body;
 
         const newDiscount = await prisma.discount.create({
             data: {
@@ -56,22 +56,24 @@ export const createDiscount: RouterHandler = async (req, res) =>{
             },
         });
 
-        return res.status(201).json(newDiscount);
+        res.status(201).json(newDiscount);
     } catch (error) {
-        return res.status(500).json({ message: 'Ошибка при создании скидки', error });
+        res.status(500).json({ message: 'Ошибка при создании скидки', error });
     }
 };
 
-
-
-export const updateDiscount: RouterHandler = async (req, res) =>{
+export const updateDiscount: RouterHandler = async (req, res) => {
     try {
         const id = req.params.id;
-        const { name, percentage, startDate, endDate, products, variants } = req.body;
+        const { name, percentage, startDate, endDate, products, variants } =
+            req.body;
 
-        const existingDiscount = await prisma.discount.findUnique({ where: { id } });
+        const existingDiscount = await prisma.discount.findUnique({
+            where: { id },
+        });
         if (!existingDiscount) {
-            return res.status(404).json({ message: 'Скидка не найдена' });
+            res.status(404).json({ message: 'Скидка не найдена' });
+            return;
         }
 
         const updatedDiscount = await prisma.discount.update({
@@ -79,45 +81,42 @@ export const updateDiscount: RouterHandler = async (req, res) =>{
             data: {
                 name,
                 percentage,
-                startDate: startDate !== undefined ? new Date(startDate) : existingDiscount.startDate,
-                endDate: endDate !== undefined ? new Date(endDate) : existingDiscount.endDate,
+                startDate:
+                    startDate !== undefined
+                        ? new Date(startDate)
+                        : existingDiscount.startDate,
+                endDate:
+                    endDate !== undefined
+                        ? new Date(endDate)
+                        : existingDiscount.endDate,
             },
         });
 
-        return res.status(200).json(updatedDiscount);
+        res.status(200).json(updatedDiscount);
     } catch (error) {
-        return res.status(500).json({ message: 'Ошибка при обновлении скидки', error });
+        res.status(500).json({
+            message: 'Ошибка при обновлении скидки',
+            error,
+        });
     }
-    
 };
 
-export const deleteDiscount: RouterHandler = async (req, res) => {  
+export const deleteDiscount: RouterHandler = async (req, res) => {
     try {
         const { id } = req.params;
 
-        const existingDiscount = await prisma.discount.findUnique( { where: { id }, } );
-        if(!existingDiscount){
-            return res.status(404).json({ message: 'Скидка не найдена' });
+        const existingDiscount = await prisma.discount.findUnique({
+            where: { id },
+        });
+        if (!existingDiscount) {
+            res.status(404).json({ message: 'Скидка не найдена' });
+            return;
         }
 
-        const deletedDiscount = await prisma.discount.delete( { where: { id }, } );
+        const deletedDiscount = await prisma.discount.delete({ where: { id } });
 
-        return res.status(200).json({ message: 'Скидка удалена', deletedDiscount });
+        res.status(200).json({ message: 'Скидка удалена', deletedDiscount });
     } catch (error) {
-        return res.status(500).json({ message: 'Ошибка при удалении скидки', error });
+        res.status(500).json({ message: 'Ошибка при удалении скидки', error });
     }
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
