@@ -183,3 +183,4 @@ export const deleteVariantTypeById: RouterHandler = async (req, res) => {
         ErrorHandler(error, res);
     }
 };
+//Need to be tested
