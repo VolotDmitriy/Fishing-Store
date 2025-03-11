@@ -9,6 +9,8 @@ model Product {
   attributes  ProductAttribute[]
   discountId  String? // "disc001"
   discount    Discount?          @relation(fields: [discountId], references: [id])
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
 }
 
 model ProductAttribute {
@@ -18,6 +20,8 @@ model ProductAttribute {
   typeId    String // "varType002"
   type      VariantType @relation(fields: [typeId], references: [id])
   value     String // "Snapdragon 8 Gen 3"
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
 }
 
 model ProductVariant {
@@ -30,6 +34,8 @@ model ProductVariant {
   attributes ProductVariantAttribute[]
   discountId String? // null (нет скидки)
   discount   Discount?                 @relation(fields: [discountId], references: [id])
+  createdAt  DateTime                  @default(now())
+  updatedAt  DateTime                  @updatedAt
 }
 
 model ProductVariantAttribute {
@@ -39,6 +45,8 @@ model ProductVariantAttribute {
   typeId    String // "varType001"
   type      VariantType    @relation(fields: [typeId], references: [id])
   value     String // "256 ГБ"
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
 }
 
 model VariantType {
@@ -48,4 +56,6 @@ model VariantType {
   name                    String // "Производитель"
   ProductAttribute        ProductAttribute[]
   ProductVariantAttribute ProductVariantAttribute[]
+  createdAt               DateTime                  @default(now())
+  updatedAt               DateTime                  @updatedAt
 }
