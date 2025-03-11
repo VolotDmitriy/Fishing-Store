@@ -6,4 +6,6 @@ model Category {
   children    Category[]    @relation("CategoryToCategory")
   products    Product[]
   VariantType VariantType[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
 }

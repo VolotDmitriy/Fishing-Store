@@ -6,4 +6,6 @@ model Discount {
   endDate    DateTime? // "2025-04-15T23:59:59.999Z"
   products   Product[]
   variants   ProductVariant[]
+  createdAt  DateTime         @default(now())
+  updatedAt  DateTime         @updatedAt
 }
