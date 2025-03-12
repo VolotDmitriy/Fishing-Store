@@ -185,21 +185,6 @@ export const deleteVariantTypeById: RouterHandler = async (req, res) => {
     }
 };
 
-/*
-model Product {
-  id          String             @id @default(cuid()) // "prod001"
-  name        String // "Смартфон Samsung Galaxy S24"
-  description String? // "Флагманский смартфон с топовыми характеристиками."
-  categoryId  String // "cat001"
-  category    Category           @relation(fields: [categoryId], references: [id])
-  images      String[] // ["https://example.com/samsung_s24.jpg"]
-  variants    ProductVariant[]
-  attributes  ProductAttribute[]
-  discountId  String? // "disc001"
-  discount    Discount?          @relation(fields: [discountId], references: [id])
-}
-*/
-// PRODUCTS
 export const getAllProducts: RouterHandler = async (req, res) => {
     try {
         const products = await prisma.product.findMany();
@@ -311,6 +296,106 @@ export const deleteProductById: RouterHandler = async (req, res) => {
         res.status(200).json({
             message: 'Product deleted successfully',
             data: product,
+        });
+    } catch (error) {
+        ErrorHandler(error, res);
+    }
+};
+
+export const getAllAttributes: RouterHandler = async (req, res) => {
+    try {
+        const attributes = await prisma.productAttribute.findMany();
+
+        res.status(200).json(attributes);
+    } catch (error) {
+        ErrorHandler(error, res);
+    }
+};
+
+export const getAttributeById: RouterHandler = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const attribute = await prisma.productAttribute.findUnique({
+            where: { id },
+        });
+
+        if (!attribute) {
+            res.status(404).json({ message: 'Attribute not found' });
+            return;
+        }
+
+        res.status(200).json(attribute);
+    } catch (error) {
+        ErrorHandler(error, res);
+    }
+};
+
+export const createAttribute: RouterHandler = async (req, res) => {
+    try {
+        const { productId, typeId, value } = req.body;
+
+        const newAttribute = await prisma.productAttribute.create({
+            data: {
+                productId,
+                typeId,
+                value,
+            },
+        });
+
+        res.status(201).json({
+            massage: 'Attribute created successfully',
+            data: newAttribute,
+        });
+    } catch (error) {
+        ErrorHandler(error, res);
+    }
+};
+
+export const updateAttributeById: RouterHandler = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { productId, typeId, value } = req.body;
+
+        const attribute = await prisma.productAttribute.update({
+            where: { id },
+            data: {
+                productId,
+                typeId,
+                value,
+            },
+        });
+
+        if (!attribute) {
+            res.status(404).json({ message: 'Attribute not found' });
+            return;
+        }
+
+        res.status(200).json(attribute);
+    } catch (error) {
+        ErrorHandler(error, res);
+    }
+};
+
+export const deleteAttributeById: RouterHandler = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const attribute = await prisma.productAttribute.findUnique({
+            where: { id },
+        });
+
+        if (!attribute) {
+            res.status(404).json({ message: 'Attribute not found' });
+            return;
+        }
+
+        await prisma.productAttribute.delete({
+            where: { id },
+        });
+
+        res.status(200).json({
+            message: 'Attribute deleted successfully',
+            data: attribute,
         });
     } catch (error) {
         ErrorHandler(error, res);
