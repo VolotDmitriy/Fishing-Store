@@ -1,7 +1,7 @@
 import { Request, Response, Router } from 'express';
 import categoryRoutes from './categoryRouter';
 import discountRouter from './discountRouter';
-import productRouter from './productRouter';
+import productRouter from './productRoutes/productRouter';
 import tackleRoutes from './tackle';
 
 const router = Router();

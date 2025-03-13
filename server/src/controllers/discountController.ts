@@ -1,9 +1,7 @@
 import { PrismaClient } from '@prisma/client';
-import { Request, Response } from 'express';
+import { RouterHandler, ErrorHandler } from '../utils/controllerUtils';
 
 const prisma = new PrismaClient();
-
-type RouterHandler = (req: Request, res: Response) => Promise<void>;
 
 export const getAllDiscounts: RouterHandler = async (req, res) => {
     try {
@@ -21,7 +19,7 @@ export const getAllDiscounts: RouterHandler = async (req, res) => {
 
         res.status(200).json(discounts);
     } catch (error) {
-        res.status(500).json({ message: 'Ошибка при получении скидок', error });
+        ErrorHandler(error, res);
     }
 };
 
@@ -38,7 +36,7 @@ export const getDiscountById: RouterHandler = async (req, res) => {
             return;
         }
     } catch (error) {
-        res.status(500).json({ message: 'Ошибка при получении скидки', error });
+        ErrorHandler(error, res);
     }
 };
 
@@ -58,7 +56,7 @@ export const createDiscount: RouterHandler = async (req, res) => {
 
         res.status(201).json(newDiscount);
     } catch (error) {
-        res.status(500).json({ message: 'Ошибка при создании скидки', error });
+        ErrorHandler(error, res);
     }
 };
 
@@ -94,10 +92,7 @@ export const updateDiscount: RouterHandler = async (req, res) => {
 
         res.status(200).json(updatedDiscount);
     } catch (error) {
-        res.status(500).json({
-            message: 'Ошибка при обновлении скидки',
-            error,
-        });
+        ErrorHandler(error, res);
     }
 };
 
@@ -117,6 +112,6 @@ export const deleteDiscount: RouterHandler = async (req, res) => {
 
         res.status(200).json({ message: 'Скидка удалена', deletedDiscount });
     } catch (error) {
-        res.status(500).json({ message: 'Ошибка при удалении скидки', error });
+        ErrorHandler(error, res);
     }
 };

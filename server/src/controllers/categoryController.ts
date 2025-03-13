@@ -1,18 +1,7 @@
 import { PrismaClient } from '@prisma/client';
-import { Request, Response } from 'express';
+import { RouterHandler, ErrorHandler } from '../utils/controllerUtils';
 
 const prisma = new PrismaClient();
-
-type RouterHandler = (req: Request, res: Response) => Promise<void>;
-
-const ErrorHandler = (error: any, res: Response) => {
-    const errorMessage =
-        error instanceof Error ? error.message : 'Unknown error';
-    res.status(500).json({
-        error: 'Internal Server Error',
-        details: errorMessage,
-    });
-};
 
 export const getAllCategories: RouterHandler = async (req, res) => {
     try {
