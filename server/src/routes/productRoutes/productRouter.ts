@@ -1,11 +1,11 @@
 import { Router } from 'express';
 import {
-    getAllProducts,
-    getProductById,
-    getProductByCategory,
     createProduct,
-    updateProductById,
     deleteProductById,
+    getAllProducts,
+    getProductByCategory,
+    getProductById,
+    updateProductById,
 } from '../../controllers/productController';
 import productAttributeRouter from './productAttributeRouter';
 import productVariantAttributeRouter from './productVariantAttributeRouter';
@@ -14,16 +14,17 @@ import variantTypeRouter from './variantTypeRouter';
 
 const router = Router();
 
-router.get('/product', getAllProducts);
-router.get('/product/:id', getProductById);
-router.get('/product/:categoryId', getProductByCategory);
-router.post('/product', createProduct);
-router.put('/product/:id', updateProductById);
-router.delete('/product/:id', deleteProductById);
+router.use('/attribute', productAttributeRouter);
+router.use('/variant', productVariantRouter);
+router.use('/type', variantTypeRouter);
+router.use('/variant_attribute', productVariantAttributeRouter);
 
-router.use('/', productAttributeRouter);
-router.use('/', productVariantRouter);
-router.use('/', variantTypeRouter);
-router.use('/', productVariantAttributeRouter);
+router.get('/', getAllProducts);
+router.get('/:id', getProductById);
+router.get('/category/:categoryId', getProductByCategory);
+router.post('/', createProduct);
+router.put('/:id', updateProductById);
+router.delete('/:id', deleteProductById);
 
 export default router;
+('localhost:4200/product/category/');

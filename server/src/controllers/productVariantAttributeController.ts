@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { RouterHandler, ErrorHandler } from '../utils/controllerUtils';
+import { ErrorHandler, RouterHandler } from '../utils/controllerUtils';
 
 const prisma = new PrismaClient();
 

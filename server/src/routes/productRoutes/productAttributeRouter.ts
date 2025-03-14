@@ -1,18 +1,18 @@
 import { Router } from 'express';
 import {
+    createAttribute,
+    deleteAttributeById,
     getAllAttributes,
     getAttributeById,
-    createAttribute,
     updateAttributeById,
-    deleteAttributeById,
 } from '../../controllers/productAttributeController';
 
 const router = Router();
 
-router.get('/attribute', getAllAttributes);
-router.get('/attribute/:id', getAttributeById);
-router.post('/attribute', createAttribute);
-router.put('/attribute/:id', updateAttributeById);
-router.delete('/attribute/:id', deleteAttributeById);
+router.get('/', getAllAttributes);
+router.get('/:id', getAttributeById);
+router.post('/', createAttribute);
+router.put('/:id', updateAttributeById);
+router.delete('/:id', deleteAttributeById);
 
 export default router;
