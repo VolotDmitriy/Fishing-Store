@@ -63,11 +63,11 @@ export const createCategory: RouterHandler = async (req, res) => {
 
 export const updateCategoryById: RouterHandler = async (req, res) => {
     try {
-        const { id, name, parentId } = req.body;
+        const { id } = req.params;
+        const { name, parentId } = req.body;
         const category = await prisma.category.update({
             where: { id },
             data: {
-                id,
                 name,
                 parentId,
             },
