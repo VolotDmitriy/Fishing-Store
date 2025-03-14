@@ -1,14 +1,6 @@
-import {
-    Category,
-    Discount,
-    Product,
-    ProductAttribute,
-    ProductVariant,
-    VariantType,
-} from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime/library';
 
-export const categories: Category[] = [
+export const categories = [
     { id: 'cat001', name: 'Удочки', parentId: null },
     { id: 'cat002', name: 'Спиннинги', parentId: 'cat001' },
     { id: 'cat003', name: 'Фидерные удочки', parentId: 'cat001' },
@@ -25,7 +17,7 @@ export const categories: Category[] = [
     { id: 'cat010', name: 'Снаряжение', parentId: null },
 ];
 
-export const variantTypes: VariantType[] = [
+export const variantTypes = [
     { id: 'vt001', categoryId: 'cat001', name: 'Длина' },
     { id: 'vt002', categoryId: 'cat001', name: 'Тест' },
     { id: 'vt003', categoryId: 'cat001', name: 'Материал' },
@@ -36,7 +28,7 @@ export const variantTypes: VariantType[] = [
     { id: 'vt008', categoryId: 'cat010', name: 'Тип' },
 ];
 
-export const discounts: Discount[] = [
+export const discounts = [
     {
         id: 'disc001',
         name: 'Осенняя распродажа',
@@ -46,7 +38,7 @@ export const discounts: Discount[] = [
     },
 ];
 
-const prodAttr: ProductAttribute[] = [
+const prodAttr = [
     {
         id: 'prodAttr001',
         productId: 'vt001',
@@ -55,7 +47,7 @@ const prodAttr: ProductAttribute[] = [
     },
 ];
 
-const prodVar: ProductVariant[] = [
+const prodVar = [
     {
         id: 'prodVar001',
         productId: 'prod001',
@@ -66,7 +58,7 @@ const prodVar: ProductVariant[] = [
     },
 ];
 
-const prod: Product[] = [
+const prod = [
     {
         id: 'prod001',
         name: 'Удочка Shimano BeastMaster',
