@@ -98,8 +98,21 @@ export const deleteProductById: RouterHandler = async (req, res) => {
     try {
         const { id } = req.params;
 
+        const { force } = req.query;
+
+        if (force !== undefined && force !== 'true' && force !== 'false') {
+            res.status(400).json({
+                message: 'Force parameter is true or false',
+            });
+            return;
+        }
+
         const product = await prisma.product.findUnique({
             where: { id },
+            include: {
+                variants: true,
+                attributes: true,
+            },
         });
 
         if (!product) {
@@ -107,9 +120,39 @@ export const deleteProductById: RouterHandler = async (req, res) => {
             return;
         }
 
-        await prisma.product.delete({
-            where: { id },
-        });
+        if (force) {    
+            await prisma.$transaction(async (tx) => {
+                const variantsId = product.variants.map(
+                    (variant) => variant.id,
+                );
+
+                await tx.productVariantAttribute.deleteMany({
+                    where: {
+                        variantId: { in: variantsId },
+                    },
+                });
+
+                await tx.productVariant.deleteMany({
+                    where: {
+                        productId: id,
+                    },
+                });
+
+                await tx.productAttribute.deleteMany({
+                    where: {
+                        productId: id,
+                    },
+                });
+
+                await tx.product.delete({
+                    where: { id },
+                });
+            });
+        } else {
+            await prisma.product.delete({
+                where: { id },
+            });
+        }
 
         res.status(200).json({
             message: 'Product deleted successfully',
