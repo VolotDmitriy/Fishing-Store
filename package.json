@@ -9,12 +9,14 @@
         "server"
     ],
     "devDependencies": {
+        "concurrently": "^9.1.2",
         "prettier": "^3.5.1",
         "prettier-plugin-organize-imports": "^4.1.0"
     },
     "scripts": {
         "format": "prettier --write 'client/**/*.{js,ts,jsx,tsx,css}' 'server/**/*.{js,ts}'",
         "client": "yarn workspace client dev",
-        "server": "yarn workspace server dev"
+        "server": "yarn workspace server dev",
+        "app": "concurrently \"yarn workspace client dev\" \"yarn workspace server dev\""
     }
 }
