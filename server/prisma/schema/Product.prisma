@@ -50,12 +50,12 @@ model ProductVariantAttribute {
 }
 
 model VariantType {
-  id                      String                    @id @default(cuid()) // "varType003"
-  categoryId              String // "cat001"
-  category                Category                  @relation(fields: [categoryId], references: [id])
-  name                    String // "Производитель"
-  ProductAttribute        ProductAttribute[]
-  ProductVariantAttribute ProductVariantAttribute[]
-  createdAt               DateTime                  @default(now())
-  updatedAt               DateTime                  @updatedAt
+  id                       String                    @id @default(cuid()) // "varType003"
+  categoryId               String // "cat001"
+  category                 Category                  @relation(fields: [categoryId], references: [id])
+  name                     String // "Производитель"
+  productAttributes        ProductAttribute[]
+  productVariantAttributes ProductVariantAttribute[]
+  createdAt                DateTime                  @default(now())
+  updatedAt                DateTime                  @updatedAt
 }
