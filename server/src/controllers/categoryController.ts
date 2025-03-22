@@ -5,7 +5,37 @@ const prisma = new PrismaClient();
 
 export const getAllCategories: RouterHandler = async (req, res) => {
     try {
-        const categories = await prisma.category.findMany();
+        const { full } = req.query;
+
+        if (full !== undefined && full !== 'true' && full !== 'false') {
+            res.status(400).json({
+                message: 'Force parameter is true or false',
+            });
+            return;
+        }
+
+        let categories;
+        if (full) {
+            categories = await prisma.category.findMany({
+                include: {
+                    children: true,
+                    products: {
+                        include: {
+                            variants: { include: { attributes: true } },
+                            attributes: true,
+                        },
+                    },
+                    variantTypes: {
+                        include: {
+                            productAttributes: true,
+                            productVariantAttributes: true,
+                        },
+                    },
+                },
+            });
+        } else {
+            categories = await prisma.category.findMany();
+        }
         res.status(200).json(categories);
     } catch (error) {
         ErrorHandler(error, res);
@@ -15,16 +45,47 @@ export const getAllCategories: RouterHandler = async (req, res) => {
 export const getCategoryById: RouterHandler = async (req, res) => {
     try {
         const { id } = req.params;
-        const category = await prisma.category.findUnique({
-            where: { id },
-        });
+        const { full } = req.query;
 
-        if (!category) {
+        if (full !== undefined && full !== 'true' && full !== 'false') {
+            res.status(400).json({
+                message: 'Force parameter is true or false',
+            });
+            return;
+        }
+
+        let categories;
+        if (full) {
+            categories = await prisma.category.findUnique({
+                where: { id },
+                include: {
+                    children: true,
+                    products: {
+                        include: {
+                            variants: { include: { attributes: true } },
+                            attributes: true,
+                        },
+                    },
+                    variantTypes: {
+                        include: {
+                            productAttributes: true,
+                            productVariantAttributes: true,
+                        },
+                    },
+                },
+            });
+        } else {
+            categories = await prisma.category.findUnique({
+                where: { id },
+            });
+        }
+
+        if (!categories) {
             res.status(404).json({ message: 'Category not found' });
             return;
         }
 
-        res.status(200).json(category);
+        res.status(200).json(categories);
     } catch (error) {
         ErrorHandler(error, res);
     }
@@ -87,9 +148,24 @@ export const updateCategoryById: RouterHandler = async (req, res) => {
 export const deleteCategoryById: RouterHandler = async (req, res) => {
     try {
         const { id } = req.params;
+        const { newId, name, parentId } = req.body;
+        const { force } = req.query;
+
+        if (force !== undefined && force !== 'true' && force !== 'false') {
+            res.status(400).json({
+                message: 'Force parameter is true or false',
+            });
+            return;
+        }
 
         const category = await prisma.category.findUnique({
             where: { id },
+            include: {
+                products: {
+                    include: { variants: true },
+                },
+                variantTypes: true,
+            },
         });
 
         if (!category) {
@@ -97,9 +173,81 @@ export const deleteCategoryById: RouterHandler = async (req, res) => {
             return;
         }
 
-        await prisma.category.delete({
-            where: { id },
-        });
+        if (force) {
+            await prisma.$transaction(async (tx) => {
+                const variantTypesId = category.variantTypes.map(
+                    (variant) => variant.id,
+                );
+
+                const productsId = category.products.map(
+                    (product) => product.id,
+                );
+
+                const variantsId = category.products
+                    .map((product) =>
+                        product.variants.map((variant) => variant.id),
+                    )
+                    .flat();
+
+                // delete VariantTypes
+                await tx.productAttribute.deleteMany({
+                    where: {
+                        typeId: { in: variantTypesId },
+                    },
+                });
+
+                await tx.productVariantAttribute.deleteMany({
+                    where: {
+                        typeId: { in: variantTypesId },
+                    },
+                });
+
+                await tx.productVariantAttribute.deleteMany({
+                    where: {
+                        variantId: { in: variantsId },
+                    },
+                });
+
+                await tx.variantType.deleteMany({
+                    where: {
+                        id: { in: variantTypesId },
+                    },
+                });
+
+                // delete Products
+                await tx.productVariant.deleteMany({
+                    where: {
+                        productId: { in: productsId },
+                    },
+                });
+
+                await tx.productAttribute.deleteMany({
+                    where: {
+                        productId: { in: productsId },
+                    },
+                });
+
+                await tx.product.deleteMany({
+                    where: {
+                        id: { in: productsId },
+                    },
+                });
+
+                // delete Category
+                await tx.category.delete({
+                    where: { id },
+                });
+            });
+        } else {
+            await prisma.category.update({
+                where: { id },
+                data: { id: newId, name, parentId },
+            });
+        }
+
+        // await prisma.category.delete({
+        //     where: { id },
+        // });
 
         res.status(200).json({
             message: 'Category deleted successfully',
