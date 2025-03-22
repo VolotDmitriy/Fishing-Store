@@ -120,7 +120,7 @@ export const deleteProductById: RouterHandler = async (req, res) => {
             return;
         }
 
-        if (force) {    
+        if (force) {
             await prisma.$transaction(async (tx) => {
                 const variantsId = product.variants.map(
                     (variant) => variant.id,

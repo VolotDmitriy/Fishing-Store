@@ -1,0 +1,592 @@
+[
+  {
+    "id": "prod001",
+    "name": "Спиннинг Shimano Nexave 240",
+    "description": "Легкий спиннинг.",
+    "categoryId": "cat002",
+    "images": [
+      "img1.jpg"
+    ],
+    "discountId": null
+  },
+  {
+    "id": "prod002",
+    "name": "Спиннинг Daiwa Exceler 270",
+    "description": "Прочный спиннинг.",
+    "categoryId": "cat002",
+    "images": [
+      "img2.jpg"
+    ],
+    "discountId": null
+  },
+  {
+    "id": "prod003",
+    "name": "Спиннинг Abu Garcia 210",
+    "description": "Компактный спиннинг.",
+    "categoryId": "cat002",
+    "images": [
+      "img3.jpg"
+    ],
+    "discountId": null
+  },
+  {
+    "id": "prod004",
+    "name": "Спиннинг Okuma Ceymar 300",
+    "description": "Мощный спиннинг.",
+    "categoryId": "cat002",
+    "images": [
+      "img4.jpg"
+    ],
+    "discountId": null
+  },
+  {
+    "id": "prod005",
+    "name": "Спиннинг Salmo Elite 240",
+    "description": "Универсальный спиннинг.",
+    "categoryId": "cat002",
+    "images": [
+      "img5.jpg"
+    ],
+    "discountId": null
+  },
+  {
+    "id": "prod006",
+    "name": "Спиннинг Berkley Pulse 270",
+    "description": "Чувствительный спиннинг.",
+    "categoryId": "cat002",
+    "images": [
+      "img6.jpg"
+    ],
+    "discountId": null
+  },
+  {
+    "id": "prod007",
+    "name": "Спиннинг St. Croix 210",
+    "description": "Легкий и прочный.",
+    "categoryId": "cat002",
+    "images": [
+      "img7.jpg"
+    ],
+    "discountId": null
+  },
+  {
+    "id": "prod008",
+    "name": "Спиннинг Fenwick 240",
+    "description": "Для дальнего заброса.",
+    "categoryId": "cat002",
+    "images": [
+      "img8.jpg"
+    ],
+    "discountId": null
+  },
+  {
+    "id": "prod009",
+    "name": "Спиннинг PENN Battle 270",
+    "description": "Для тяжелых приманок.",
+    "categoryId": "cat002",
+    "images": [
+      "img9.jpg"
+    ],
+    "discountId": null
+  },
+  {
+    "id": "prod010",
+    "name": "Спиннинг KastKing 300",
+    "description": "Бюджетный спиннинг.",
+    "categoryId": "cat002",
+    "images": [
+      "img10.jpg"
+    ],
+    "discountId": null
+  },
+  {
+    "id": "prod011",
+    "name": "Фидер Shimano Beastmaster 360",
+    "description": "Для фидерной ловли.",
+    "categoryId": "cat003",
+    "images": [
+      "img11.jpg"
+    ],
+    "discountId": null
+  },
+  {
+    "id": "prod012",
+    "name": "Фидер Daiwa Windcast 390",
+    "description": "Мощный фидер.",
+    "categoryId": "cat003",
+    "images": [
+      "img12.jpg"
+    ],
+    "discountId": null
+  },
+  {
+    "id": "prod013",
+    "name": "Фидер Salmo Diamond 330",
+    "description": "Легкий фидер.",
+    "categoryId": "cat003",
+    "images": [
+      "img13.jpg"
+    ],
+    "discountId": null
+  },
+  {
+    "id": "prod014",
+    "name": "Фидер Browning 360",
+    "description": "Универсальный фидер.",
+    "categoryId": "cat003",
+    "images": [
+      "img14.jpg"
+    ],
+    "discountId": null
+  },
+  {
+    "id": "prod015",
+    "name": "Фидер Preston 390",
+    "description": "Для дальнего заброса.",
+    "categoryId": "cat003",
+    "images": [
+      "img15.jpg"
+    ],
+    "discountId": null
+  },
+  {
+    "id": "prod016",
+    "name": "Катушка Daiwa Ninja 3000",
+    "description": "Бюджетная катушка.",
+    "categoryId": "cat005",
+    "images": [
+      "img16.jpg"
+    ],
+    "discountId": null
+  },
+  {
+    "id": "prod017",
+    "name": "Катушка Shimano Catana 2500",
+    "description": "Надежная катушка.",
+    "categoryId": "cat005",
+    "images": [
+      "img17.jpg"
+    ],
+    "discountId": null
+  },
+  {
+    "id": "prod018",
+    "name": "Катушка Okuma Avenger 4000",
+    "description": "Мощная катушка.",
+    "categoryId": "cat005",
+    "images": [
+      "img18.jpg"
+    ],
+    "discountId": null
+  },
+  {
+    "id": "prod019",
+    "name": "Катушка Ryobi Excia 2000",
+    "description": "Легкая катушка.",
+    "categoryId": "cat005",
+    "images": [
+      "img19.jpg"
+    ],
+    "discountId": null
+  },
+  {
+    "id": "prod020",
+    "name": "Катушка PENN Spinfisher 3500",
+    "description": "Для тяжелых нагрузок.",
+    "categoryId": "cat005",
+    "images": [
+      "img20.jpg"
+    ],
+    "discountId": null
+  },
+  {
+    "id": "prod021",
+    "name": "Катушка Abu Garcia Revo 3000",
+    "description": "Прочная катушка.",
+    "categoryId": "cat005",
+    "images": [
+      "img21.jpg"
+    ],
+    "discountId": null
+  },
+  {
+    "id": "prod022",
+    "name": "Катушка Salmo Sniper 2000",
+    "description": "Бюджетная модель.",
+    "categoryId": "cat005",
+    "images": [
+      "img22.jpg"
+    ],
+    "discountId": null
+  },
+  {
+    "id": "prod023",
+    "name": "Катушка KastKing Sharky 4000",
+    "description": "Для дальнего заброса.",
+    "categoryId": "cat005",
+    "images": [
+      "img23.jpg"
+    ],
+    "discountId": null
+  },
+  {
+    "id": "prod024",
+    "name": "Катушка St. Croix 2500",
+    "description": "Легкая и прочная.",
+    "categoryId": "cat005",
+    "images": [
+      "img24.jpg"
+    ],
+    "discountId": null
+  },
+  {
+    "id": "prod025",
+    "name": "Катушка Fenwick Elite 3000",
+    "description": "Универсальная катушка.",
+    "categoryId": "cat005",
+    "images": [
+      "img25.jpg"
+    ],
+    "discountId": null
+  },
+  {
+    "id": "prod026",
+    "name": "Воблер Rapala Original 5",
+    "description": "Классический воблер.",
+    "categoryId": "cat007",
+    "images": [
+      "img26.jpg"
+    ],
+    "discountId": null
+  },
+  {
+    "id": "prod027",
+    "name": "Воблер Yo-Zuri Crystal 7",
+    "description": "Яркий воблер.",
+    "categoryId": "cat007",
+    "images": [
+      "img27.jpg"
+    ],
+    "discountId": null
+  },
+  {
+    "id": "prod028",
+    "name": "Воблер Salmo Hornet 4",
+    "description": "Для щуки.",
+    "categoryId": "cat007",
+    "images": [
+      "img28.jpg"
+    ],
+    "discountId": null
+  },
+  {
+    "id": "prod029",
+    "name": "Воблер Strike Pro 6",
+    "description": "Плавающий воблер.",
+    "categoryId": "cat007",
+    "images": [
+      "img29.jpg"
+    ],
+    "discountId": null
+  },
+  {
+    "id": "prod030",
+    "name": "Воблер Bomber Fat 5",
+    "description": "Для окуня.",
+    "categoryId": "cat007",
+    "images": [
+      "img30.jpg"
+    ],
+    "discountId": null
+  },
+  {
+    "id": "prod031",
+    "name": "Воблер Pontoon 21 7",
+    "description": "Глубоководный воблер.",
+    "categoryId": "cat007",
+    "images": [
+      "img31.jpg"
+    ],
+    "discountId": null
+  },
+  {
+    "id": "prod032",
+    "name": "Воблер Lucky Craft 5",
+    "description": "Для судака.",
+    "categoryId": "cat007",
+    "images": [
+      "img32.jpg"
+    ],
+    "discountId": null
+  },
+  {
+    "id": "prod033",
+    "name": "Воблер Megabass Vision 6",
+    "description": "Премиум воблер.",
+    "categoryId": "cat007",
+    "images": [
+      "img33.jpg"
+    ],
+    "discountId": null
+  },
+  {
+    "id": "prod034",
+    "name": "Воблер Duo Realis 5",
+    "description": "Реалистичный воблер.",
+    "categoryId": "cat007",
+    "images": [
+      "img34.jpg"
+    ],
+    "discountId": null
+  },
+  {
+    "id": "prod035",
+    "name": "Воблер Bandit 4",
+    "description": "Для троллинга.",
+    "categoryId": "cat007",
+    "images": [
+      "img35.jpg"
+    ],
+    "discountId": null
+  },
+  {
+    "id": "prod036",
+    "name": "Леска Berkley Trilene 0.25",
+    "description": "Прочная леска.",
+    "categoryId": "cat008",
+    "images": [
+      "img36.jpg"
+    ],
+    "discountId": null
+  },
+  {
+    "id": "prod037",
+    "name": "Леска Shimano Aspire 0.30",
+    "description": "Для тяжелых нагрузок.",
+    "categoryId": "cat008",
+    "images": [
+      "img37.jpg"
+    ],
+    "discountId": null
+  },
+  {
+    "id": "prod038",
+    "name": "Леска Sufix Advance 0.20",
+    "description": "Тонкая леска.",
+    "categoryId": "cat008",
+    "images": [
+      "img38.jpg"
+    ],
+    "discountId": null
+  },
+  {
+    "id": "prod039",
+    "name": "Леска Daiwa J-Braid 0.28",
+    "description": "Плетеная леска.",
+    "categoryId": "cat008",
+    "images": [
+      "img39.jpg"
+    ],
+    "discountId": null
+  },
+  {
+    "id": "prod040",
+    "name": "Леска Power Pro 0.32",
+    "description": "Сверхпрочная леска.",
+    "categoryId": "cat008",
+    "images": [
+      "img40.jpg"
+    ],
+    "discountId": null
+  },
+  {
+    "id": "prod041",
+    "name": "Крючки Owner Mosquito #2",
+    "description": "Острые крючки.",
+    "categoryId": "cat009",
+    "images": [
+      "img41.jpg"
+    ],
+    "discountId": null
+  },
+  {
+    "id": "prod042",
+    "name": "Крючки Gamakatsu LS-531 #4",
+    "description": "Для крупной рыбы.",
+    "categoryId": "cat009",
+    "images": [
+      "img42.jpg"
+    ],
+    "discountId": null
+  },
+  {
+    "id": "prod043",
+    "name": "Крючки Mustad Classic #6",
+    "description": "Универсальные крючки.",
+    "categoryId": "cat009",
+    "images": [
+      "img43.jpg"
+    ],
+    "discountId": null
+  },
+  {
+    "id": "prod044",
+    "name": "Крючки Hayabusa 531 #3",
+    "description": "Для приманок.",
+    "categoryId": "cat009",
+    "images": [
+      "img44.jpg"
+    ],
+    "discountId": null
+  },
+  {
+    "id": "prod045",
+    "name": "Крючки VMC 7545 #5",
+    "description": "Прочные крючки.",
+    "categoryId": "cat009",
+    "images": [
+      "img45.jpg"
+    ],
+    "discountId": null
+  },
+  {
+    "id": "prod046",
+    "name": "Ящик Plano 3600",
+    "description": "Для снастей.",
+    "categoryId": "cat010",
+    "images": [
+      "img46.jpg"
+    ],
+    "discountId": null
+  },
+  {
+    "id": "prod047",
+    "name": "Подставка Shimano Rod Rest",
+    "description": "Для удочек.",
+    "categoryId": "cat010",
+    "images": [
+      "img47.jpg"
+    ],
+    "discountId": null
+  },
+  {
+    "id": "prod048",
+    "name": "Сигнализатор Daiwa Bite",
+    "description": "Электронный сигнализатор.",
+    "categoryId": "cat010",
+    "images": [
+      "img48.jpg"
+    ],
+    "discountId": null
+  },
+  {
+    "id": "prod049",
+    "name": "Сумка Salmo Tackle",
+    "description": "Для переноски.",
+    "categoryId": "cat010",
+    "images": [
+      "img49.jpg"
+    ],
+    "discountId": null
+  },
+  {
+    "id": "cm88r3h380005qhvsneobr7kr",
+    "name": "test name",
+    "description": "test description",
+    "categoryId": "cat001",
+    "images": [
+      "img1.jpg"
+    ],
+    "discountId": null
+  },
+  {
+    "id": "cm88rou7k0007qhvsfkhbgy0d",
+    "name": "test name",
+    "description": "test description",
+    "categoryId": "cat001",
+    "images": [
+      "img1.jpg"
+    ],
+    "discountId": "disc001"
+  },
+  {
+    "id": "cm88rspzq0009qhvsurxoiz92",
+    "name": "test name",
+    "description": "test description",
+    "categoryId": "cat001",
+    "images": [
+      "img1.jpg"
+    ],
+    "discountId": null
+  },
+  {
+    "id": "cm88rsrbp000bqhvs58a8av6f",
+    "name": "test name",
+    "description": "test description",
+    "categoryId": "cat001",
+    "images": [
+      "img1.jpg"
+    ],
+    "discountId": "disc001"
+  },
+  {
+    "id": "cm88rsww9000dqhvsabemgkrw",
+    "name": "test name",
+    "description": "test description",
+    "categoryId": "cat001",
+    "images": [
+      "img1.jpg"
+    ],
+    "discountId": null
+  },
+  {
+    "id": "cm88s23h3000gqhvsfcooxb7c",
+    "name": "test name",
+    "description": "test description",
+    "categoryId": "cat001",
+    "images": [
+      "img1.jpg"
+    ],
+    "discountId": null
+  },
+  {
+    "id": "cm88s23ka000iqhvs2r9yk7lw",
+    "name": "test name",
+    "description": "test description",
+    "categoryId": "cat001",
+    "images": [
+      "img1.jpg"
+    ],
+    "discountId": "disc001"
+  },
+  {
+    "id": "cm88s2uef000lqhvsx4vwpfrn",
+    "name": "test name",
+    "description": "test description",
+    "categoryId": "cat001",
+    "images": [
+      "img1.jpg"
+    ],
+    "discountId": null
+  },
+  {
+    "id": "cm88s2ug4000nqhvsuwc7fw39",
+    "name": "test name",
+    "description": "test description",
+    "categoryId": "cat001",
+    "images": [
+      "img1.jpg"
+    ],
+    "discountId": "disc001"
+  },
+  {
+    "id": "prod050",
+    "name": "test name",
+    "description": "test description",
+    "categoryId": "cat009",
+    "images": [
+      "img2.jpg"
+    ],
+    "discountId": "disc001"
+  }
+]
