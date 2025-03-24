@@ -110,8 +110,35 @@ export const productColumns: ColumnDef<z.infer<typeof productSchema>>[] = [
     {
         accessorKey: 'description',
         header: 'Описание',
-        cell: ({ row }) => row.original.description,
+        cell: ({ row }) => row.original.description || 'Описание отсутствует',
     },
+    {
+        accessorKey: 'variants',
+        header: 'Варианты',
+        cell: ({ row }) => {
+          const variants = row.original.variants;
+          if (!variants || variants.length === 0) {
+            return 'Нет вариантов';
+          }
+          const count = variants.length;
+          return (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="sm">
+                  {count} Вариант{count > 1 ? 'ов' : ''}
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                {variants.map((variant, index) => (
+                  <DropdownMenuItem key={index}>
+                    {variant.sku}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          );
+        },
+      },
     {
         accessorKey: 'categoryId',
         header: 'Категория',
@@ -120,7 +147,7 @@ export const productColumns: ColumnDef<z.infer<typeof productSchema>>[] = [
     {
         accessorKey: 'images',
         header: 'Изображения',
-        cell: ({ row }) => row.original.images.join(', '),
+        cell: ({ row }) => row.original.images.join(', ') || 'Нет изображений',
     },
     {
         accessorKey: 'discountId',

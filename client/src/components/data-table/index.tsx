@@ -24,7 +24,7 @@ export function DataTable() {
                 setCategories(dataCategories);
 
                 const dataProducts = await axios
-                    .get('http://localhost:4200/product')
+                    .get('http://localhost:4200/product?full=true')
                     .then((res) => res.data);
                 setProducts(dataProducts);
 
