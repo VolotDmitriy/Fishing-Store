@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 
 export const getAllCategories: RouterHandler = async (req, res) => {
     try {
-        const { full } = req.query;
+        const { full } = req.query as { full?: string };
 
         if (full !== undefined && full !== 'true' && full !== 'false') {
             res.status(400).json({
@@ -14,9 +14,10 @@ export const getAllCategories: RouterHandler = async (req, res) => {
             return;
         }
 
-        let categories;
-        if (full) {
-            categories = await prisma.category.findMany({
+        const isFull = full === 'true';
+
+        const categories = await prisma.category.findMany({
+            ...(isFull && {
                 include: {
                     children: true,
                     products: {
@@ -32,10 +33,14 @@ export const getAllCategories: RouterHandler = async (req, res) => {
                         },
                     },
                 },
-            });
-        } else {
-            categories = await prisma.category.findMany();
+            }),
+        });
+
+        if (!categories) {
+            res.status(404).json({ message: 'Categories not found' });
+            return;
         }
+
         res.status(200).json(categories);
     } catch (error) {
         ErrorHandler(error, res);
@@ -45,7 +50,7 @@ export const getAllCategories: RouterHandler = async (req, res) => {
 export const getCategoryById: RouterHandler = async (req, res) => {
     try {
         const { id } = req.params;
-        const { full } = req.query;
+        const { full } = req.query as { full?: string };
 
         if (full !== undefined && full !== 'true' && full !== 'false') {
             res.status(400).json({
@@ -54,10 +59,11 @@ export const getCategoryById: RouterHandler = async (req, res) => {
             return;
         }
 
-        let categories;
-        if (full) {
-            categories = await prisma.category.findUnique({
-                where: { id },
+        const isFull = full === 'true';
+
+        const categories = await prisma.category.findMany({
+            where: { id },
+            ...(isFull && {
                 include: {
                     children: true,
                     products: {
@@ -73,15 +79,11 @@ export const getCategoryById: RouterHandler = async (req, res) => {
                         },
                     },
                 },
-            });
-        } else {
-            categories = await prisma.category.findUnique({
-                where: { id },
-            });
-        }
+            }),
+        });
 
         if (!categories) {
-            res.status(404).json({ message: 'Category not found' });
+            res.status(404).json({ message: 'Categories not found' });
             return;
         }
 
