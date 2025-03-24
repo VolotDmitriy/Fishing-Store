@@ -9,13 +9,47 @@ export const categorySchema = z.object({
     updatedAt: z.string(),
 });
 
+export const productVariantAtribute = z.object({
+    id: z.string(),
+    variantId: z.string(),
+    typeId: z.string(),
+    value: z.string(),
+    createdAt: z.string(),
+    updatedAt: z.string(),
+});
+
+export const productVariant = z.object({
+    id: z.string(),
+    productId: z.string(),
+    sku: z.string(),
+    price: z.string(),
+    inStock: z.number(),
+    attributes: z.array(productVariantAtribute),
+    discountId: z.string().nullable(),
+    createdAt: z.string(),
+    updatedAt: z.string(),
+});
+
+export const ProductAttribute = z.object({
+    id: z.string(),
+    productId: z.string(),
+    typeId: z.string(),
+    value: z.string(),
+    createdAt: z.string(),
+    updatedAt: z.string(),
+});
+
 export const productSchema = z.object({
     id: z.string(),
     name: z.string(),
-    description: z.string(),
-    categoryId: z.string().nullable(),
+    description: z.string().optional(),
+    categoryId: z.string(),
     images: z.array(z.string()),
+    variants: z.array(productVariant).nullable(),
+    attributes: z.array(ProductAttribute),
     discountId: z.string().nullable(),
+    createdAt: z.string(),
+    updatedAt: z.string(),
 });
 
 export const discountSchema = z.object({
