@@ -5,7 +5,31 @@ const prisma = new PrismaClient();
 
 export const getAllProducts: RouterHandler = async (req, res) => {
     try {
-        const products = await prisma.product.findMany();
+        const { full } = req.query as { full?: string };
+
+        if (full !== undefined && full !== 'true' && full !== 'false') {
+            res.status(400).json({
+                message: 'Force parameter is true or false',
+            });
+            return;
+        }
+
+        const isFull = full === 'true';
+
+        const products = await prisma.product.findMany({
+            ...(isFull && {
+                include: {
+                    variants: { include: { attributes: true } },
+                    attributes: true,
+                    discount: true,
+                },
+            }),
+        });
+
+        if (!products) {
+            res.status(404).json({ message: 'Products not found' });
+            return;
+        }
 
         res.status(200).json(products);
     } catch (error) {
@@ -16,12 +40,29 @@ export const getAllProducts: RouterHandler = async (req, res) => {
 export const getProductById: RouterHandler = async (req, res) => {
     try {
         const { id } = req.params;
+        const { full } = req.query as { full?: string };
+        if (full !== undefined && full !== 'true' && full !== 'false') {
+            res.status(400).json({
+                message: 'Force parameter is true or false',
+            });
+            return;
+        }
+
+        const isFull = full === 'true';
+
         const product = await prisma.product.findUnique({
             where: { id },
+            ...(isFull && {
+                include: {
+                    variants: { include: { attributes: true } },
+                    attributes: true,
+                    discount: true,
+                },
+            }),
         });
 
         if (!product) {
-            res.status(404).json({ message: 'Product not found' });
+            res.status(404).json({ message: 'Products not found' });
             return;
         }
 
@@ -34,9 +75,31 @@ export const getProductById: RouterHandler = async (req, res) => {
 export const getProductByCategory: RouterHandler = async (req, res) => {
     try {
         const { categoryId } = req.params;
+        const { full } = req.query as { full?: string };
+        if (full !== undefined && full !== 'true' && full !== 'false') {
+            res.status(400).json({
+                message: 'Force parameter is true or false',
+            });
+            return;
+        }
+
+        const isFull = full === 'true';
+
         const products = await prisma.product.findMany({
             where: { categoryId },
+            ...(isFull && {
+                include: {
+                    variants: { include: { attributes: true } },
+                    attributes: true,
+                    discount: true,
+                },
+            }),
         });
+
+        if (!products) {
+            res.status(404).json({ message: 'Products not found' });
+            return;
+        }
 
         res.status(200).json(products);
     } catch (error) {
