@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { IconDotsVertical } from '@tabler/icons-react';
 import { ColumnDef } from '@tanstack/react-table';
+import { ChevronDown, ChevronRight } from 'lucide-react';
 import { z } from 'zod';
 import { TableCellViewer } from './table-cell-viewer';
 import { categorySchema, discountSchema, productSchema } from './types';
@@ -115,30 +116,39 @@ export const productColumns: ColumnDef<z.infer<typeof productSchema>>[] = [
     {
         accessorKey: 'variants',
         header: 'Варианты',
-        cell: ({ row }) => {
-          const variants = row.original.variants;
-          if (!variants || variants.length === 0) {
-            return 'Нет вариантов';
-          }
-          const count = variants.length;
-          return (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="sm">
-                  {count} Вариант{count > 1 ? 'ов' : ''}
+        cell: ({ row, table }) => {
+            const variants = row.original.variants;
+            if (!variants || variants.length === 0) {
+                return 'Нет вариантов';
+            }
+            const count = variants.length;
+            const expandedState = table.getState().expanded;
+            const isExpanded =
+                typeof expandedState === 'object'
+                    ? expandedState[row.id]
+                    : false;
+
+            return (
+                <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => {
+                        if (typeof expandedState === 'object') {
+                            table.setExpanded({
+                                ...expandedState,
+                                [row.id]: !isExpanded,
+                            });
+                        } else {
+                            table.setExpanded({ [row.id]: true });
+                        }
+                    }}
+                >
+                    {count} Вариант{count > 1 ? 'ов' : ''}{' '}
+                    {isExpanded ? <ChevronDown /> : <ChevronRight />}
                 </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                {variants.map((variant, index) => (
-                  <DropdownMenuItem key={index}>
-                    {variant.sku}
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
-          );
+            );
         },
-      },
+    },
     {
         accessorKey: 'categoryId',
         header: 'Категория',
