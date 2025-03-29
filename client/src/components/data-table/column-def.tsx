@@ -130,7 +130,7 @@ export const productColumns: ColumnDef<z.infer<typeof productSchema>>[] = [
 
             return (
                 <Button
-                    variant="ghost"
+                    variant="outline"
                     size="sm"
                     onClick={() => {
                         if (typeof expandedState === 'object') {

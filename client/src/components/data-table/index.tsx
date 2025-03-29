@@ -2,11 +2,10 @@
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ColumnDef } from '@tanstack/react-table';
-import { categoryColumns, discountColumns, productColumns } from './column-def';
-import { TableView } from './table-view';
-// import { ColumnType, DataTableProps } from './types';
 import axios from 'axios';
 import React from 'react';
+import { categoryColumns, discountColumns, productColumns } from './column-def';
+import { TableView } from './table-view';
 import { ColumnType } from './types';
 
 export function DataTable() {
@@ -49,7 +48,6 @@ export function DataTable() {
                     <TabsTrigger value="products">Products</TabsTrigger>
                     <TabsTrigger value="discounts">Discounts</TabsTrigger>
                 </TabsList>
-                {/* Кнопки Customize Columns и Add Item перенесены внутрь TableView */}
             </div>
             <TabsContent value="categories">
                 <TableView

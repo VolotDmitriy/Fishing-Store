@@ -18,7 +18,7 @@ interface VariantSubTableProps {
 export function VariantSubTable({ variants }: VariantSubTableProps) {
     return (
         <Table>
-            <TableHeader>
+            <TableHeader className="bg-muted sticky top-0 z-10">
                 <TableRow>
                     <TableHead>ID</TableHead>
                     <TableHead>Название</TableHead>

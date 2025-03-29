@@ -36,6 +36,62 @@
                         "updatedAt": "2025-03-17T19:03:41.822Z"
                     }
                 ]
+            },
+            {
+                "id": "var102",
+                "productId": "prod001",
+                "sku": "SH-NX-270",
+                "price": "6000",
+                "inStock": 10,
+                "discountId": null,
+                "createdAt": "2025-03-17T19:03:41.822Z",
+                "updatedAt": "2025-03-17T19:03:41.822Z",
+                "attributes": [
+                    {
+                        "id": "attr01002",
+                        "variantId": "var102",
+                        "typeId": "vt001",
+                        "value": "2.7 м",
+                        "createdAt": "2025-03-17T19:03:41.822Z",
+                        "updatedAt": "2025-03-17T19:03:41.822Z"
+                    },
+                    {
+                        "id": "attr01002",
+                        "variantId": "var101",
+                        "typeId": "vt002",
+                        "value": "10-30 г",
+                        "createdAt": "2025-03-17T19:03:41.822Z",
+                        "updatedAt": "2025-03-17T19:03:41.822Z"
+                    }
+                ]
+            },
+            {
+                "id": "var103",
+                "productId": "prod001",
+                "sku": "SH-NX-300",
+                "price": "7400",
+                "inStock": 10,
+                "discountId": null,
+                "createdAt": "2025-03-17T19:03:41.822Z",
+                "updatedAt": "2025-03-17T19:03:41.822Z",
+                "attributes": [
+                    {
+                        "id": "attr01003",
+                        "variantId": "var103",
+                        "typeId": "vt001",
+                        "value": "3.0 м",
+                        "createdAt": "2025-03-17T19:03:41.822Z",
+                        "updatedAt": "2025-03-17T19:03:41.822Z"
+                    },
+                    {
+                        "id": "attr01002",
+                        "variantId": "var101",
+                        "typeId": "vt002",
+                        "value": "10-30 г",
+                        "createdAt": "2025-03-17T19:03:41.822Z",
+                        "updatedAt": "2025-03-17T19:03:41.822Z"
+                    }
+                ]
             }
         ],
         "attributes": [],
