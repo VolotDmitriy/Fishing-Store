@@ -1,0 +1,38 @@
+import {
+    CategoryType,
+    DiscountType,
+    ProductType,
+} from '@/components/data-table/types';
+import axios from 'axios';
+
+export async function fetchCategories(): Promise<CategoryType[]> {
+    try {
+        const response = await axios.get('http://localhost:4200/category');
+        return response.data;
+    } catch (error) {
+        console.error('Ошибка при получении категорий:', error);
+        throw error;
+    }
+}
+
+export async function fetchProducts(): Promise<ProductType[]> {
+    try {
+        const response = await axios.get(
+            'http://localhost:4200/product?full=true',
+        );
+        return response.data; // Возвращаем данные
+    } catch (error) {
+        console.error('Ошибка при получении продуктов:', error);
+        throw error;
+    }
+}
+
+export async function fetchDiscounts(): Promise<DiscountType[]> {
+    try {
+        const response = await axios.get('http://localhost:4200/discount');
+        return response.data;
+    } catch (error) {
+        console.error('Ошибка при получении скидок:', error);
+        throw error;
+    }
+}

@@ -1,5 +1,7 @@
 'use client';
 
+import { VariantDrawer } from '@/components/data-table/drawers/ProductVariantsDrawer';
+import { TableCellViewer } from '@/components/data-table/table-cell-viewer';
 import {
     Table,
     TableBody,
@@ -8,12 +10,14 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table';
-import { z } from 'zod';
-import { productVariant } from './types';
+import { fetchProducts } from '@/utils/requests';
+import { VariantType } from './types';
 
 interface VariantSubTableProps {
-    variants: z.infer<typeof productVariant>[];
+    variants: VariantType[];
 }
+
+const dataDiscount = await fetchProducts();
 
 export function VariantSubTable({ variants }: VariantSubTableProps) {
     return (
@@ -32,7 +36,14 @@ export function VariantSubTable({ variants }: VariantSubTableProps) {
                 {variants.map((variant, index) => (
                     <TableRow key={index}>
                         <TableCell>{variant.id}</TableCell>
-                        <TableCell>{variant.sku}</TableCell>
+                        <TableCell>
+                            <TableCellViewer itemName={variant.sku}>
+                                <VariantDrawer
+                                    item={variant}
+                                    data={variants}
+                                ></VariantDrawer>
+                            </TableCellViewer>
+                        </TableCell>
                         <TableCell>{variant.price} ₴</TableCell>
                         <TableCell>{variant.inStock} шт.</TableCell>
                         <TableCell>{variant.discountId || 'Нет'}</TableCell>

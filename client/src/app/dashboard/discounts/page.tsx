@@ -1,11 +1,11 @@
 import DataTableWrapper from '@/components/data-table/data-table-wrapper';
 import { discountSchema } from '@/components/data-table/types';
-import axios from 'axios';
+import { fetchDiscounts } from '@/utils/requests';
 
 export default async function DiscountsPage() {
     try {
-        const response = await axios.get('http://localhost:4200/discount');
-        const discounts = discountSchema.array().parse(response.data);
+        const responseData = await fetchDiscounts();
+        const discounts = discountSchema.array().parse(responseData);
 
         return (
             <DataTableWrapper

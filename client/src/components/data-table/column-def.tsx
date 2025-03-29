@@ -1,5 +1,8 @@
 'use client';
 
+import { CategoryDrawer } from '@/components/data-table/drawers/CaterogyDrawer';
+import { DiscountDrawer } from '@/components/data-table/drawers/DiscountDrawer';
+import { ProductDrawer } from '@/components/data-table/drawers/ProductDrawer';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -9,6 +12,11 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import {
+    fetchCategories,
+    fetchDiscounts,
+    fetchProducts,
+} from '@/utils/requests';
 import { IconDotsVertical } from '@tabler/icons-react';
 import { ColumnDef } from '@tanstack/react-table';
 import { ChevronDown, ChevronRight } from 'lucide-react';
@@ -16,7 +24,10 @@ import { z } from 'zod';
 import { TableCellViewer } from './table-cell-viewer';
 import { categorySchema, discountSchema, productSchema } from './types';
 
-// Столбцы для каждой таблицы
+const dataCategories = await fetchCategories();
+const dataProducts = await fetchProducts();
+const dataDiscount = await fetchDiscounts();
+
 export const categoryColumns: ColumnDef<z.infer<typeof categorySchema>>[] = [
     {
         id: 'select',
@@ -41,7 +52,14 @@ export const categoryColumns: ColumnDef<z.infer<typeof categorySchema>>[] = [
     {
         accessorKey: 'name',
         header: 'Название',
-        cell: ({ row }) => <TableCellViewer item={row.original} />,
+        cell: ({ row }) => (
+            <TableCellViewer itemName={row.original.name}>
+                <CategoryDrawer
+                    item={row.original}
+                    data={dataCategories}
+                ></CategoryDrawer>
+            </TableCellViewer>
+        ),
         enableHiding: false,
     },
     {
@@ -105,7 +123,14 @@ export const productColumns: ColumnDef<z.infer<typeof productSchema>>[] = [
     {
         accessorKey: 'name',
         header: 'Название',
-        cell: ({ row }) => <TableCellViewer item={row.original} />,
+        cell: ({ row }) => (
+            <TableCellViewer itemName={row.original.name}>
+                <ProductDrawer
+                    item={row.original}
+                    data={dataProducts}
+                ></ProductDrawer>
+            </TableCellViewer>
+        ),
         enableHiding: false,
     },
     {
@@ -206,7 +231,14 @@ export const discountColumns: ColumnDef<z.infer<typeof discountSchema>>[] = [
     {
         accessorKey: 'name',
         header: 'Название',
-        cell: ({ row }) => <TableCellViewer item={row.original} />,
+        cell: ({ row }) => (
+            <TableCellViewer itemName={row.original.name}>
+                <DiscountDrawer
+                    item={row.original}
+                    data={dataDiscount}
+                ></DiscountDrawer>
+            </TableCellViewer>
+        ),
         enableHiding: false,
     },
     {

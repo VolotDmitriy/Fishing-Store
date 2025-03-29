@@ -39,17 +39,19 @@ export default function DashboardLayout({
                                 onValueChange={handleTabChange}
                                 className="w-full"
                             >
-                                <TabsList>
-                                    <TabsTrigger value="categories">
-                                        Categories
-                                    </TabsTrigger>
-                                    <TabsTrigger value="products">
-                                        Products
-                                    </TabsTrigger>
-                                    <TabsTrigger value="discounts">
-                                        Discounts
-                                    </TabsTrigger>
-                                </TabsList>
+                                <div className="flex items-center justify-between px-4 lg:px-6">
+                                    <TabsList className="hidden @4xl/main:flex">
+                                        <TabsTrigger value="categories">
+                                            Categories
+                                        </TabsTrigger>
+                                        <TabsTrigger value="products">
+                                            Products
+                                        </TabsTrigger>
+                                        <TabsTrigger value="discounts">
+                                            Discounts
+                                        </TabsTrigger>
+                                    </TabsList>
+                                </div>
                             </Tabs>
                             {children}
                         </div>

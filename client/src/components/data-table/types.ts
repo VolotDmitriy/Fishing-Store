@@ -62,6 +62,11 @@ export const discountSchema = z.object({
     updatedAt: z.string(),
 });
 
+export type CategoryType = z.infer<typeof categorySchema>;
+export type ProductType = z.infer<typeof productSchema>;
+export type DiscountType = z.infer<typeof discountSchema>;
+export type VariantType = z.infer<typeof productVariant>;
+
 export type ColumnType =
     | z.infer<typeof categorySchema>
     | z.infer<typeof productSchema>

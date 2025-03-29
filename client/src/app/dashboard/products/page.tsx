@@ -1,13 +1,11 @@
 import DataTableWrapper from '@/components/data-table/data-table-wrapper';
 import { productSchema } from '@/components/data-table/types';
-import axios from 'axios';
+import { fetchProducts } from '@/utils/requests';
 
 export default async function ProductsPage() {
     try {
-        const response = await axios.get(
-            'http://localhost:4200/product?full=true',
-        );
-        const products = productSchema.array().parse(response.data);
+        const responseData = await fetchProducts();
+        const products = productSchema.array().parse(responseData);
 
         return (
             <DataTableWrapper
