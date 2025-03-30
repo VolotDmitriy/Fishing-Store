@@ -7,14 +7,21 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
-import { ProductType } from '../types';
+import { CategoryType, DiscountType, ProductType } from '../types';
 
 interface ProductDrawerProps {
     item: ProductType;
     data: ProductType[];
+    categoriesData: CategoryType[];
+    discountsData: DiscountType[];
 }
 
-export const ProductDrawer: React.FC<ProductDrawerProps> = ({ item, data }) => {
+export const ProductDrawer: React.FC<ProductDrawerProps> = ({
+    item,
+    data,
+    categoriesData,
+    discountsData,
+}) => {
     return (
         <div className="flex flex-col gap-3">
             <div className="flex flex-col gap-3">
@@ -29,12 +36,12 @@ export const ProductDrawer: React.FC<ProductDrawerProps> = ({ item, data }) => {
                         <SelectValue placeholder="Выберите категорию" />
                     </SelectTrigger>
                     <SelectContent align="end">
-                        {data.map((product) => (
+                        {categoriesData.map((category) => (
                             <SelectItem
-                                key={product.id}
-                                value={`${product.id}`}
+                                key={category.id}
+                                value={`${category.id}`}
                             >
-                                {product.name}
+                                {category.name}
                             </SelectItem>
                         ))}
                     </SelectContent>
@@ -48,7 +55,22 @@ export const ProductDrawer: React.FC<ProductDrawerProps> = ({ item, data }) => {
 
             <div className="flex flex-col gap-3">
                 <Label htmlFor="discountId">Скидка</Label>
-                <Input id="discountId" defaultValue={item.discountId || ''} />
+                <Select defaultValue={item.discountId || 'null'}>
+                    <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Выберите скидку" />
+                    </SelectTrigger>
+                    <SelectContent align="end">
+                        <SelectItem value="null">Без скидки</SelectItem>
+                        {discountsData.map((discount) => (
+                            <SelectItem
+                                key={discount.id}
+                                value={`${discount.id}`}
+                            >
+                                {discount.percentage}% {discount.name}
+                            </SelectItem>
+                        ))}
+                    </SelectContent>
+                </Select>
             </div>
         </div>
     );

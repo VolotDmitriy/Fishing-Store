@@ -10,14 +10,14 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table';
-import { fetchProducts } from '@/utils/requests';
+import { fetchDiscounts } from '@/utils/requests';
 import { VariantType } from './types';
 
 interface VariantSubTableProps {
     variants: VariantType[];
 }
 
-const dataDiscount = await fetchProducts();
+const dataDiscount = await fetchDiscounts();
 
 export function VariantSubTable({ variants }: VariantSubTableProps) {
     return (
@@ -41,6 +41,7 @@ export function VariantSubTable({ variants }: VariantSubTableProps) {
                                 <VariantDrawer
                                     item={variant}
                                     data={variants}
+                                    discountsData={dataDiscount}
                                 ></VariantDrawer>
                             </TableCellViewer>
                         </TableCell>

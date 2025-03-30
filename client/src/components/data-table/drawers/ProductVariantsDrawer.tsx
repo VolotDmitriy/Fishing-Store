@@ -1,13 +1,24 @@
-import { VariantType } from '@/components/data-table/types';
+import { DiscountType, VariantType } from '@/components/data-table/types';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select';
 
 interface VariantDrawerProps {
     item: VariantType;
     data: VariantType[];
+    discountsData: DiscountType[];
 }
 
-export const VariantDrawer: React.FC<VariantDrawerProps> = ({ item }) => {
+export const VariantDrawer: React.FC<VariantDrawerProps> = ({
+    item,
+    discountsData,
+}) => {
     return (
         <div className="flex flex-col gap-3">
             <div className="flex flex-col gap-3">
@@ -27,10 +38,22 @@ export const VariantDrawer: React.FC<VariantDrawerProps> = ({ item }) => {
 
             <div className="flex flex-col gap-3">
                 <Label htmlFor="discountId">Скидка</Label>
-                <Input
-                    id="discountId"
-                    defaultValue={item.discountId || 'Нет'}
-                />
+                <Select defaultValue={item.discountId || 'null'}>
+                    <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Выберите скидку" />
+                    </SelectTrigger>
+                    <SelectContent align="end">
+                        <SelectItem value="null">Без скидки</SelectItem>
+                        {discountsData.map((discount) => (
+                            <SelectItem
+                                key={discount.id}
+                                value={`${discount.id}`}
+                            >
+                                {discount.percentage}% {discount.name}
+                            </SelectItem>
+                        ))}
+                    </SelectContent>
+                </Select>
             </div>
 
             <div className="flex flex-col gap-3">

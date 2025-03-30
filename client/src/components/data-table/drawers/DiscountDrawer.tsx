@@ -11,6 +11,11 @@ export const DiscountDrawer: React.FC<DiscountDrawerProps> = ({ item }) => {
     return (
         <div className="flex flex-col gap-3">
             <div className="flex flex-col gap-3">
+                <Label htmlFor="discountName">Название скидки</Label>
+                <Input id="discountName" defaultValue={item.name} />
+            </div>
+
+            <div className="flex flex-col gap-3">
                 <Label htmlFor="percentage">Скидка (%)</Label>
                 <Input
                     id="percentage"
