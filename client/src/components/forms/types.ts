@@ -27,7 +27,7 @@ export const productFormSchema = z.object({
         }),
     description: z
         .string()
-        .min(2, {
+        .min(0, {
             message: 'Name must be at least 2 characters.',
         })
         .max(250, {
@@ -42,6 +42,38 @@ export const productFormSchema = z.object({
             value: z.string().url({ message: 'Please enter a valid URL.' }),
         }),
     ),
+    variants: z
+        .array(
+            z.object({
+                sku: z
+                    .string()
+                    .min(1, 'SKU is required')
+                    .regex(
+                        /^[A-Za-z0-9-]+$/,
+                        'SKU must contain only letters, numbers, and hyphens',
+                    ),
+                price: z
+                    .string()
+                    .transform((val) =>
+                        parseFloat(val.replace(/^0+/, '') || '0'),
+                    )
+                    .pipe(z.number().min(0, 'Price must be a positive number')),
+                    
+                inStock: z
+                    .string()
+                    .transform((val) =>
+                        parseInt(val.replace(/^0+,/, '') || '0'),
+                    )
+                    .pipe(
+                        z
+                            .number()
+                            .int('Stock must be an integer')
+                            .min(0, 'Stock must be a non-negative number'),
+                    ),
+                discountId: z.string().nullable().optional(),
+            }),
+        )
+        .optional(),
 });
 
 export type CategoryFormValues = z.infer<typeof categoryFormSchema>;
