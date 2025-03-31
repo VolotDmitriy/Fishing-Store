@@ -15,12 +15,12 @@ export async function fetchCategories(): Promise<CategoryType[]> {
     }
 }
 
-export async function fetchProducts(): Promise<ProductType[]> {
+export async function fetchProducts(full: boolean): Promise<ProductType[]> {
     try {
         const response = await axios.get(
-            'http://localhost:4200/product?full=true',
+            `http://localhost:4200/product?full=${full}`,
         );
-        return response.data; // Возвращаем данные
+        return response.data;
     } catch (error) {
         console.error('Ошибка при получении продуктов:', error);
         throw error;
