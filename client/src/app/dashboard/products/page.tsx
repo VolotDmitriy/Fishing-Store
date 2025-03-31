@@ -4,7 +4,7 @@ import { fetchProducts } from '@/utils/requests';
 
 export default async function ProductsPage() {
     try {
-        const responseData = await fetchProducts();
+        const responseData = await fetchProducts(true);
         const products = productSchema.array().parse(responseData);
 
         return (

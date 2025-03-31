@@ -25,7 +25,7 @@ import { TableCellViewer } from './table-cell-viewer';
 import { categorySchema, discountSchema, productSchema } from './types';
 
 const dataCategories = await fetchCategories();
-const dataProducts = await fetchProducts();
+const dataProducts = await fetchProducts(true);
 const dataDiscount = await fetchDiscounts();
 
 export const categoryColumns: ColumnDef<z.infer<typeof categorySchema>>[] = [

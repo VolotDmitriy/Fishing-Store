@@ -29,7 +29,7 @@ export function DataTable() {
 
         const loadProducts = async () => {
             try {
-                const dataProducts = await fetchProducts();
+                const dataProducts = await fetchProducts(true);
                 setProducts(dataProducts);
             } catch (error) {
                 console.error('Не удалось загрузить продукты:', error);

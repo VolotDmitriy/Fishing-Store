@@ -14,6 +14,9 @@ export const categoryFormSchema = z.object({
             required_error: 'Please select an parentId to display.',
         })
         .optional(),
+    products: z
+        .array(z.object({ productId: z.string(), name: z.string() }))
+        .optional(),
 });
 
 export const productFormSchema = z.object({
@@ -77,5 +80,10 @@ export const productFormSchema = z.object({
 });
 
 export type CategoryFormValues = z.infer<typeof categoryFormSchema>;
+
+export interface SelectedProduct {
+    productId: string;
+    name: string;
+}
 
 export type ProductFormValues = z.infer<typeof productFormSchema>;
