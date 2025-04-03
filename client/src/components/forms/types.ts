@@ -17,6 +17,9 @@ export const categoryFormSchema = z.object({
     products: z
         .array(z.object({ productId: z.string(), name: z.string() }))
         .optional(),
+    childCategories: z
+        .array(z.object({ categoryId: z.string(), name: z.string() }))
+        .optional(),
 });
 
 export const productFormSchema = z.object({
@@ -61,7 +64,7 @@ export const productFormSchema = z.object({
                         parseFloat(val.replace(/^0+/, '') || '0'),
                     )
                     .pipe(z.number().min(0, 'Price must be a positive number')),
-                    
+
                 inStock: z
                     .string()
                     .transform((val) =>
@@ -87,3 +90,13 @@ export interface SelectedProduct {
 }
 
 export type ProductFormValues = z.infer<typeof productFormSchema>;
+
+export interface SelectedProduct {
+    productId: string;
+    name: string;
+}
+
+export interface SelectedCategory {
+    categoryId: string;
+    name: string;
+}

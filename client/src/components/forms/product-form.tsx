@@ -33,7 +33,7 @@ const defaultValues: Partial<ProductFormValues> = {
     description: '',
     categoryId: 'null',
     images: [{ value: '' }],
-    variants: [], // Изначально пустой массив
+    variants: [],
 };
 
 export function ProductForm() {
