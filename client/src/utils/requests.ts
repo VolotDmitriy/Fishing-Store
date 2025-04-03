@@ -5,9 +5,11 @@ import {
 } from '@/components/data-table/types';
 import axios from 'axios';
 
-export async function fetchCategories(): Promise<CategoryType[]> {
+export async function fetchCategories(full: boolean): Promise<CategoryType[]> {
     try {
-        const response = await axios.get('http://localhost:4200/category');
+        const response = await axios.get(
+            `http://localhost:4200/category?full=${full}`,
+        );
         return response.data;
     } catch (error) {
         console.error('Ошибка при получении категорий:', error);
@@ -27,9 +29,11 @@ export async function fetchProducts(full: boolean): Promise<ProductType[]> {
     }
 }
 
-export async function fetchDiscounts(): Promise<DiscountType[]> {
+export async function fetchDiscounts(full: boolean): Promise<DiscountType[]> {
     try {
-        const response = await axios.get('http://localhost:4200/discount');
+        const response = await axios.get(
+            `http://localhost:4200/discount?full=${full}`,
+        );
         return response.data;
     } catch (error) {
         console.error('Ошибка при получении скидок:', error);

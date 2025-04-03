@@ -4,7 +4,7 @@ import { fetchCategories } from '@/utils/requests';
 
 export default async function CategoriesPage() {
     try {
-        const responseData = await fetchCategories();
+        const responseData = await fetchCategories(false);
         const categories = categorySchema.array().parse(responseData);
 
         return (

@@ -4,7 +4,7 @@ import { fetchDiscounts } from '@/utils/requests';
 
 export default async function DiscountsPage() {
     try {
-        const responseData = await fetchDiscounts();
+        const responseData = await fetchDiscounts(false);
         const discounts = discountSchema.array().parse(responseData);
 
         return (

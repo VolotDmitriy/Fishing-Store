@@ -20,7 +20,7 @@ export function DataTable() {
     React.useEffect(() => {
         const loadCategories = async () => {
             try {
-                const dataCategories = await fetchCategories();
+                const dataCategories = await fetchCategories(false);
                 setCategories(dataCategories);
             } catch (error) {
                 console.error('Не удалось загрузить категории:', error);
@@ -38,7 +38,7 @@ export function DataTable() {
 
         const loadDiscount = async () => {
             try {
-                const dataDiscounts = await fetchDiscounts();
+                const dataDiscounts = await fetchDiscounts(false);
                 setDiscounts(dataDiscounts);
             } catch (error) {
                 console.error('Не удалось загрузить скидки:', error);

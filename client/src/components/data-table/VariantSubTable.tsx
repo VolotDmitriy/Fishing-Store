@@ -17,7 +17,7 @@ interface VariantSubTableProps {
     variants: VariantType[];
 }
 
-const dataDiscount = await fetchDiscounts();
+const dataDiscount = await fetchDiscounts(false);
 
 export function VariantSubTable({ variants }: VariantSubTableProps) {
     return (
