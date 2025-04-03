@@ -6,7 +6,17 @@ const prisma = new PrismaClient();
 export const getAllDiscounts: RouterHandler = async (req, res) => {
     try {
         const { active } = req.query;
+        const { full } = req.query as { full?: string };
         const now = new Date();
+
+        if (full !== undefined && full !== 'true' && full !== 'false') {
+            res.status(400).json({
+                message: 'Force parameter is true or false',
+            });
+            return;
+        }
+
+        const isFull = full === 'true';
 
         const discounts = await prisma.discount.findMany({
             where: active
@@ -15,7 +25,13 @@ export const getAllDiscounts: RouterHandler = async (req, res) => {
                       endDate: { gte: now },
                   }
                 : undefined,
+            ...(isFull && { include: { products: true, variants: true } }),
         });
+
+        if (!discounts) {
+            res.status(404).json({ message: 'Discounts not found' });
+            return;
+        }
 
         res.status(200).json(discounts);
     } catch (error) {
@@ -26,15 +42,28 @@ export const getAllDiscounts: RouterHandler = async (req, res) => {
 export const getDiscountById: RouterHandler = async (req, res) => {
     try {
         const { id } = req.params;
-        const discount = await prisma.discount.findUnique({
-            where: { id },
-        });
-        if (discount) {
-            res.status(200).json(discount);
-        } else {
-            res.status(404).json({ message: 'Скидка не найдена' });
+        const { full } = req.query as { full?: string };
+
+        if (full !== undefined && full !== 'true' && full !== 'false') {
+            res.status(400).json({
+                message: 'Force parameter is true or false',
+            });
             return;
         }
+
+        const isFull = full === 'true';
+
+        const discount = await prisma.discount.findMany({
+            where: { id },
+            ...(isFull && { include: { products: true, variants: true } }),
+        });
+
+        if (!discount) {
+            res.status(404).json({ message: 'Discount not found' });
+            return;
+        }
+
+        res.status(200).json(discount);
     } catch (error) {
         ErrorHandler(error, res);
     }
