@@ -1,6 +1,6 @@
 'use client';
 
-import { ProductType } from '@/components/data-table/types';
+import { CategoryTypeF, ProductType } from '@/components/data-table/types';
 import { Button } from '@/components/ui/button';
 import {
     Form,
@@ -19,38 +19,24 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
+import { fetchCategories, fetchProducts } from '@/utils/requests';
 import { zodResolver } from '@hookform/resolvers/zod';
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import { ProductSelector } from './ProductSelector';
-import {
-    categoryFormSchema,
-    CategoryFormValues,
-    SelectedProduct,
-} from './types';
+import { ItemSelector } from './item-selector';
+import { categoryFormSchema, CategoryFormValues } from './types';
 
 const defaultValues: Partial<CategoryFormValues> = {
     name: '',
     parentId: '',
     products: [],
+    childCategories: [],
 };
-
-async function fetchProducts(): Promise<ProductType[]> {
-    try {
-        const response = await axios.get(
-            'http://localhost:4200/product?full=false',
-        );
-        return response.data;
-    } catch (error) {
-        console.error('Ошибка при получении продуктов:', error);
-        throw error;
-    }
-}
 
 export function CategoryForm() {
     const [products, setProducts] = useState<ProductType[]>([]);
+    const [categories, setCategories] = useState<CategoryTypeF[]>([]);
     const [loading, setLoading] = useState(true);
 
     const form = useForm<CategoryFormValues>({
@@ -59,24 +45,43 @@ export function CategoryForm() {
         mode: 'onChange',
     });
 
-    const { fields, replace, remove } = useFieldArray({
+    const {
+        fields: productFields,
+        replace: replaceProducts,
+        remove: removeProduct,
+    } = useFieldArray({
+        keyName: 'code',
         name: 'products',
         control: form.control,
     });
 
+    const {
+        fields: categoryFields,
+        replace: replaceCategories,
+        remove: removeCategory,
+    } = useFieldArray({
+        keyName: 'code',
+        name: 'childCategories',
+        control: form.control,
+    });
+
     useEffect(() => {
-        const loadProducts = async () => {
+        const loadData = async () => {
             setLoading(true);
             try {
-                const fetchedProducts = await fetchProducts();
+                const [fetchedProducts, fetchedCategories] = await Promise.all([
+                    fetchProducts(false),
+                    fetchCategories(true),
+                ]);
                 setProducts(fetchedProducts);
+                setCategories(fetchedCategories);
             } catch (error) {
-                toast.error('Failed to load products');
+                toast.error('Failed to load data');
             } finally {
                 setLoading(false);
             }
         };
-        loadProducts();
+        loadData();
     }, []);
 
     function onSubmit(data: CategoryFormValues) {
@@ -91,12 +96,31 @@ export function CategoryForm() {
         });
     }
 
-    const handleProductsSelected = (selectedProducts: SelectedProduct[]) => {
-        replace(selectedProducts);
+    const handleProductsSelected = (
+        selectedProducts: { id: string; name: string }[],
+    ) => {
+        const selectedProductsMapped = selectedProducts.map((product) => ({
+            productId: product.id,
+            name: product.name,
+        }));
+        replaceProducts(selectedProductsMapped);
     };
 
-    const sortedFields = [...fields].sort((a, b) =>
+    const handleCategoriesSelected = (
+        selectedCategories: { id: string; name: string }[],
+    ) => {
+        const selectedCategoriesMapped = selectedCategories.map((category) => ({
+            categoryId: category.id,
+            name: category.name,
+        }));
+        replaceCategories(selectedCategoriesMapped);
+    };
+
+    const sortedProductFields = [...productFields].sort((a, b) =>
         a.productId.localeCompare(b.productId),
+    );
+    const sortedCategoryFields = [...categoryFields].sort((a, b) =>
+        a.categoryId.localeCompare(b.categoryId),
     );
 
     if (loading) {
@@ -117,7 +141,7 @@ export function CategoryForm() {
                     >
                         <path d="M21 12a9 9 0 1 1-6.219-8.56" />
                     </svg>
-                    Loading products...
+                    Loading data...
                 </div>
             </div>
         );
@@ -137,15 +161,15 @@ export function CategoryForm() {
                                 name="name"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Name</FormLabel>
+                                        <FormLabel>Название</FormLabel>
                                         <FormControl>
                                             <Input
-                                                placeholder="Category name"
+                                                placeholder="Название категории"
                                                 {...field}
                                             />
                                         </FormControl>
                                         <FormDescription>
-                                            Please enter category name
+                                            Введите название категории
                                         </FormDescription>
                                         <FormMessage />
                                     </FormItem>
@@ -156,62 +180,64 @@ export function CategoryForm() {
                                 name="parentId"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Parent</FormLabel>
+                                        <FormLabel>
+                                            Родительская категория
+                                        </FormLabel>
                                         <Select
                                             onValueChange={field.onChange}
-                                            defaultValue={'null'}
+                                            defaultValue="null"
                                         >
                                             <FormControl className="w-full">
                                                 <SelectTrigger>
-                                                    <SelectValue placeholder="Select a category parent" />
+                                                    <SelectValue placeholder="Выберите родительскую категорию" />
                                                 </SelectTrigger>
                                             </FormControl>
                                             <SelectContent>
                                                 <SelectItem value="null">
                                                     Без родителя
                                                 </SelectItem>
-                                                {products.map((product) => (
+                                                {categories.map((category) => (
                                                     <SelectItem
-                                                        key={product.id}
-                                                        value={product.id}
+                                                        key={category.id}
+                                                        value={category.id}
                                                     >
-                                                        {product.name}
+                                                        {category.name}
                                                     </SelectItem>
                                                 ))}
                                             </SelectContent>
                                         </Select>
                                         <FormDescription>
-                                            Please select a category parent
+                                            Выберите родительскую категорию
                                         </FormDescription>
                                         <FormMessage />
                                     </FormItem>
                                 )}
                             />
                             <FormItem>
-                                <FormLabel>Products</FormLabel>
+                                <FormLabel>Дочерние категории</FormLabel>
                                 <div className="space-y-2">
-                                    <ProductSelector
-                                        onProductsSelected={
-                                            handleProductsSelected
-                                        }
-                                        initialSelected={fields.map(
+                                    <ItemSelector
+                                        onSelected={handleCategoriesSelected}
+                                        initialSelected={categoryFields.map(
                                             (field) => ({
-                                                productId: field.productId,
+                                                id: field.categoryId,
                                                 name: field.name,
                                             }),
                                         )}
-                                        products={products}
+                                        items={categories}
+                                        itemType="category"
+                                        triggerButtonText="Выбрать дочерние категории"
                                     />
-                                    {sortedFields.length > 0 && (
+                                    {sortedCategoryFields.length > 0 && (
                                         <div className="space-y-2">
-                                            {sortedFields.map(
+                                            {sortedCategoryFields.map(
                                                 (field, index) => (
                                                     <div
-                                                        key={field.id}
+                                                        key={field.code}
                                                         className="flex items-center justify-between"
                                                     >
                                                         <span>
-                                                            {field.productId} -{' '}
+                                                            {field.categoryId} -{' '}
                                                             {field.name}
                                                         </span>
                                                         <Button
@@ -219,7 +245,9 @@ export function CategoryForm() {
                                                             variant="ghost"
                                                             size="sm"
                                                             onClick={() =>
-                                                                remove(index)
+                                                                removeCategory(
+                                                                    index,
+                                                                )
                                                             }
                                                         >
                                                             ✕
@@ -231,11 +259,62 @@ export function CategoryForm() {
                                     )}
                                 </div>
                                 <FormDescription>
-                                    Select products for this category
+                                    Выберите дочерние категории для этой
+                                    категории
                                 </FormDescription>
                                 <FormMessage />
                             </FormItem>
-                            <Button type="submit">Update profile</Button>
+                            <FormItem>
+                                <FormLabel>Товары</FormLabel>
+                                <div className="space-y-2">
+                                    <ItemSelector
+                                        onSelected={handleProductsSelected}
+                                        initialSelected={productFields.map(
+                                            (field) => ({
+                                                id: field.productId,
+                                                name: field.name,
+                                            }),
+                                        )}
+                                        items={products}
+                                        itemType="products"
+                                        triggerButtonText="Выбрать товары"
+                                    />
+                                    {sortedProductFields.length > 0 && (
+                                        <div className="space-y-2">
+                                            {sortedProductFields.map(
+                                                (field, index) => (
+                                                    <div
+                                                        key={field.code}
+                                                        className="flex items-center justify-between"
+                                                    >
+                                                        <span>
+                                                            {field.productId} -{' '}
+                                                            {field.name}
+                                                        </span>
+                                                        <Button
+                                                            type="button"
+                                                            variant="ghost"
+                                                            size="sm"
+                                                            onClick={() =>
+                                                                removeProduct(
+                                                                    index,
+                                                                )
+                                                            }
+                                                        >
+                                                            ✕
+                                                        </Button>
+                                                    </div>
+                                                ),
+                                            )}
+                                        </div>
+                                    )}
+                                </div>
+                                <FormDescription>
+                                    Выберите товары для этой категории
+                                </FormDescription>
+                                <FormMessage />
+                            </FormItem>
+                            <Button type="submit">Обновить категорию</Button>
                         </form>
                     </Form>
                 </div>
