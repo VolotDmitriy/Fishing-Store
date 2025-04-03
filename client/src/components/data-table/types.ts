@@ -72,9 +72,30 @@ export type ColumnType =
     | z.infer<typeof productSchema>
     | z.infer<typeof discountSchema>;
 
-// Основной компонент DataTable с вкладками
 export interface DataTableProps {
     categories: ColumnType[];
     products: ColumnType[];
     discounts: ColumnType[];
 }
+
+export const categorySchemaF = z.object({
+    id: z.string(),
+    name: z.string(),
+    parentId: z.string().nullable(),
+    children: z.array(z.lazy(() => categorySchema)).optional(),
+    products: z.array(z.lazy(() => productSchema)).optional(),
+    variantTypes: z
+        .array(
+            z.object({
+                id: z.string(),
+                name: z.string(),
+                createdAt: z.string(),
+                updatedAt: z.string(),
+            }),
+        )
+        .optional(),
+    createdAt: z.string(),
+    updatedAt: z.string(),
+});
+
+export type CategoryTypeF = z.infer<typeof categorySchemaF>;
