@@ -22,65 +22,93 @@ export const categoryFormSchema = z.object({
         .optional(),
 });
 
-export const productFormSchema = z.object({
-    name: z
-        .string()
-        .min(2, {
-            message: 'Name must be at least 2 characters.',
-        })
-        .max(30, {
-            message: 'Name must not be longer than 30 characters.',
-        }),
-    description: z
-        .string()
-        .min(0, {
-            message: 'Name must be at least 2 characters.',
-        })
-        .max(250, {
-            message: 'Name must not be longer than 250 characters.',
-        })
-        .optional(),
-    categoryId: z.string({
-        required_error: 'Please select an categoryId to display.',
-    }),
-    images: z.array(
-        z.object({
-            value: z.string().url({ message: 'Please enter a valid URL.' }),
-        }),
-    ),
-    variants: z
-        .array(
-            z.object({
-                sku: z
-                    .string()
-                    .min(1, 'SKU is required')
-                    .regex(
-                        /^[A-Za-z0-9-]+$/,
-                        'SKU must contain only letters, numbers, and hyphens',
-                    ),
-                price: z
-                    .string()
-                    .transform((val) =>
-                        parseFloat(val.replace(/^0+/, '') || '0'),
-                    )
-                    .pipe(z.number().min(0, 'Price must be a positive number')),
-
-                inStock: z
-                    .string()
-                    .transform((val) =>
-                        parseInt(val.replace(/^0+,/, '') || '0'),
-                    )
-                    .pipe(
-                        z
-                            .number()
-                            .int('Stock must be an integer')
-                            .min(0, 'Stock must be a non-negative number'),
-                    ),
-                discountId: z.string().nullable().optional(),
+export const productFormSchema = z
+    .object({
+        name: z
+            .string()
+            .min(2, {
+                message: 'Name must be at least 2 characters.',
+            })
+            .max(30, {
+                message: 'Name must not be longer than 30 characters.',
             }),
-        )
-        .optional(),
-});
+        description: z
+            .string()
+            .min(0, {
+                message: 'Name must be at least 2 characters.',
+            })
+            .max(250, {
+                message: 'Name must not be longer than 250 characters.',
+            })
+            .optional(),
+        categoryId: z.string({
+            required_error: 'Please select an categoryId to display.',
+        }),
+        images: z.array(
+            z.object({
+                value: z.string().url({ message: 'Please enter a valid URL.' }),
+            }),
+        ),
+        productAttributes: z.array(
+            z.object({
+                typeId: z.string({
+                    required_error: 'Please select an attribute type.',
+                }),
+                value: z
+                    .string()
+                    .min(1, { message: 'Attribute value is required.' }),
+            }),
+        ),
+        variantAttributeTypes: z
+            .array(z.string())
+            .refine((types) => new Set(types).size === types.length, {
+                message: 'Variant attribute types must be unique.',
+            }),
+        variants: z
+            .array(
+                z.object({
+                    sku: z
+                        .string()
+                        .min(1, 'SKU is required')
+                        .regex(
+                            /^[A-Za-z0-9-]+$/,
+                            'SKU must contain only letters, numbers, and hyphens',
+                        ),
+                    price: z
+                        .string()
+                        .transform((val) =>
+                            parseFloat(val.replace(/^0+/, '') || '0'),
+                        )
+                        .pipe(
+                            z
+                                .number()
+                                .min(0, 'Price must be a positive number'),
+                        ),
+
+                    inStock: z
+                        .string()
+                        .transform((val) =>
+                            parseInt(val.replace(/^0+,/, '') || '0'),
+                        )
+                        .pipe(
+                            z
+                                .number()
+                                .int('Stock must be an integer')
+                                .min(0, 'Stock must be a non-negative number'),
+                        ),
+                    discountId: z.string().nullable().optional(),
+                    attributes: z
+                    .array(
+                        z.object({
+                            name: z.string().min(1, 'Attribute name is required'),
+                            value: z.string().min(1, 'Attribute value is required'),
+                        }),
+                    )
+                    .optional(),
+                }),
+            )
+            .optional(),
+    });
 
 export type CategoryFormValues = z.infer<typeof categoryFormSchema>;
 
