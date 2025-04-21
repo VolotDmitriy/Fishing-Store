@@ -1,10 +1,6 @@
 'use client';
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useFieldArray, useForm } from 'react-hook-form';
-
-import categoryData from '@/app/dashboard/categ.json';
-import discountData from '@/app/dashboard/disc.json';
+import { CategoryTypeF, DiscountType } from '@/components/data-table/types';
 import { Button } from '@/components/ui/button';
 import {
     Form,
@@ -24,10 +20,16 @@ import {
     SelectValue,
 } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
+import { fetchCategories, fetchDiscounts } from '@/utils/requests';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useEffect, useState } from 'react';
+import { useFieldArray, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { Textarea } from '../ui/textarea';
 import { productFormSchema, ProductFormValues } from './types';
+import { VariantForm } from './variant-form';
 
+// Define default values
 const defaultValues: Partial<ProductFormValues> = {
     name: '',
     description: '',
@@ -36,7 +38,12 @@ const defaultValues: Partial<ProductFormValues> = {
     variants: [],
 };
 
+
 export function ProductForm() {
+    const [discounts, setDiscounts] = useState<DiscountType[]>([]);
+    const [categories, setCategories] = useState<CategoryTypeF[]>([]);
+    const [loading, setLoading] = useState(true);
+
     const form = useForm<ProductFormValues>({
         resolver: zodResolver(productFormSchema),
         defaultValues,
@@ -61,6 +68,25 @@ export function ProductForm() {
         control: form.control,
     });
 
+    useEffect(() => {
+        const loadData = async () => {
+            setLoading(true);
+            try {
+                const [fetchedCategories, fetchedDiscounts] = await Promise.all([
+                    fetchCategories(true),
+                    fetchDiscounts(false),
+                ]);
+                setCategories(fetchedCategories);
+                setDiscounts(fetchedDiscounts);
+            } catch (error) {
+                toast.error('Failed to load data');
+            } finally {
+                setLoading(false);
+            }
+        };
+        loadData();
+    }, [form]);
+
     function onSubmit(data: ProductFormValues) {
         toast('You submitted the following values:', {
             description: (
@@ -71,6 +97,30 @@ export function ProductForm() {
                 </pre>
             ),
         });
+    }
+
+    if (loading) {
+        return (
+            <div className="hidden space-y-6 p-10 pb-16 md:block">
+                <div className="flex flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0 gap-4">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="animate-spin"
+                    >
+                        <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+                    </svg>
+                    Loading data...
+                </div>
+            </div>
+        );
     }
 
     return (
@@ -126,26 +176,21 @@ export function ProductForm() {
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel>Category</FormLabel>
-                                        <Select
-                                            onValueChange={field.onChange}
-                                            defaultValue={categoryData[0].id}
-                                        >
+                                        <Select onValueChange={field.onChange}>
                                             <FormControl className="w-full">
                                                 <SelectTrigger>
                                                     <SelectValue placeholder="Select a category for product" />
                                                 </SelectTrigger>
                                             </FormControl>
                                             <SelectContent>
-                                                {categoryData.map(
-                                                    (category) => (
-                                                        <SelectItem
-                                                            key={category.id}
-                                                            value={category.id}
-                                                        >
-                                                            {category.name}
-                                                        </SelectItem>
-                                                    ),
-                                                )}
+                                                {categories.map((category) => (
+                                                    <SelectItem
+                                                        key={category.id}
+                                                        value={category.id}
+                                                    >
+                                                        {category.name}
+                                                    </SelectItem>
+                                                ))}
                                             </SelectContent>
                                         </Select>
                                         <FormDescription>
@@ -165,16 +210,14 @@ export function ProductForm() {
                                             <FormItem className="mb-4">
                                                 <FormLabel
                                                     className={cn(
-                                                        index !== 0 &&
-                                                            'sr-only',
+                                                        index !== 0 && 'sr-only',
                                                     )}
                                                 >
                                                     URLs images
                                                 </FormLabel>
                                                 <FormDescription
                                                     className={cn(
-                                                        index !== 0 &&
-                                                            'sr-only',
+                                                        index !== 0 && 'sr-only',
                                                         index === 0 && 'mb-2',
                                                     )}
                                                 >
@@ -238,6 +281,7 @@ export function ProductForm() {
                                                     price: 0,
                                                     inStock: 0,
                                                     discountId: null,
+                                                    attributes: [],
                                                 })
                                             }
                                         >
@@ -246,170 +290,15 @@ export function ProductForm() {
                                     </div>
                                 ) : (
                                     variantFields.map((field, index) => (
-                                        <FormItem
+                                        <VariantForm
                                             key={field.id}
-                                            className="mb-4"
-                                        >
-                                            <div className="flex flex-row justify-between items-start">
-                                                <div className="flex flex-col gap-2">
-                                                    <FormLabel
-                                                        className={cn(
-                                                            index !== 0 &&
-                                                                'sr-only',
-                                                        )}
-                                                    >
-                                                        Variant
-                                                    </FormLabel>
-                                                    <FormDescription
-                                                        className={cn(
-                                                            index !== 0 &&
-                                                                'sr-only',
-                                                            index === 0 &&
-                                                                'mb-2',
-                                                        )}
-                                                    >
-                                                        Add variant details for
-                                                        this product.
-                                                    </FormDescription>
-                                                </div>
-                                                <Button
-                                                    type="button"
-                                                    variant="ghost"
-                                                    size="icon"
-                                                    onClick={() =>
-                                                        removeVariant(index)
-                                                    }
-                                                    disabled={
-                                                        variantFields.length ===
-                                                        0
-                                                    }
-                                                    className="mt-2"
-                                                >
-                                                    ✖
-                                                </Button>
-                                            </div>
-                                            <div className="space-y-2">
-                                                <div className="flex items-center gap-6">
-                                                    <FormLabel className="w-20">
-                                                        SKU:
-                                                    </FormLabel>
-                                                    <FormField
-                                                        control={form.control}
-                                                        name={`variants.${index}.sku`}
-                                                        render={({ field }) => (
-                                                            <FormItem>
-                                                                <FormControl>
-                                                                    <Input
-                                                                        placeholder="Variant SKU"
-                                                                        className="w-64"
-                                                                        {...field}
-                                                                    />
-                                                                </FormControl>
-                                                                <FormMessage />
-                                                            </FormItem>
-                                                        )}
-                                                    />
-                                                </div>
-                                                <div className="flex items-center gap-6">
-                                                    <FormLabel className="w-20">
-                                                        Price:
-                                                    </FormLabel>
-                                                    <FormField
-                                                        control={form.control}
-                                                        name={`variants.${index}.price`}
-                                                        render={({ field }) => (
-                                                            <FormItem>
-                                                                <FormControl>
-                                                                    <Input
-                                                                        type="number"
-                                                                        placeholder="Variant price"
-                                                                        className="w-64"
-                                                                        {...field}
-                                                                    />
-                                                                </FormControl>
-                                                                <FormMessage />
-                                                            </FormItem>
-                                                        )}
-                                                    />
-                                                </div>
-                                                <div className="flex items-center gap-6">
-                                                    <FormLabel className="w-20">
-                                                        In Stock:
-                                                    </FormLabel>
-                                                    <FormField
-                                                        control={form.control}
-                                                        name={`variants.${index}.inStock`}
-                                                        render={({ field }) => (
-                                                            <FormItem>
-                                                                <FormControl>
-                                                                    <Input
-                                                                        type="number"
-                                                                        step="1"
-                                                                        placeholder="Variant in stock"
-                                                                        className="w-64"
-                                                                        {...field}
-                                                                    />
-                                                                </FormControl>
-                                                                <FormMessage />
-                                                            </FormItem>
-                                                        )}
-                                                    />
-                                                </div>
-                                                <div className="flex items-center gap-6">
-                                                    <FormLabel className="w-20">
-                                                        Discount ID:
-                                                    </FormLabel>
-                                                    <FormField
-                                                        control={form.control}
-                                                        name={`variants.${index}.discountId`}
-                                                        render={({ field }) => (
-                                                            <FormItem>
-                                                                <Select
-                                                                    onValueChange={
-                                                                        field.onChange
-                                                                    }
-                                                                    defaultValue={
-                                                                        'null'
-                                                                    }
-                                                                >
-                                                                    <FormControl className="w-full">
-                                                                        <SelectTrigger>
-                                                                            <SelectValue placeholder="Select a discount" />
-                                                                        </SelectTrigger>
-                                                                    </FormControl>
-                                                                    <SelectContent>
-                                                                        <SelectItem value="null">
-                                                                            Без
-                                                                            скидки
-                                                                        </SelectItem>
-                                                                        {discountData.map(
-                                                                            (
-                                                                                category,
-                                                                            ) => (
-                                                                                <SelectItem
-                                                                                    key={
-                                                                                        category.id
-                                                                                    }
-                                                                                    value={
-                                                                                        category.id
-                                                                                    }
-                                                                                >
-                                                                                    {
-                                                                                        category.name
-                                                                                    }
-                                                                                </SelectItem>
-                                                                            ),
-                                                                        )}
-                                                                    </SelectContent>
-                                                                </Select>
-                                                                <FormMessage />
-                                                            </FormItem>
-                                                        )}
-                                                    />
-                                                    <FormMessage />
-                                                </div>
-                                            </div>
-                                        </FormItem>
+                                            index={index}
+                                            form={form}
+                                            removeVariant={() =>
+                                                removeVariant(index)
+                                            }
+                                            discounts={discounts}
+                                        />
                                     ))
                                 )}
                                 {variantFields.length > 0 && (
@@ -424,6 +313,7 @@ export function ProductForm() {
                                                 price: 0,
                                                 inStock: 0,
                                                 discountId: null,
+                                                attributes: [],
                                             })
                                         }
                                     >
