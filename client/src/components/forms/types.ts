@@ -98,13 +98,13 @@ export const productFormSchema = z
                         ),
                     discountId: z.string().nullable().optional(),
                     attributes: z
-                    .array(
-                        z.object({
-                            name: z.string().min(1, 'Attribute name is required'),
-                            value: z.string().min(1, 'Attribute value is required'),
-                        }),
-                    )
-                    .optional(),
+                        .array(
+                            z.object({
+                                name: z.string().min(1, 'Attribute name is required'),
+                                value: z.string().min(1, 'Attribute value is required'),
+                            }),
+                        )
+                        .optional(),
                 }),
             )
             .optional(),
