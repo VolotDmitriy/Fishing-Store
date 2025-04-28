@@ -2,6 +2,7 @@
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { CategoryForm } from './category-form';
+import { DiscountForm } from './discount-form';
 import { ProductForm } from './product-form';
 // import axios from 'axios';
 // import React from 'react';
@@ -53,7 +54,9 @@ export function Forms() {
             <TabsContent value="products">
                 <ProductForm />
             </TabsContent>
-            <TabsContent value="discounts"></TabsContent>
+            <TabsContent value="discounts">
+                <DiscountForm />
+            </TabsContent>
         </Tabs>
     );
 }

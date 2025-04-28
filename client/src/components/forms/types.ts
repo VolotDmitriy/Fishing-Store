@@ -109,14 +109,48 @@ export const productFormSchema = z.object({
         .optional(),
 });
 
-export type CategoryFormValues = z.infer<typeof categoryFormSchema>;
-
-export interface SelectedProduct {
-    productId: string;
-    name: string;
-}
-
-export type ProductFormValues = z.infer<typeof productFormSchema>;
+export const discountFormSchema = z.object({
+    name: z
+        .string()
+        .min(2, {
+            message: 'Name must be at least 2 characters.',
+        })
+        .max(30, {
+            message: 'Name must not be longer than 30 characters.',
+        }),
+    percentage: z
+        .string()
+        .transform((val) => (val ? parseFloat(val) : 0))
+        .refine((val) => val >= 0 && val <= 100, {
+            message: 'Discount percentage should be from 0 to 100',
+        }),
+    // date: z
+    //     .object({ from: z.date().optional(), to: z.date().optional() })
+    //     .optional(),
+    date: z
+        .object({
+            from: z.date(),
+            to: z.date(),
+        })
+        .refine((data) => data.to >= data.from, {
+            message: 'Дата окончания должна быть позже даты начала',
+            path: ['to'],
+        }),
+    // startDate: z
+    //     .string()
+    //     .transform((val) => (val ? new Date(val).toISOString() : null))
+    //     .refine((val) => !val || !isNaN(new Date(val).getTime()), {
+    //         message: 'Invalid start date format',
+    //     }),
+    // endDate: z
+    //     .string()
+    //     .transform((val) => (val ? new Date(val).toISOString() : null))
+    //     .refine((val) => !val || !isNaN(new Date(val).getTime()), {
+    //         message: 'Invalid end date format',
+    //     }),
+    products: z.array(z.unknown()).optional(),
+    variants: z.array(z.unknown()).optional(),
+});
 
 export interface SelectedProduct {
     productId: string;
@@ -127,3 +161,8 @@ export interface SelectedCategory {
     categoryId: string;
     name: string;
 }
+export type ProductFormValues = z.infer<typeof productFormSchema>;
+
+export type CategoryFormValues = z.infer<typeof categoryFormSchema>;
+
+export type DiscountFormValues = z.infer<typeof discountFormSchema>;
