@@ -1,10 +1,12 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
+    const router = useRouter();
     const handleClick = () => {
-        console.log('Кнопка была нажата!');
+        router.push(`/auth-admin`);
     };
 
     return (

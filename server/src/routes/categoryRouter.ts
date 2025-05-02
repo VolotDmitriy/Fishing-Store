@@ -6,13 +6,14 @@ import {
     getCategoryById,
     updateCategoryById,
 } from '../controllers/categoryController';
+import { verifyToken } from '../middlewares/cookieJwtAuth';
 
 const router = Router();
 
 router.get('/', getAllCategories);
 router.get('/:id', getCategoryById);
-router.post('/', createCategory);
-router.put('/:id', updateCategoryById);
-router.delete('/:id', deleteCategoryById);
+router.post('/', verifyToken, createCategory);
+router.put('/:id', verifyToken, updateCategoryById);
+router.delete('/:id', verifyToken, deleteCategoryById);
 
 export default router;

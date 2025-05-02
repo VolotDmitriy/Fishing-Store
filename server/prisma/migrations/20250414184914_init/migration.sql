@@ -3,6 +3,8 @@ CREATE TABLE "Category" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "parentId" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Category_pkey" PRIMARY KEY ("id")
 );
@@ -14,6 +16,8 @@ CREATE TABLE "Discount" (
     "percentage" DOUBLE PRECISION NOT NULL,
     "startDate" TIMESTAMP(3),
     "endDate" TIMESTAMP(3),
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Discount_pkey" PRIMARY KEY ("id")
 );
@@ -26,6 +30,8 @@ CREATE TABLE "Product" (
     "categoryId" TEXT NOT NULL,
     "images" TEXT[],
     "discountId" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Product_pkey" PRIMARY KEY ("id")
 );
@@ -36,6 +42,8 @@ CREATE TABLE "ProductAttribute" (
     "productId" TEXT NOT NULL,
     "typeId" TEXT NOT NULL,
     "value" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "ProductAttribute_pkey" PRIMARY KEY ("id")
 );
@@ -48,6 +56,8 @@ CREATE TABLE "ProductVariant" (
     "price" DECIMAL(65,30) NOT NULL,
     "inStock" INTEGER NOT NULL DEFAULT 10,
     "discountId" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "ProductVariant_pkey" PRIMARY KEY ("id")
 );
@@ -58,6 +68,8 @@ CREATE TABLE "ProductVariantAttribute" (
     "variantId" TEXT NOT NULL,
     "typeId" TEXT NOT NULL,
     "value" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "ProductVariantAttribute_pkey" PRIMARY KEY ("id")
 );
@@ -67,6 +79,8 @@ CREATE TABLE "VariantType" (
     "id" TEXT NOT NULL,
     "categoryId" TEXT NOT NULL,
     "name" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "VariantType_pkey" PRIMARY KEY ("id")
 );
