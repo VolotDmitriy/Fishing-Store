@@ -38,7 +38,6 @@ const defaultValues: Partial<ProductFormValues> = {
     variants: [],
 };
 
-
 export function ProductForm() {
     const [discounts, setDiscounts] = useState<DiscountType[]>([]);
     const [categories, setCategories] = useState<CategoryTypeF[]>([]);
@@ -72,10 +71,9 @@ export function ProductForm() {
         const loadData = async () => {
             setLoading(true);
             try {
-                const [fetchedCategories, fetchedDiscounts] = await Promise.all([
-                    fetchCategories(true),
-                    fetchDiscounts(false),
-                ]);
+                const [fetchedCategories, fetchedDiscounts] = await Promise.all(
+                    [fetchCategories(true), fetchDiscounts(false)],
+                );
                 setCategories(fetchedCategories);
                 setDiscounts(fetchedDiscounts);
             } catch (error) {
@@ -210,14 +208,16 @@ export function ProductForm() {
                                             <FormItem className="mb-4">
                                                 <FormLabel
                                                     className={cn(
-                                                        index !== 0 && 'sr-only',
+                                                        index !== 0 &&
+                                                            'sr-only',
                                                     )}
                                                 >
                                                     URLs images
                                                 </FormLabel>
                                                 <FormDescription
                                                     className={cn(
-                                                        index !== 0 && 'sr-only',
+                                                        index !== 0 &&
+                                                            'sr-only',
                                                         index === 0 && 'mb-2',
                                                     )}
                                                 >
