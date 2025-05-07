@@ -5,6 +5,13 @@ import ProductCard from '@/components/product-card';
 import { Button } from '@/components/ui/button';
 import UniversalCarousel from '@/components/universal-carousel';
 import { useRouter } from 'next/navigation';
+import Header from '.././components/app-components/header';
+import Banner from '../components/app-components/banner';
+import Hero from '../components/app-components/hero';
+import Footer from '../components/app-components/footer';
+import FeaturesBenefits from '@/components/app-components/featuresBenefits';
+
+ 
 
 export default function Home() {
     const router = useRouter();
@@ -13,7 +20,13 @@ export default function Home() {
     };
 
     return (
-        <>
+
+        <div className=" bg-[#141414]">
+            <Header/>
+            <Banner/>
+            <Hero/>
+            <FeaturesBenefits/>
+            <Footer/>
             <div className="flex flex-col h-screen items-center justify-center bg-violet-500">
                 <h1>Home</h1>
                 <Button onClick={handleClick}>Click</Button>
@@ -120,6 +133,6 @@ export default function Home() {
                     </UniversalCarousel>
                 </div>
             </div>
-        </>
+        </div>
     );
 }
