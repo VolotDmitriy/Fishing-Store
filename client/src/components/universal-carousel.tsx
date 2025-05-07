@@ -5,17 +5,44 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from '@/components/ui/carousel';
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 interface UniversalCarouselProps {
     children: React.ReactNode;
-    itemsPerView?: number;
+    itemsPerView?: number; // Рекомендуемое значение
+    minItemWidth?: number; // Минимальная ширина одного элемента, например 300px
 }
 
 function UniversalCarousel({
     children,
-    itemsPerView = 1,
+    itemsPerView = 3,
+    minItemWidth = 300,
 }: UniversalCarouselProps) {
+    const containerRef = useRef<HTMLDivElement>(null);
+    const [calculatedPerView, setCalculatedPerView] = useState(itemsPerView);
+
+    useEffect(() => {
+        const resizeObserver = new ResizeObserver((entries) => {
+            for (let entry of entries) {
+                const containerWidth = entry.contentRect.width;
+                const maxItems = Math.floor(containerWidth / minItemWidth);
+                setCalculatedPerView(
+                    Math.max(1, Math.min(itemsPerView, maxItems)),
+                );
+            }
+        });
+
+        if (containerRef.current) {
+            resizeObserver.observe(containerRef.current);
+        }
+
+        return () => {
+            if (containerRef.current) {
+                resizeObserver.unobserve(containerRef.current);
+            }
+        };
+    }, [itemsPerView, minItemWidth]);
+
     const getBasisClass = (items: number): string => {
         switch (items) {
             case 1:
@@ -29,14 +56,17 @@ function UniversalCarousel({
             case 5:
                 return 'basis-1/5';
             default:
-                return 'basis-full';
+                return `basis-[calc(100%/${items})]`;
         }
     };
 
-    const basisClass = getBasisClass(itemsPerView);
+    const basisClass = getBasisClass(calculatedPerView);
 
     return (
-        <div className="relative w-full overflow-hidden pb-10">
+        <div
+            ref={containerRef}
+            className="relative w-full overflow-hidden pb-10"
+        >
             <Carousel className="px-10">
                 <CarouselContent className="flex flex-row ml-0 w-full">
                     {React.Children.map(children, (child, index) => (
@@ -50,11 +80,11 @@ function UniversalCarousel({
                 </CarouselContent>
                 <CarouselPrevious
                     className="absolute left-1"
-                    variant={'ghost_custom'}
+                    variant="ghost_custom"
                 />
                 <CarouselNext
                     className="absolute right-1"
-                    variant={'ghost_custom'}
+                    variant="ghost_custom"
                 />
             </Carousel>
         </div>
