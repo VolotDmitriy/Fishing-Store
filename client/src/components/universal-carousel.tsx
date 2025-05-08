@@ -16,7 +16,7 @@ interface UniversalCarouselProps {
 function UniversalCarousel({
     children,
     itemsPerView = 3,
-    minItemWidth = 300,
+    minItemWidth = 320,
 }: UniversalCarouselProps) {
     const containerRef = useRef<HTMLDivElement>(null);
     const [calculatedPerView, setCalculatedPerView] = useState(itemsPerView);
@@ -72,7 +72,7 @@ function UniversalCarousel({
                     {React.Children.map(children, (child, index) => (
                         <CarouselItem
                             key={index}
-                            className={`${basisClass} flex-shrink-0 pl-0 w-fit flex flex-row`}
+                            className={`${basisClass} flex-shrink-0 pl-0 w-fit flex flex-row justify-center items-center`}
                         >
                             {child}
                         </CarouselItem>
