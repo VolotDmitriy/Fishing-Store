@@ -1,4 +1,7 @@
 import { PrismaClient } from '@prisma/client';
+import { Request } from 'express';
+
+import * as productService from '../services/productService';
 import { ErrorHandler, RouterHandler } from '../utils/controllerUtils';
 
 const prisma = new PrismaClient();
@@ -107,23 +110,15 @@ export const getProductByCategory: RouterHandler = async (req, res) => {
     }
 };
 
-export const createProduct: RouterHandler = async (req, res) => {
+export const createProduct: RouterHandler = async (
+    req: Request<{}, {}, productService.IRequestBody>,
+    res,
+) => {
     try {
-        const { name, description, categoryId, images, discountId } = req.body;
-
-        const newProduct = await prisma.product.create({
-            data: {
-                name,
-                description: description || undefined,
-                categoryId,
-                images,
-                discountId: discountId || undefined,
-            },
-        });
-
+        const data = await productService.createProduct(req.body);
         res.status(201).json({
             message: 'Product created successfully',
-            data: newProduct,
+            data,
         });
     } catch (error) {
         ErrorHandler(error, res);
