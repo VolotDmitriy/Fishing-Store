@@ -1,17 +1,15 @@
 'use client';
 
-import CategoryCard from '@/components/category-card';
+import CategoryCarousel from '@/components/app-components/category-carousel';
+import FeaturesBenefits from '@/components/app-components/featuresBenefits';
 import ProductCard from '@/components/product-card';
 import { Button } from '@/components/ui/button';
 import UniversalCarousel from '@/components/universal-carousel';
 import { useRouter } from 'next/navigation';
 import Header from '.././components/app-components/header';
 import Banner from '../components/app-components/banner';
-import Hero from '../components/app-components/hero';
 import Footer from '../components/app-components/footer';
-import FeaturesBenefits from '@/components/app-components/featuresBenefits';
-
- 
+import Hero from '../components/app-components/hero';
 
 export default function Home() {
     const router = useRouter();
@@ -20,52 +18,16 @@ export default function Home() {
     };
 
     return (
-
         <div className=" bg-[#141414]">
-            <Header/>
-            <Banner/>
-            <Hero/>
-            <FeaturesBenefits/>
-            <Footer/>
-            <div className="flex flex-col h-screen items-center justify-center bg-violet-500">
+            <Header />
+            <Banner />
+            <CategoryCarousel />
+            <Hero />
+            <FeaturesBenefits />
+            <Footer />
+            <div className="flex flex-col h-screen items-center justify-center bg-[#141414]">
                 <h1>Home</h1>
                 <Button onClick={handleClick}>Click</Button>
-
-                <div
-                    className={
-                        'flex flex-col items-center justify-center bg-gray-800'
-                    }
-                >
-                    <h2 className={'font-brigend pt-9'}>SHOP BY CATEGORY</h2>
-
-                    <UniversalCarousel itemsPerView={3}>
-                        <CategoryCard
-                            title="Катушки"
-                            imageSrc="Categories/Reels.png"
-                        />
-                        <CategoryCard
-                            title="Крючки"
-                            imageSrc="Categories/Hooks.jpg"
-                        />
-                        <CategoryCard
-                            title="Аксессуары"
-                            imageSrc="Categories/Accessories.jpg"
-                        />
-                        <CategoryCard
-                            title="Катушки"
-                            imageSrc="Categories/Reels.png"
-                        />
-                        <CategoryCard
-                            title="Крючки"
-                            imageSrc="Categories/Hooks.jpg"
-                        />
-                        <CategoryCard
-                            title="Аксессуары"
-                            imageSrc="Categories/Accessories.jpg"
-                        />
-                    </UniversalCarousel>
-                </div>
-
                 <div
                     className={
                         'flex flex-col w-full items-center justify-center bg-gray-800'
