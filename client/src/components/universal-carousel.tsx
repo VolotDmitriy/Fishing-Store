@@ -65,9 +65,9 @@ function UniversalCarousel({
     return (
         <div
             ref={containerRef}
-            className="relative w-full overflow-hidden pb-10"
+            className="relative w-full overflow-hidden pt-[50px] pb-[38px]"
         >
-            <Carousel className="px-10">
+            <Carousel className="px-[50px]">
                 <CarouselContent className="flex flex-row ml-0 w-full">
                     {React.Children.map(children, (child, index) => (
                         <CarouselItem
