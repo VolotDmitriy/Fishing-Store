@@ -45,12 +45,12 @@ export const productFormSchema = z.object({
     }),
     images: z.array(
         z.object({
-            value: z.string().url({ message: 'Please enter a valid URL.' }),
+            value: z.string(),
         }),
     ),
-    productAttributes: z.array(
+    attributes: z.array(
         z.object({
-            typeId: z.string({
+            name: z.string({
                 required_error: 'Please select an attribute type.',
             }),
             value: z
@@ -58,11 +58,6 @@ export const productFormSchema = z.object({
                 .min(1, { message: 'Attribute value is required.' }),
         }),
     ),
-    variantAttributeTypes: z
-        .array(z.string())
-        .refine((types) => new Set(types).size === types.length, {
-            message: 'Variant attribute types must be unique.',
-        }),
     variants: z
         .array(
             z.object({
@@ -124,30 +119,15 @@ export const discountFormSchema = z.object({
         .refine((val) => val >= 0 && val <= 100, {
             message: 'Discount percentage should be from 0 to 100',
         }),
-    // date: z
-    //     .object({ from: z.date().optional(), to: z.date().optional() })
-    //     .optional(),
     date: z
         .object({
             from: z.date(),
             to: z.date(),
         })
         .refine((data) => data.to >= data.from, {
-            message: 'Дата окончания должна быть позже даты начала',
+            message: 'The end date must be later than the start date',
             path: ['to'],
         }),
-    // startDate: z
-    //     .string()
-    //     .transform((val) => (val ? new Date(val).toISOString() : null))
-    //     .refine((val) => !val || !isNaN(new Date(val).getTime()), {
-    //         message: 'Invalid start date format',
-    //     }),
-    // endDate: z
-    //     .string()
-    //     .transform((val) => (val ? new Date(val).toISOString() : null))
-    //     .refine((val) => !val || !isNaN(new Date(val).getTime()), {
-    //         message: 'Invalid end date format',
-    //     }),
     products: z.array(z.unknown()).optional(),
     variants: z.array(z.unknown()).optional(),
 });

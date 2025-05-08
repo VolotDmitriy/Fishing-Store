@@ -35,6 +35,7 @@ const defaultValues: Partial<ProductFormValues> = {
     description: '',
     categoryId: 'null',
     images: [{ value: '' }],
+    attributes: [],
     variants: [],
 };
 
@@ -67,6 +68,15 @@ export function ProductForm() {
         control: form.control,
     });
 
+    const {
+        fields: attributeFields,
+        append: appendAttribute,
+        remove: removeAttribute,
+    } = useFieldArray({
+        name: 'attributes',
+        control: form.control,
+    });
+
     useEffect(() => {
         const loadData = async () => {
             setLoading(true);
@@ -77,7 +87,7 @@ export function ProductForm() {
                 setCategories(fetchedCategories);
                 setDiscounts(fetchedDiscounts);
             } catch (error) {
-                toast.error('Failed to load data');
+                toast.error('Failed to load data! ' + error);
             } finally {
                 setLoading(false);
             }
@@ -260,6 +270,78 @@ export function ProductForm() {
                                     Add URL
                                 </Button>
                             </div>
+
+                            <div className="mt-4">
+                                <div className="flex flex-row gap-15 mb-2">
+                                    <div className="flex flex-col gap-2 mb-2">
+                                        <FormLabel>Attributes</FormLabel>
+                                        <FormDescription>
+                                            Add attributes for this variant.
+                                        </FormDescription>
+                                    </div>
+                                    <Button
+                                        type="button"
+                                        variant="outline"
+                                        size="sm"
+                                        onClick={() =>
+                                            appendAttribute({
+                                                name: '',
+                                                value: '',
+                                            })
+                                        }
+                                    >
+                                        Add Attribute
+                                    </Button>
+                                </div>
+                                {attributeFields.map((attrField, attrIndex) => (
+                                    <div
+                                        key={attrField.id}
+                                        className="flex items-center gap-2 mb-2"
+                                    >
+                                        <FormField
+                                            control={form.control}
+                                            name={`attributes.${attrIndex}.name`}
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormControl>
+                                                        <Input
+                                                            placeholder="Attribute name"
+                                                            {...field}
+                                                        />
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                        <FormField
+                                            control={form.control}
+                                            name={`attributes.${attrIndex}.value`}
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormControl>
+                                                        <Input
+                                                            placeholder="Attribute value"
+                                                            {...field}
+                                                        />
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                        <Button
+                                            type="button"
+                                            variant="ghost"
+                                            size="icon"
+                                            onClick={() =>
+                                                removeAttribute(attrIndex)
+                                            }
+                                        >
+                                            ✖
+                                        </Button>
+                                    </div>
+                                ))}
+                            </div>
+
                             <div>
                                 {variantFields.length === 0 ? (
                                     <div className="flex flex-row justify-between items-start">

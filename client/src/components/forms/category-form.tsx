@@ -76,7 +76,7 @@ export function CategoryForm() {
                 setProducts(fetchedProducts);
                 setCategories(fetchedCategories);
             } catch (error) {
-                toast.error('Failed to load data');
+                toast.error('Failed to load data' + error);
             } finally {
                 setLoading(false);
             }
