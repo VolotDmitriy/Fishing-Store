@@ -4,7 +4,7 @@
     "main": "index.ts",
     "license": "MIT",
     "dependencies": {
-        "@prisma/client": "^6.4.1",
+        "@prisma/client": "^6.7.0",
         "cookie-parser": "^1.4.7",
         "cors": "^2.8.5",
         "dotenv": "^16.4.7",
@@ -18,7 +18,7 @@
         "@types/jsonwebtoken": "^9.0.9",
         "@types/node": "^22.13.4",
         "nodemon": "^3.1.9",
-        "prisma": "^6.4.1",
+        "prisma": "^6.7.0",
         "ts-node": "^10.9.2",
         "typescript": "^5.7.3"
     },
@@ -28,6 +28,7 @@
         "seed": "prisma db seed"
     },
     "prisma": {
-        "seed": "ts-node prisma/seed.ts"
+        "seed": "ts-node prisma/seed.ts",
+        "schema": "prisma/schema/"
     }
 }
