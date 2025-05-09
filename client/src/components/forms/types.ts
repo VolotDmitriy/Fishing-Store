@@ -61,13 +61,6 @@ export const productFormSchema = z.object({
     variants: z
         .array(
             z.object({
-                sku: z
-                    .string()
-                    .min(1, 'SKU is required')
-                    .regex(
-                        /^[A-Za-z0-9-]+$/,
-                        'SKU must contain only letters, numbers, and hyphens',
-                    ),
                 price: z
                     .string()
                     .transform((val) =>

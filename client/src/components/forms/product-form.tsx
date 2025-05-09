@@ -359,7 +359,6 @@ export function ProductForm() {
                                             className="mt-2"
                                             onClick={() =>
                                                 appendVariant({
-                                                    sku: '',
                                                     price: 0,
                                                     inStock: 0,
                                                     discountId: null,
@@ -391,7 +390,6 @@ export function ProductForm() {
                                         className="mt-2"
                                         onClick={() =>
                                             appendVariant({
-                                                sku: '',
                                                 price: 0,
                                                 inStock: 0,
                                                 discountId: null,
