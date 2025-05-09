@@ -1,4 +1,5 @@
 import {
+    Category,
     Prisma,
     PrismaClient,
     Product,
@@ -6,6 +7,7 @@ import {
     ProductVariant,
     VariantType,
 } from '@prisma/client';
+import { generateSKU } from '../utils/generateSku';
 
 const prisma = new PrismaClient();
 
@@ -17,13 +19,15 @@ export interface IRequestBody {
     discountId?: string;
     attributes: { name: string; value: string }[];
     variants: {
-        sku: string;
         price: number;
         inStock: number;
         discountId?: string;
         attributes: { name: string; value: string }[];
     }[];
 }
+type ProductWithCategory = Product & {
+    category: Category;
+};
 
 export const upsertVariantTypes = async (
     tx: Prisma.TransactionClient,
@@ -82,31 +86,36 @@ export const createAttributes = async (
 export const createVariants = async (
     tx: Prisma.TransactionClient,
     variants: {
-        sku: string;
         price: number;
         inStock: number;
         discountId?: string;
         attributes: { name: string; value: string }[];
     }[],
     typeMap: Map<string, string>,
-    productId: string,
+    product: ProductWithCategory,
 ): Promise<ProductVariant[]> => {
     const createdVariants: ProductVariant[] = [];
     for (const variant of variants) {
+        const generatedSku = generateSKU(
+            product.category.name,
+            product.name,
+            variant.attributes.map((a) => a.value),
+            5,
+        );
         const existing = await tx.productVariant.findUnique({
-            where: { sku: variant.sku },
+            where: { sku: generatedSku },
         });
         if (existing) {
-            throw new Error(`Variant with SKU ${variant.sku} already exists`);
+            throw new Error(`Variant with SKU ${generatedSku} already exists`);
         }
 
         const createdVariant = await tx.productVariant.create({
             data: {
-                sku: variant.sku,
+                sku: generatedSku,
                 price: variant.price,
                 inStock: variant.inStock,
                 discountId: variant.discountId || null,
-                productId,
+                productId: product.id,
             },
         });
 
@@ -157,6 +166,7 @@ export const createProduct = async (input: IRequestBody) => {
                 images: imagesArray,
                 discountId: discountId || null,
             },
+            include: { category: true },
         });
         resultData.product = newProduct;
 
@@ -195,7 +205,7 @@ export const createProduct = async (input: IRequestBody) => {
                 tx,
                 variants,
                 typeMap,
-                newProduct.id,
+                newProduct,
             );
 
             resultData.variantTypes?.push(...created);
