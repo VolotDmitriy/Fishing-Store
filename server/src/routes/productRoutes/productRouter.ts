@@ -22,7 +22,7 @@ router.use('/variant_attribute', verifyToken, productVariantAttributeRouter);
 
 router.get('/', getAllProducts);
 router.get('/:id', getProductById);
-router.get('/category/:categoryId', verifyToken, getProductByCategory);
+router.get('/category/:categoryId', getProductByCategory);
 router.post('/', verifyToken, createProduct);
 router.put('/:id', verifyToken, updateProductById);
 router.delete('/:id', verifyToken, deleteProductById);

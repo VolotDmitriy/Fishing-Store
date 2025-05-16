@@ -1,3 +1,5 @@
+'use client';
+
 import {
     Carousel,
     CarouselContent,
@@ -9,8 +11,8 @@ import React, { useEffect, useRef, useState } from 'react';
 
 interface UniversalCarouselProps {
     children: React.ReactNode;
-    itemsPerView?: number; // Рекомендуемое значение
-    minItemWidth?: number; // Минимальная ширина одного элемента, например 300px
+    itemsPerView?: number;
+    minItemWidth?: number;
 }
 
 function UniversalCarousel({
