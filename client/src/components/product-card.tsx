@@ -7,9 +7,11 @@ import {
     SelectValue,
 } from '@/components/ui/select';
 import { ShoppingCart } from 'lucide-react';
+import Link from 'next/link';
 import React from 'react';
 
 interface ProductCardProps {
+    id: string;
     imageSrc: string;
     title: string;
     price: number;
@@ -18,6 +20,7 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({
+    id,
     imageSrc,
     title,
     price,
@@ -25,7 +28,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
     weights,
 }) => {
     return (
-        <div className="w-full max-w-[380px] max-h-fit bg-black text-white flex flex-col justify-between gap-[30px] px-[20px] pt-[20px] pb-[30px] mx-[10px] rounded-[16px] border-solid! border-white border-[1px] shadow-lg">
+        <div className="w-full max-w-[360px] max-h-fit bg-black text-white flex flex-col justify-between gap-[30px] px-[20px] pt-[20px] pb-[30px] mx-[10px] rounded-[16px] border-solid! border-white border-[1px] shadow-lg">
             <div className="w-full h-full flex justify-center items-center overflow-hidden rounded-[12px] outline-solid! outline-white outline-[1px]">
                 <img
                     src={imageSrc}
@@ -35,10 +38,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
             </div>
 
             <div className="flex flex-col gap-[18px]">
-                <h3 className="text-lg overflow-hidden text-[20px] leading-[1] text-nowrap">
-                    {title}
-                </h3>
-
+                <Link href={`/${id}`} passHref legacyBehavior>
+                    <h3 className="text-lg overflow-hidden text-[20px] leading-[1] text-nowrap cursor-pointer">
+                        {title}
+                    </h3>
+                </Link>
                 <div className="flex flex-row gap-[20px]">
                     <Select>
                         <SelectTrigger className="w-fit h-[30px]! bg-black border-gray-600 text-white">
