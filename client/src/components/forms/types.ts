@@ -13,7 +13,7 @@ export const categoryFormSchema = z.object({
         .string({
             required_error: 'Please select an parentId to display.',
         })
-        .optional(),
+        .optional().nullable(),
     products: z
         .array(z.object({ productId: z.string(), name: z.string() }))
         .optional(),
