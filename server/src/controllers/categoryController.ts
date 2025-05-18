@@ -109,8 +109,7 @@ export const createCategory: RouterHandler = async (
 ) => {
     try {
         const { name, parentId, products, childCategories } = req.body;
-
-        if (parentId) {
+        if (parentId && parentId !== 'null') {
             const parentExists = await prisma.category.findUnique({
                 where: { id: parentId },
             });
@@ -133,7 +132,7 @@ export const createCategory: RouterHandler = async (
             const newCategory = await tx.category.create({
                 data: {
                     name,
-                    parentId,
+                    parentId: parentId === 'null' ? null : parentId,
                 },
             });
             resultData.category = newCategory;
