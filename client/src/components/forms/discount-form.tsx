@@ -12,9 +12,12 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
+import axios from 'axios';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { DatePickerWithRange } from '../data-range-picker';
+import { LoadingOverlay } from '../loading-overlay';
 import { DiscountFormValues, discountFormSchema } from './types';
 
 const defaultValues: Partial<DiscountFormValues> = {
@@ -26,26 +29,57 @@ const defaultValues: Partial<DiscountFormValues> = {
 };
 
 export function DiscountForm() {
+    const [createLoading, setCreateLoading] = useState(false);
+
     const form = useForm<DiscountFormValues>({
         resolver: zodResolver(discountFormSchema),
         defaultValues,
         mode: 'onChange',
     });
 
-    function onSubmit(data: DiscountFormValues) {
-        toast('You submitted the following values:', {
-            description: (
-                <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                    <code className="text-white">
-                        {JSON.stringify(data, null, 2)}
-                    </code>
-                </pre>
-            ),
-        });
+    async function onSubmit(data: DiscountFormValues) {
+        setCreateLoading(true);
+        try {
+            const response = await axios.post(
+                `${process.env.NEXT_PUBLIC_SERVER_URL}/discount`,
+
+                data,
+                {
+                    withCredentials: true,
+                },
+            );
+            if (response.status === 200 || response.status === 201) {
+                const resData = response.data;
+
+                toast('You submitted the following values:', {
+                    description: (
+                        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                            <code className="text-white">
+                                {`${JSON.stringify(resData, null, 2)}`}
+                            </code>
+                        </pre>
+                    ),
+                });
+                form.reset();
+            }
+        } catch (error) {
+            toast('Error submitting form:', {
+                description: (
+                    <pre className="mt-2  w-[340px] rounded-md bg-slate-950 p-4">
+                        <code className="text-white text-wrap">
+                            {'Please try again later. \n' + error}
+                        </code>
+                    </pre>
+                ),
+            });
+        } finally {
+            setCreateLoading(false);
+        }
     }
 
     return (
         <div className="hidden space-y-6 p-10 pb-16 md:block">
+            <LoadingOverlay isLoading={createLoading} />{' '}
             <div className="flex flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
                 <div className="flex-1 lg:max-w-2xl">
                     <Form {...form}>
@@ -96,7 +130,7 @@ export function DiscountForm() {
                                 name="date"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Размер</FormLabel>
+                                        <FormLabel>Длительность</FormLabel>
                                         <FormControl>
                                             <DatePickerWithRange
                                                 value={field.value}
@@ -104,7 +138,7 @@ export function DiscountForm() {
                                             />
                                         </FormControl>
                                         <FormDescription>
-                                            Введите размер скидки
+                                            Выберите длительность скидки
                                         </FormDescription>
                                         <FormMessage />
                                     </FormItem>
