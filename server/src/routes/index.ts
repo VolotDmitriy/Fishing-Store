@@ -4,7 +4,6 @@ import adminAuth from './adminAuth';
 import categoryRoutes from './categoryRouter';
 import discountRouter from './discountRouter';
 import productRouter from './productRoutes/productRouter';
-import tackleRoutes from './tackle';
 
 const router = Router();
 type RouterHandler = (req: Request, res: Response) => void;
@@ -14,7 +13,6 @@ const rootHandler: RouterHandler = (req, res) => {
 };
 
 router.get('/', rootHandler);
-router.use('/tackle', verifyToken, tackleRoutes);
 router.use('/category', categoryRoutes);
 router.use('/discount', discountRouter);
 router.use('/product', productRouter);
