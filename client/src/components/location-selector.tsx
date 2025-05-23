@@ -8,7 +8,8 @@ import {
     CommandList,
 } from '@/components/ui/command';
 import { Input } from '@/components/ui/input';
-import { Icon, LeafletMouseEvent, Map } from 'leaflet';
+import { LocationData, Position, Settlement } from '@/utils/types';
+import { Icon, Map } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import dynamic from 'next/dynamic';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -19,6 +20,7 @@ import {
     MarkerProps,
     TileLayer,
     TileLayerProps,
+    useMap,
 } from 'react-leaflet';
 
 const DynamicMapContainer = dynamic<MapContainerProps>(
@@ -36,50 +38,28 @@ const DynamicMarker = dynamic<MarkerProps>(
     { ssr: false },
 ) as typeof Marker;
 
-interface Position {
-    lat: number;
-    lng: number;
-}
-
-interface Suggestion {
-    place_id: string;
-    display_name: string;
-    lat: string;
-    lon: string;
-}
-
 interface LocationSelectorProps {
-    selectedLocation: string;
-    setSelectedLocation: (location: string) => void;
+    locationData: LocationData;
+    setLocationData: (data: LocationData) => void;
     markerPosition: Position;
     setMarkerPosition: (position: Position) => void;
 }
 
 const LocationSelector = ({
-    selectedLocation,
-    setSelectedLocation,
+    locationData,
+    setLocationData,
     markerPosition,
     setMarkerPosition,
 }: LocationSelectorProps) => {
-    const [searchQuery, setSearchQuery] = useState<string>('');
-    const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
+    const [searchQuery, setSearchQuery] = useState<string>(
+        locationData.display_name || '',
+    );
+    const [suggestions, setSuggestions] = useState<LocationData[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [error, setError] = useState<string | null>(null);
     const mapRef = useRef<Map | null>(null);
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
     const [customIcon, setCustomIcon] = useState<Icon | undefined>(undefined);
-    const [useMap, setUseMap] = useState<(() => Map) | null>(null);
-    const [useMapEvents, setUseMapEvents] = useState<
-        ((handlers: { click: (e: LeafletMouseEvent) => void }) => void) | null
-    >(null);
-
-    useEffect(() => {
-        if (typeof window !== 'undefined') {
-            import('react-leaflet').then((mod) => {
-                setUseMap(() => mod.useMap);
-                setUseMapEvents(() => mod.useMapEvents);
-            });
-        }
-    }, []);
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -101,56 +81,78 @@ const LocationSelector = ({
         }
     }, []);
 
-    const geocodeLocation = useCallback(
-        async (lat: number, lng: number) => {
-            try {
-                const response = await fetch(
-                    `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`,
-                    {
-                        headers: {
-                            'User-Agent':
-                                'MyNextApp/1.0 (your-email@example.com)',
-                        },
-                    },
-                );
-                const data = await response.json();
-                if (data && data.display_name) {
-                    setSelectedLocation(data.display_name);
-                    setSearchQuery(data.display_name);
-                } else {
-                    setSelectedLocation('Не вдалося визначити адресу');
-                    setSearchQuery('Не вдалося визначити адресу');
-                }
-            } catch (error) {
-                console.error('Помилка геокодування:', error);
-                setSelectedLocation('Не вдалося визначити адресу');
-                setSearchQuery('Не вдалося визначити адресу');
-            }
-        },
-        [setSelectedLocation],
-    );
+    useEffect(() => {
+        if (locationData && locationData.display_name) {
+            setSearchQuery(locationData.display_name);
+        }
+    }, [locationData]);
+
+    const isCyrillic = (text: string) => {
+        return /^[\u0400-\u04FF\s\-0-9]*$/.test(text);
+    };
 
     const fetchSuggestions = useCallback(async (query: string) => {
         if (query.length < 3) {
             setSuggestions([]);
+            setError(null);
             setIsLoading(false);
             return;
         }
+
+        if (!isCyrillic(query)) {
+            setError(
+                'Використовуйте кирилицю для пошуку (наприклад, Київ або Киев)',
+            );
+            setSuggestions([]);
+            setIsLoading(false);
+            return;
+        }
+
         setIsLoading(true);
+        setError(null);
+
         try {
             const response = await fetch(
-                `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&addressdetails=1&limit=5&countrycodes=ua`,
+                'https://api.novaposhta.ua/v2.0/json/',
                 {
+                    method: 'POST',
                     headers: {
-                        'User-Agent': 'MyNextApp/1.0 (your-email@example.com)',
+                        'Content-Type': 'application/json',
                     },
+                    body: JSON.stringify({
+                        apiKey: '',
+                        modelName: 'Address',
+                        calledMethod: 'getSettlements',
+                        methodProperties: {
+                            FindByString: query,
+                        },
+                    }),
                 },
             );
-            const data: Suggestion[] = await response.json();
-            console.log('Suggestions:', data);
-            setSuggestions(data);
+
+            const result = await response.json();
+
+            if (result.success) {
+                const settlements = result.data.map(
+                    (settlement: Settlement) => ({
+                        settlement,
+                        display_name: `${settlement.SettlementTypeDescription}, ${settlement.Description}, ${settlement.AreaDescription} обл.${
+                            settlement.RegionsDescription !== ''
+                                ? `, (${settlement.RegionsDescription} р-н)`
+                                : ''
+                        }`,
+                        lat: settlement.Latitude,
+                        lon: settlement.Longitude,
+                    }),
+                );
+                setSuggestions(settlements);
+            } else {
+                setError('Немає результатів. Спробуйте іншу назву міста.');
+                setSuggestions([]);
+            }
         } catch (error) {
             console.error('Помилка при отриманні підказок:', error);
+            setError('Помилка сервера. Спробуйте ще раз.');
             setSuggestions([]);
         } finally {
             setIsLoading(false);
@@ -158,31 +160,21 @@ const LocationSelector = ({
     }, []);
 
     const handleSuggestionSelect = useCallback(
-        (suggestion: Suggestion) => {
+        (suggestion: LocationData) => {
             const lat = parseFloat(suggestion.lat);
             const lng = parseFloat(suggestion.lon);
             setMarkerPosition({ lat, lng });
-            setSelectedLocation(suggestion.display_name);
+            setLocationData(suggestion);
             setSearchQuery(suggestion.display_name);
             setSuggestions([]);
-            setIsLoading(false);
+            setError(null);
         },
-        [setMarkerPosition, setSelectedLocation],
+        [setMarkerPosition, setLocationData],
     );
 
     const MapController = () => {
-        if (!useMap || !useMapEvents) return null;
-
         const map = useMap();
         mapRef.current = map;
-
-        useMapEvents({
-            click(e: LeafletMouseEvent) {
-                const { lat, lng } = e.latlng;
-                setMarkerPosition({ lat, lng });
-                geocodeLocation(lat, lng);
-            },
-        });
 
         useEffect(() => {
             if (map) {
@@ -206,6 +198,7 @@ const LocationSelector = ({
         if (timeoutRef.current) {
             clearTimeout(timeoutRef.current);
         }
+
         timeoutRef.current = setTimeout(() => {
             fetchSuggestions(value);
         }, 300);
@@ -215,36 +208,46 @@ const LocationSelector = ({
         <div className="space-y-4">
             <div className="w-full">
                 <Input
-                    placeholder="Введіть назву міста або адресу"
+                    placeholder="Введіть назву міста"
                     value={searchQuery}
                     onChange={(e) => handleSearchChange(e.target.value)}
                     className="bg-transparent border-white text-white placeholder-gray-500"
                 />
-                <Command className="bg-black border-white absolute z-50 pr-5 w-[fill-available] md:w-[-webkit-fill-available] lg:w-[-moz-available]">
-                    <CommandList>
-                        {isLoading ? (
-                            <CommandEmpty>Завантаження...</CommandEmpty>
-                        ) : suggestions.length > 0 ? (
-                            <CommandGroup>
-                                {suggestions.map((suggestion) => (
-                                    <CommandItem
-                                        key={suggestion.place_id}
-                                        value={suggestion.display_name}
-                                        onSelect={() =>
-                                            handleSuggestionSelect(suggestion)
-                                        }
-                                        className="text-white hover:bg-gray-800"
-                                    >
-                                        {suggestion.display_name}
-                                    </CommandItem>
-                                ))}
-                            </CommandGroup>
-                        ) : searchQuery.length >= 3 &&
-                          searchQuery !== selectedLocation ? (
-                            <CommandEmpty>Немає результатів</CommandEmpty>
-                        ) : null}
-                    </CommandList>
-                </Command>
+
+                {(isLoading || suggestions.length > 0 || error) && (
+                    <Command className="bg-black border-white absolute z-50 pr-5 w-[fill-available] md:w-[-webkit-fill-available] lg:w-[-moz-available]">
+                        <CommandList>
+                            {isLoading ? (
+                                <CommandEmpty>Завантаження...</CommandEmpty>
+                            ) : error ? (
+                                <CommandEmpty>{error}</CommandEmpty>
+                            ) : suggestions.length > 0 ? (
+                                <CommandGroup>
+                                    {suggestions.map((suggestion) => (
+                                        <CommandItem
+                                            key={suggestion.settlement.Ref}
+                                            value={suggestion.display_name}
+                                            onSelect={() =>
+                                                handleSuggestionSelect(
+                                                    suggestion,
+                                                )
+                                            }
+                                            className="text-white hover:bg-gray-800"
+                                        >
+                                            {suggestion.display_name}
+                                        </CommandItem>
+                                    ))}
+                                </CommandGroup>
+                            ) : searchQuery.length >= 3 &&
+                              searchQuery !== locationData.display_name ? (
+                                <CommandEmpty>
+                                    Немає результатів. Спробуйте ввести назву
+                                    міста кирилицею.
+                                </CommandEmpty>
+                            ) : null}
+                        </CommandList>
+                    </Command>
+                )}
             </div>
 
             <div className={'relative z-0 h-[400px] w-full'}>
