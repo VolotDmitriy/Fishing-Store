@@ -95,7 +95,6 @@ const SearchBar = () => {
                                 >
                                     {product.name}
                                 </Link>
-                                ;
                             </div>
                         ))}
                     </div>
