@@ -2,6 +2,7 @@ import { Request, Response, Router } from 'express';
 import { verifyToken } from '../middlewares/cookieJwtAuth';
 import adminAuth from './adminAuth';
 import categoryRoutes from './categoryRouter';
+import deliveryRouter from './deliveryRouter';
 import discountRouter from './discountRouter';
 import productRouter from './productRoutes/productRouter';
 
@@ -17,6 +18,7 @@ router.use('/category', categoryRoutes);
 router.use('/discount', discountRouter);
 router.use('/product', productRouter);
 router.use('/admin', adminAuth);
+router.use('/delivery', deliveryRouter);
 
 router.get('/check-token', verifyToken, (req, res) => {
     res.status(200).json({ message: 'Token is valid' });
