@@ -4,7 +4,7 @@ import React from 'react';
 import Cart from './public/Cart icon.png';
 import Favorite from './public/Favorite icon.png';
 import Logo from './public/game-icons_fishing-net.png';
-import Search from './public/Search icon.png';
+import SearchBar from './searchBar';
 
 const Header: React.FC = () => {
     return (
@@ -41,19 +41,7 @@ const Header: React.FC = () => {
                 </nav>
 
                 <div className="flex items-center">
-                    <div className="max-w-[256px] h-[40px] bg-[#292929] rounded-[12px] flex flex-row items-center px-[16px] gap-[8px]">
-                        <Image
-                            src={Search}
-                            alt="Search"
-                            width={24}
-                            height={24}
-                        />
-                        <input
-                            type="text"
-                            placeholder="Search"
-                            className="w-full h-[24px] bg-transparent text-[#C4C4C4] font-plus-jakarta-sans text-base leading-[24px] outline-none"
-                        />
-                    </div>
+                    <SearchBar />
                 </div>
 
                 <div className="flex justify-end px-[36px]">
