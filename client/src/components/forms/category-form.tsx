@@ -265,7 +265,9 @@ export function CategoryForm() {
                                 <FormLabel>Дочерние категории</FormLabel>
                                 <div className="space-y-2">
                                     <ItemSelector
-                                        onSelected={handleCategoriesSelected}
+                                        onSelectedAction={
+                                            handleCategoriesSelected
+                                        }
                                         initialSelected={categoryFields.map(
                                             (field) => ({
                                                 id: field.categoryId,
@@ -316,7 +318,9 @@ export function CategoryForm() {
                                 <FormLabel>Товары</FormLabel>
                                 <div className="space-y-2">
                                     <ItemSelector
-                                        onSelected={handleProductsSelected}
+                                        onSelectedAction={
+                                            handleProductsSelected
+                                        }
                                         initialSelected={productFields.map(
                                             (field) => ({
                                                 id: field.productId,
