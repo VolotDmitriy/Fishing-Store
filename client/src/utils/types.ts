@@ -1,3 +1,11 @@
+export interface CartItem {
+    id: string;
+    name: string;
+    imgURL: string;
+    price: number;
+    quantity: number;
+}
+
 export interface Position {
     lat: number;
     lng: number;

@@ -2,30 +2,23 @@
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { getCart, setCart } from '@/utils/cartUtils';
+import { CartItem } from '@/utils/types';
 import { Minus, Plus, X } from 'lucide-react';
-import { useState } from 'react';
-
-interface CartItem {
-    id: number;
-    name: string;
-    price: number;
-    quantity: number;
-}
+import { useEffect, useState } from 'react';
 
 const Cart = () => {
-    const [cartItems, setCartItems] = useState<CartItem[]>([
-        { id: 1, name: 'Болты розничный SquidBerry', price: 570, quantity: 2 },
-        { id: 2, name: 'Болты розничный SquidBerry', price: 570, quantity: 2 },
-        { id: 3, name: 'Болты розничный SquidBerry', price: 570, quantity: 2 },
-        { id: 4, name: 'Болты розничный SquidBerry', price: 570, quantity: 2 },
-    ]);
-
+    const [cartItems, setCartItems] = useState<CartItem[]>(getCart());
     const [showCouponInput, setShowCouponInput] = useState(false);
     const [couponCode, setCouponCode] = useState('');
     const [isCouponApplied, setIsCouponApplied] = useState(false);
     const [error, setError] = useState('');
 
-    const updateQuantity = (id: number, delta: number) => {
+    useEffect(() => {
+        setCart(cartItems);
+    }, [cartItems]);
+
+    const updateQuantity = (id: string, delta: number) => {
         setCartItems((prevItems) =>
             prevItems
                 .map((item) =>
@@ -40,7 +33,7 @@ const Cart = () => {
         );
     };
 
-    const handleRemoveItem = (id: number) => {
+    const handleRemoveItem = (id: string) => {
         setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
     };
 
@@ -79,7 +72,7 @@ const Cart = () => {
                             className="grid grid-cols-[100px_1fr_150px_150px_150px] gap-4 items-center border border-white px-5 py-4"
                         >
                             <img
-                                src="Products/1.jpg"
+                                src={item.imgURL}
                                 alt={item.name}
                                 className="w-full h-full max-w-20 max-h-20 object-cover rounded-[10px]"
                             />
@@ -145,7 +138,6 @@ const Cart = () => {
                     <span>Sales Tax</span>
                     <span>{salesTax.toLocaleString()} €</span>
                 </div>
-
                 <div className="flex justify-between items-start gap-2">
                     <span className="pt-2">Coupon code</span>
                     <div className="flex flex-col relative">
@@ -191,15 +183,13 @@ const Cart = () => {
                         )}
                     </div>
                 </div>
-
                 <div className="flex justify-between items-center text-lg font-bold pb-2 border-b border-gray-500">
                     <span>Grand total</span>
                     <span className="text-[22px]">
                         {grandTotal.toLocaleString()} €
                     </span>
                 </div>
-
-                <Button className="w-full bg-white text-black text-lg py-6  hover:bg-gray-200">
+                <Button className="w-full bg-white text-black text-lg py-6 hover:bg-gray-200">
                     Place Order
                 </Button>
             </div>
@@ -212,7 +202,6 @@ const Cart = () => {
                         Check out the catalog—maybe you’ll find something useful
                     </p>
                 </div>
-
                 <Button
                     variant="link"
                     className="w-full font-bold text-[20px] font-jakarta h-auto text-white"
