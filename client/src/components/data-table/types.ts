@@ -45,7 +45,7 @@ export const productSchema = z.object({
     description: z.string().optional(),
     categoryId: z.string(),
     images: z.array(z.string()),
-    variants: z.array(productVariant).nullable(),
+    variants: z.array(productVariant),
     attributes: z.array(ProductAttribute),
     discountId: z.string().nullable(),
     createdAt: z.string(),
