@@ -5,7 +5,26 @@ const prisma = new PrismaClient();
 
 export const getAllVariantTypes: RouterHandler = async (req, res) => {
     try {
-        const variantTypes = await prisma.variantType.findMany();
+        const { full } = req.query as { full?: string };
+
+        if (full !== undefined && full !== 'true' && full !== 'false') {
+            res.status(400).json({
+                message: 'Force parameter is true or false',
+            });
+            return;
+        }
+
+        const isFull = full === 'true';
+
+        const variantTypes = await prisma.variantType.findMany({
+            ...(isFull && {
+                include: {
+                    category: true,
+                    productVariantAttributes: true,
+                    productAttributes: true,
+                },
+            }),
+        });
 
         res.status(200).json(variantTypes);
     } catch (error) {
