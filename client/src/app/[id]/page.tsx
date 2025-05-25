@@ -7,7 +7,9 @@ import Header from '../.././components/app-components/header';
 async function getProduct(id: string): Promise<ProductType> {
     if (!id) throw new Error('Product ID is required');
 
-    const res = await fetch(`http://localhost:4200/product/${id}?full=true`);
+    const res = await fetch(`http://localhost:4200/product/${id}?full=true`, {
+        cache: 'no-store', // Отключаем кэширование для динамических данных
+    });
     if (!res.ok) throw new Error('Failed to fetch product');
 
     const data = await res.json();
@@ -17,12 +19,13 @@ async function getProduct(id: string): Promise<ProductType> {
 export default async function ProductPage({
     params,
 }: {
-    params: { id: string };
+    params: Promise<{ id: string }>;
 }) {
     try {
-        const product = await getProduct(params.id);
+        const resolvedParams = await params;
+        const product = await getProduct(resolvedParams.id);
         return (
-            <div className=" bg-[#141414]">
+            <div className="bg-[#141414]">
                 <Header />
                 <ItemSection id={product.id} />
                 <ProductRecomend categoryId={product.categoryId} />
