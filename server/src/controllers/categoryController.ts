@@ -188,7 +188,7 @@ export const updateCategoryById: RouterHandler = async (req, res) => {
             where: { id },
             data: {
                 name,
-                parentId,
+                parentId: parentId === 'null' ? null : parentId,
             },
         });
 
