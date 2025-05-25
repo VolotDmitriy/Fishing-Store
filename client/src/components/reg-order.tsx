@@ -9,11 +9,17 @@ import {
     DialogTitle,
     DialogTrigger,
 } from '@/components/ui/dialog';
+import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { LocationData, Position } from '@/utils/types';
+import { fetchWarehouses } from '@/utils/requests';
+import {
+    DeliveryMethod,
+    LocationData,
+    Position,
+    Warehouse,
+} from '@/utils/types';
 import { MapPin } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { Label } from './ui/label';
 import WarehouseSelector from './warehouse-selector';
 
 const defaultSettlement = {
@@ -38,8 +44,6 @@ const defaultPosition: Position = {
     lng: parseFloat(defaultLocationData.lon),
 };
 
-type DeliveryMethod = 'warehouse' | 'postomat';
-
 const OrderForm = () => {
     const [dialogOpen, setDialogOpen] = useState<boolean>(false);
     const [locationData, setLocationData] =
@@ -50,10 +54,36 @@ const OrderForm = () => {
         useState<DeliveryMethod>('warehouse');
     const [selectedDeliveryPoint, setSelectedDeliveryPoint] =
         useState<string>('');
+    const [warehouses, setWarehouses] = useState<{
+        warehouse: Warehouse[];
+        postomat: Warehouse[];
+    }>({
+        warehouse: [],
+        postomat: [],
+    });
+    const [isLoading, setIsLoading] = useState<boolean>(true); // Ініціалізуємо true, щоб показати "Loading..." одразу
 
-    // Скидаємо вибір відділення/поштомата при зміні локації
     useEffect(() => {
-        setSelectedDeliveryPoint('');
+        setIsLoading(true); // Встановлюємо true перед початком запиту
+        const fetchAllWarehouses = async () => {
+            try {
+                const [warehouseData, postomatData] = await Promise.all([
+                    fetchWarehouses(locationData.settlement.Ref, 'warehouse'),
+                    fetchWarehouses(locationData.settlement.Ref, 'postomat'),
+                ]);
+                setWarehouses({
+                    warehouse: warehouseData as Warehouse[],
+                    postomat: postomatData as Warehouse[],
+                });
+                setSelectedDeliveryPoint('');
+            } catch (error) {
+                console.error('Помилка при завантаженні відділень:', error);
+            } finally {
+                setIsLoading(false); // Завантаження завершено, незалежно від результату
+            }
+        };
+
+        fetchAllWarehouses();
     }, [locationData.settlement.Ref]);
 
     const getFormattedLocation = (): string => {
@@ -71,7 +101,6 @@ const OrderForm = () => {
             <h1 className="text-4xl font-bold mb-6">
                 REGISTRATION OF AN ORDER
             </h1>
-
             <div className="flex flex-row gap-6 min-h-0 h-full">
                 <div className="w-1/2 grid grid-cols-1 grid-rows-2 gap-6 flex-1 pt-17">
                     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
@@ -120,69 +149,75 @@ const OrderForm = () => {
                             місцезнаходження, натисніть "Змінити".
                         </p>
                     </div>
-
                     <div>
                         <h2 className="text-lg font-semibold mb-4">Delivery</h2>
-                        <RadioGroup
-                            value={deliveryMethod}
-                            onValueChange={(value) => {
-                                setDeliveryMethod(value as DeliveryMethod);
-                                setSelectedDeliveryPoint('');
-                            }}
-                            className="space-y-4"
-                        >
-                            <div className="flex items-center space-x-4">
-                                <RadioGroupItem
-                                    value="warehouse"
-                                    id="warehouse"
-                                />
-                                <Label
-                                    htmlFor="warehouse"
-                                    className="text-white"
-                                >
-                                    Відділення NovaPost
-                                </Label>
-                                <WarehouseSelector
-                                    settlementRef={locationData.settlement.Ref}
-                                    selectedWarehouse={
-                                        deliveryMethod === 'warehouse'
-                                            ? selectedDeliveryPoint
-                                            : ''
-                                    }
-                                    setSelectedWarehouse={(point: string) =>
-                                        onDeliveryPointSelect(
-                                            point,
-                                            'warehouse',
-                                        )
-                                    }
-                                    warehouseType="warehouse"
-                                />
-                            </div>
-                            <div className="flex items-center space-x-4">
-                                <RadioGroupItem
-                                    value="postomat"
-                                    id="postomat"
-                                />
-                                <Label
-                                    htmlFor="postomat"
-                                    className="text-white"
-                                >
-                                    Поштомат NovaPost
-                                </Label>
-                                <WarehouseSelector
-                                    settlementRef={locationData.settlement.Ref}
-                                    selectedWarehouse={
-                                        deliveryMethod === 'postomat'
-                                            ? selectedDeliveryPoint
-                                            : ''
-                                    }
-                                    setSelectedWarehouse={(point: string) =>
-                                        onDeliveryPointSelect(point, 'postomat')
-                                    }
-                                    warehouseType="postomat"
-                                />
-                            </div>
-                        </RadioGroup>
+                        {isLoading ? (
+                            <p>Loading...</p> // Показуємо "Loading..." під час завантаження
+                        ) : (
+                            <RadioGroup
+                                value={deliveryMethod}
+                                onValueChange={(value) => {
+                                    setDeliveryMethod(value as DeliveryMethod);
+                                    setSelectedDeliveryPoint('');
+                                }}
+                                className="space-y-4"
+                            >
+                                <div className="flex items-center space-x-4">
+                                    <RadioGroupItem
+                                        value="warehouse"
+                                        id="warehouse"
+                                    />
+                                    <Label
+                                        htmlFor="warehouse"
+                                        className="text-white"
+                                    >
+                                        Відділення NovaPost
+                                    </Label>
+                                    <WarehouseSelector
+                                        warehouses={warehouses.warehouse}
+                                        selectedWarehouse={
+                                            deliveryMethod === 'warehouse'
+                                                ? selectedDeliveryPoint
+                                                : ''
+                                        }
+                                        setSelectedWarehouse={(point: string) =>
+                                            onDeliveryPointSelect(
+                                                point,
+                                                'warehouse',
+                                            )
+                                        }
+                                        warehouseType="warehouse"
+                                    />
+                                </div>
+                                <div className="flex items-center space-x-4">
+                                    <RadioGroupItem
+                                        value="postomat"
+                                        id="postomat"
+                                    />
+                                    <Label
+                                        htmlFor="postomat"
+                                        className="text-white"
+                                    >
+                                        Поштомат NovaPost
+                                    </Label>
+                                    <WarehouseSelector
+                                        warehouses={warehouses.postomat}
+                                        selectedWarehouse={
+                                            deliveryMethod === 'postomat'
+                                                ? selectedDeliveryPoint
+                                                : ''
+                                        }
+                                        setSelectedWarehouse={(point: string) =>
+                                            onDeliveryPointSelect(
+                                                point,
+                                                'postomat',
+                                            )
+                                        }
+                                        warehouseType="postomat"
+                                    />
+                                </div>
+                            </RadioGroup>
+                        )}
                     </div>
                 </div>
             </div>

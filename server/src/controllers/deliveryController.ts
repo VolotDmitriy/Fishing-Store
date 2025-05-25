@@ -73,6 +73,7 @@ export const getWarehouses: RouterHandler = async (req, res) => {
     const cachedData = cache.get(cacheKey);
 
     if (cachedData) {
+        console.log('Get from cache:', cacheKey);
         res.json(cachedData);
         return;
     }

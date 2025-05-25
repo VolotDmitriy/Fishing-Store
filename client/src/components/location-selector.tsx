@@ -8,6 +8,7 @@ import {
     CommandList,
 } from '@/components/ui/command';
 import { Input } from '@/components/ui/input';
+import { fetchSettlements } from '@/utils/requests'; // Імпортуємо нову функцію
 import { LocationData, Position, Settlement } from '@/utils/types';
 import { Icon, Map } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -112,46 +113,21 @@ const LocationSelector = ({
         setError(null);
 
         try {
-            const response = await fetch(
-                'https://api.novaposhta.ua/v2.0/json/',
-                {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        apiKey: '',
-                        modelName: 'Address',
-                        calledMethod: 'getSettlements',
-                        methodProperties: {
-                            FindByString: query,
-                        },
-                    }),
-                },
+            const settlements = await fetchSettlements(query);
+            const formattedSuggestions = settlements.map(
+                (settlement: Settlement) => ({
+                    settlement,
+                    display_name: `${settlement.SettlementTypeDescription}, ${settlement.Description}, ${settlement.AreaDescription} обл.${
+                        settlement.RegionsDescription !== ''
+                            ? `, (${settlement.RegionsDescription} р-н)`
+                            : ''
+                    }`,
+                    lat: settlement.Latitude,
+                    lon: settlement.Longitude,
+                }),
             );
-
-            const result = await response.json();
-
-            if (result.success) {
-                const settlements = result.data.map(
-                    (settlement: Settlement) => ({
-                        settlement,
-                        display_name: `${settlement.SettlementTypeDescription}, ${settlement.Description}, ${settlement.AreaDescription} обл.${
-                            settlement.RegionsDescription !== ''
-                                ? `, (${settlement.RegionsDescription} р-н)`
-                                : ''
-                        }`,
-                        lat: settlement.Latitude,
-                        lon: settlement.Longitude,
-                    }),
-                );
-                setSuggestions(settlements);
-            } else {
-                setError('Немає результатів. Спробуйте іншу назву міста.');
-                setSuggestions([]);
-            }
+            setSuggestions(formattedSuggestions);
         } catch (error) {
-            console.error('Помилка при отриманні підказок:', error);
             setError('Помилка сервера. Спробуйте ще раз.');
             setSuggestions([]);
         } finally {
