@@ -15,89 +15,6 @@ interface Product {
     weights: string[];
 }
 
-const productsTest: Product[] = [
-    {
-        id: 'prod001',
-        name: 'Бойли розчинні SquidBerry',
-        imageSrc: 'Products/1.jpg',
-        price: 405,
-        sizes: ['20 мм', '24 мм'],
-        weights: ['zip-уп 1 кг', 'відро 3 кг'],
-    },
-    {
-        id: 'prod002',
-        name: 'Бойли Krill Fusion',
-        imageSrc: 'Products/2.jpg',
-        price: 379,
-        sizes: ['16 мм', '20 мм'],
-        weights: ['zip-уп 0.5 кг', 'відро 2 кг'],
-    },
-    {
-        id: 'prod003',
-        name: 'Pop-ups Ananas',
-        imageSrc: 'Products/3.jpg',
-        price: 189,
-        sizes: ['10 мм', '14 мм'],
-        weights: ['банка 100г'],
-    },
-    {
-        id: 'prod004',
-        name: 'Крючки RB-28419',
-        imageSrc: 'Products/4.jpg',
-        price: 129,
-        sizes: ['M', 'L'],
-        weights: ['упаковка 10 шт'],
-    },
-    {
-        id: 'prod005',
-        name: 'Бойли розчинні SquidBerry',
-        imageSrc: 'Products/1.jpg',
-        price: 405,
-        sizes: ['20 мм', '24 мм'],
-        weights: ['zip-уп 1 кг', 'відро 3 кг'],
-    },
-    {
-        id: 'prod006',
-        name: 'Бойли Krill Fusion',
-        imageSrc: 'Products/2.jpg',
-        price: 379,
-        sizes: ['16 мм', '20 мм'],
-        weights: ['zip-уп 0.5 кг', 'відро 2 кг'],
-    },
-    {
-        id: 'prod007',
-        name: 'Pop-ups Ananas',
-        imageSrc: 'Products/3.jpg',
-        price: 189,
-        sizes: ['10 мм', '14 мм'],
-        weights: ['банка 100г'],
-    },
-    {
-        id: 'prod008',
-        name: 'Крючки RB-28419',
-        imageSrc: 'Products/4.jpg',
-        price: 129,
-        sizes: ['M', 'L'],
-        weights: ['упаковка 10 шт'],
-    },
-    {
-        id: 'prod009',
-        name: 'Бойли розчинні SquidBerry',
-        imageSrc: 'Products/1.jpg',
-        price: 405,
-        sizes: ['20 мм', '24 мм'],
-        weights: ['zip-уп 1 кг', 'відро 3 кг'],
-    },
-    {
-        id: 'prod010',
-        name: 'Бойли Krill Fusion',
-        imageSrc: 'Products/2.jpg',
-        price: 379,
-        sizes: ['16 мм', '20 мм'],
-        weights: ['zip-уп 0.5 кг', 'відро 2 кг'],
-    },
-];
-
 async function getRecommendedProduct(
     categoryId: string,
 ): Promise<ProductType[]> {
@@ -132,16 +49,8 @@ async function ProductRecomend({ categoryId }: ItemSectionProps) {
                     </h2>
 
                     <UniversalCarousel itemsPerView={5}>
-                        {recomProducts.map((product: ProductType, index) => (
-                            <ProductCard
-                                key={product.id}
-                                id={product.id}
-                                imageSrc={productsTest[index].imageSrc}
-                                title={product.name}
-                                price={productsTest[index].price}
-                                sizes={productsTest[index].sizes}
-                                weights={productsTest[index].weights}
-                            />
+                        {recomProducts.map((product: ProductType) => (
+                            <ProductCard key={product.id} item={product} />
                         ))}
                     </UniversalCarousel>
                 </div>
