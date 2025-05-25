@@ -75,3 +75,35 @@ export async function fetchVariantTypes(
         throw error;
     }
 }
+
+export async function fetchSettlements(query: string): Promise<any[]> {
+    try {
+        const response = await axios.post(
+            `${process.env.NEXT_PUBLIC_SERVER_URL}/delivery/location`,
+            { query },
+        );
+        return response.data;
+    } catch (error) {
+        console.error('Помилка при отриманні населених пунктів:', error);
+        throw error;
+    }
+}
+
+export async function fetchWarehouses(
+    settlementRef: string,
+    warehouseType: 'warehouse' | 'postomat',
+): Promise<any[]> {
+    try {
+        const response = await axios.post(
+            `${process.env.NEXT_PUBLIC_SERVER_URL}/delivery/warehouse`,
+            {
+                settlementRef,
+                warehouseType,
+            },
+        );
+        return response.data;
+    } catch (error) {
+        console.error('Помилка при отриманні відділень:', error);
+        throw error;
+    }
+}
