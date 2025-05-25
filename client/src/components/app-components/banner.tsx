@@ -27,12 +27,12 @@ const banner: React.FC = () => {
                         </p>
                     </div>
                     <div className="w-full h-[48px] flex flex-row items-center gap-[30px] ">
-                        <Link href="/categories" className="flex w-[160px] ">
+                        <Link href="/catalog" className="flex w-[160px] ">
                             <button className="w-full h-[48px] bg-[#38E078] rounded-[24px] flex justify-center items-center font-plus-jakarta-sans text-black text-base cursor-pointer hover:brightness-85 active:brightness-80 active:opacity-80 transition-all duration-300">
                                 Shop Now
                             </button>
                         </Link>
-                        <Link href="/filters" className="flex w-[160px]">
+                        <Link href="/catalog" className="flex w-[160px]">
                             <button className="w-full h-[48px] bg-[#38E078] rounded-[24px] flex justify-center items-center font-plus-jakarta-sans text-black text-base cursor-pointer hover:brightness-85 active:brightness-80 active:opacity-80 transition-all duration-300">
                                 Apply Filters
                             </button>
