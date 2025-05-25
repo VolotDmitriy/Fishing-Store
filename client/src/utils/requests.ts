@@ -1,14 +1,35 @@
 import {
     CategoryType,
+    CategoryTypeF,
     DiscountType,
     ProductType,
+    VariantTypeType,
 } from '@/components/data-table/types';
 import axios from 'axios';
 
-export async function fetchCategories(full: boolean): Promise<CategoryType[]> {
+type FetchCategoriesResponse<T extends boolean> = T extends true
+    ? CategoryTypeF[]
+    : CategoryType[];
+
+export async function fetchCategories<T extends boolean>(
+    full: T,
+): Promise<FetchCategoriesResponse<T>> {
     try {
         const response = await axios.get(
-            `http://localhost:4200/category?full=${full}`,
+            `${process.env.NEXT_PUBLIC_SERVER_URL}/category?full=${full}`,
+        );
+
+        return response.data as FetchCategoriesResponse<T>;
+    } catch (error) {
+        console.error('Ошибка при получении категорий:', error);
+        throw error;
+    }
+}
+
+export async function fetchCategoryById(full: boolean): Promise<CategoryType> {
+    try {
+        const response = await axios.get(
+            `${process.env.NEXT_PUBLIC_SERVER_URL}/category?full=${full}`,
         );
         return response.data;
     } catch (error) {
@@ -20,7 +41,7 @@ export async function fetchCategories(full: boolean): Promise<CategoryType[]> {
 export async function fetchProducts(full: boolean): Promise<ProductType[]> {
     try {
         const response = await axios.get(
-            `http://localhost:4200/product?full=${full}`,
+            `${process.env.NEXT_PUBLIC_SERVER_URL}/product?full=${full}`,
         );
         return response.data;
     } catch (error) {
@@ -32,11 +53,25 @@ export async function fetchProducts(full: boolean): Promise<ProductType[]> {
 export async function fetchDiscounts(full: boolean): Promise<DiscountType[]> {
     try {
         const response = await axios.get(
-            `http://localhost:4200/discount?full=${full}`,
+            `${process.env.NEXT_PUBLIC_SERVER_URL}/discount?full=${full}`,
         );
         return response.data;
     } catch (error) {
         console.error('Ошибка при получении скидок:', error);
+        throw error;
+    }
+}
+
+export async function fetchVariantTypes(
+    full: boolean,
+): Promise<VariantTypeType[]> {
+    try {
+        const response = await axios.get(
+            `${process.env.NEXT_PUBLIC_SERVER_URL}/product/type?full=${full}`,
+        );
+        return response.data;
+    } catch (error) {
+        console.error('Ошибка при получении типов вариантов:', error);
         throw error;
     }
 }
