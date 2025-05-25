@@ -17,7 +17,7 @@ const router = Router();
 
 router.use('/attribute', verifyToken, productAttributeRouter);
 router.use('/variant', verifyToken, productVariantRouter);
-router.use('/type', verifyToken, variantTypeRouter);
+router.use('/type', variantTypeRouter);
 router.use('/variant_attribute', verifyToken, productVariantAttributeRouter);
 
 router.get('/', getAllProducts);
