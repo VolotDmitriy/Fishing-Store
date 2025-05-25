@@ -15,6 +15,7 @@ const Cart = () => {
     const [error, setError] = useState('');
 
     useEffect(() => {
+        console.log('Сохранение корзины:', cartItems);
         setCart(cartItems);
     }, [cartItems]);
 
@@ -77,7 +78,9 @@ const Cart = () => {
                                 className="w-full h-full max-w-20 max-h-20 object-cover rounded-[10px]"
                             />
                             <div>
-                                <p>{item.name}</p>
+                                <p>
+                                    {item.name} ({item.variantSku})
+                                </p>
                                 <p className="text-sm text-gray-500">
                                     57,000.yn/wt
                                 </p>

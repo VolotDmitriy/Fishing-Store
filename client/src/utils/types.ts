@@ -1,9 +1,11 @@
 export interface CartItem {
-    id: string;
-    name: string;
-    imgURL: string;
-    price: number;
-    quantity: number;
+    id: string; // ID варианта
+    productId: string; // ID продукта
+    name: string; // Название продукта
+    variantSku: string; // SKU варианта
+    imgURL: string; // URL изображения
+    price: number; // Цена
+    quantity: number; // Количество
 }
 
 export interface Position {
