@@ -24,14 +24,14 @@ import { ProductFormValues } from './types';
 interface VariantFormProps {
     index: number;
     form: UseFormReturn<ProductFormValues>;
-    removeVariant: () => void;
+    removeVariantAction: () => void;
     discounts: DiscountType[];
 }
 
 export function VariantForm({
     index,
     form,
-    removeVariant,
+    removeVariantAction,
     discounts,
 }: VariantFormProps) {
     const {
@@ -56,7 +56,7 @@ export function VariantForm({
                     type="button"
                     variant="ghost"
                     size="icon"
-                    onClick={removeVariant}
+                    onClick={removeVariantAction}
                     className="mt-2"
                 >
                     ✖

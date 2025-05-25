@@ -279,12 +279,13 @@ export const discountColumns: ColumnDef<z.infer<typeof discountSchema>>[] = [
         accessorKey: 'startDate',
         header: 'Начало',
         cell: ({ row }) =>
-            new Date(row.original.startDate).toLocaleDateString(),
+            row.original.startDate ? new Date(row.original.startDate).toLocaleDateString() : 'Нет данных',
     },
     {
         accessorKey: 'endDate',
         header: 'Конец',
-        cell: ({ row }) => new Date(row.original.endDate).toLocaleDateString(),
+        cell: ({ row }) =>
+            row.original.endDate ? new Date(row.original.endDate).toLocaleDateString() : 'Нет данных',
     },
     {
         id: 'actions',

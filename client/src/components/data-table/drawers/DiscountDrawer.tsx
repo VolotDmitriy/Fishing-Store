@@ -28,7 +28,9 @@ export const DiscountDrawer: React.FC<DiscountDrawerProps> = ({ item }) => {
                 <Label htmlFor="startDate">Начало</Label>
                 <Input
                     id="startDate"
-                    defaultValue={item.startDate.slice(0, 16)}
+                    defaultValue={
+                        item.startDate ? item.startDate.slice(0, 16) : ''
+                    }
                     type="datetime-local"
                 />
             </div>
@@ -37,7 +39,7 @@ export const DiscountDrawer: React.FC<DiscountDrawerProps> = ({ item }) => {
                 <Label htmlFor="endDate">Конец</Label>
                 <Input
                     id="endDate"
-                    defaultValue={item.endDate.slice(0, 16)}
+                    defaultValue={item.endDate ? item.endDate.slice(0, 16) : ''}
                     type="datetime-local"
                 />
             </div>
