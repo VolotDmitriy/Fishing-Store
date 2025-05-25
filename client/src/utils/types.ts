@@ -19,3 +19,12 @@ export interface LocationData {
     lat: string;
     lon: string;
 }
+
+export interface Warehouse {
+    Description: string;
+    Number: string;
+    CityDescription: string;
+    TypeOfWarehouse: string;
+}
+
+export type DeliveryMethod = 'warehouse' | 'postomat';
