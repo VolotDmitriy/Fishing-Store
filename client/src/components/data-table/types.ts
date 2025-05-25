@@ -9,7 +9,7 @@ export const categorySchema = z.object({
     updatedAt: z.string(),
 });
 
-export const productVariantAtribute = z.object({
+export const productVariantAttribute = z.object({
     id: z.string(),
     variantId: z.string(),
     typeId: z.string(),
@@ -24,7 +24,7 @@ export const productVariant = z.object({
     sku: z.string(),
     price: z.string(),
     inStock: z.number(),
-    attributes: z.array(productVariantAtribute),
+    attributes: z.array(productVariantAttribute),
     discountId: z.string().nullable(),
     createdAt: z.string(),
     updatedAt: z.string(),
@@ -52,12 +52,22 @@ export const productSchema = z.object({
     updatedAt: z.string(),
 });
 
+export const variantTypeSchema = z.object({
+    id: z.string(),
+    categoryId: z.string(),
+    name: z.string(),
+    productAttributes: z.array(ProductAttribute),
+    productVariantAttributes: z.array(productVariantAttribute),
+    createdAt: z.string(),
+    updatedAt: z.string(),
+});
+
 export const discountSchema = z.object({
     id: z.string(),
     name: z.string(),
     percentage: z.number(),
-    startDate: z.string(),
-    endDate: z.string(),
+    startDate: z.string().nullable(),
+    endDate: z.string().nullable(),
     createdAt: z.string(),
     updatedAt: z.string(),
 });
@@ -65,7 +75,8 @@ export const discountSchema = z.object({
 export type CategoryType = z.infer<typeof categorySchema>;
 export type ProductType = z.infer<typeof productSchema>;
 export type DiscountType = z.infer<typeof discountSchema>;
-export type VariantType = z.infer<typeof productVariant>;
+export type ProductVariantType = z.infer<typeof productVariant>;
+export type VariantTypeType = z.infer<typeof variantTypeSchema>;
 
 export type ColumnType =
     | z.infer<typeof categorySchema>

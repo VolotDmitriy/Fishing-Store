@@ -1,4 +1,7 @@
-import { DiscountType, VariantType } from '@/components/data-table/types';
+import {
+    DiscountType,
+    ProductVariantType,
+} from '@/components/data-table/types';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import {
@@ -10,8 +13,8 @@ import {
 } from '@/components/ui/select';
 
 interface VariantDrawerProps {
-    item: VariantType;
-    data: VariantType[];
+    item: ProductVariantType;
+    data: ProductVariantType[];
     discountsData: DiscountType[];
 }
 
