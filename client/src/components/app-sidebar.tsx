@@ -89,7 +89,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <SidebarContent>
                 <NavMain items={data.navMain} />
                 <NavSecondary items={data.navSecondary} />
-                <NavDocuments items={data.documents} />
             </SidebarContent>
         </Sidebar>
     );

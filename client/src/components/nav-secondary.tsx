@@ -23,7 +23,7 @@ export function NavSecondary({
 } & React.ComponentPropsWithoutRef<typeof SidebarGroup>) {
     return (
         <SidebarGroup {...props}>
-            <SidebarGroupLabel>All orders</SidebarGroupLabel>
+            <SidebarGroupLabel>All dashboards</SidebarGroupLabel>
             <SidebarGroupContent>
                 <SidebarMenu>
                     {items.map((item) => (
