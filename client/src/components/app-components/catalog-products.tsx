@@ -14,7 +14,7 @@ export const CatalogProducts: React.FC<Props> = ({ className, products }) => {
             <div className="flex flex-row flex-wrap gap-y-8 gap-x-3">
                 {products &&
                     products.map((product) => (
-                        <div className='max-w-[350px]'>
+                        <div className='max-w-[350px]' key={product.id}>
                             <ProductCard key={product.id} item={product} />
                         </div>
                     ))}
