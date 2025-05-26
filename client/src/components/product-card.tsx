@@ -93,7 +93,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
                 <img
                     src={item.images[0]}
                     alt={item.name}
-                    className="object-cover aspect-square w-full h-full"
+                    className="aspect-square w-full h-full"
                 />
             </div>
 
