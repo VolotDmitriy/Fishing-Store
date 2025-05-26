@@ -82,9 +82,11 @@ function ItemSection({ id }: ItemSectionProps) {
             const cartItem: CartItem = {
                 id: selectedVariant.id,
                 name: `${product.name} - ${selectedVariant.sku}`,
-                imgURL: product.images?.[0] || '/default-image.jpg', // Предполагаем, что у продукта есть images
+                imgURL: product.images?.[0] || '/default-image.jpg',
                 price: parseFloat(selectedVariant.price),
                 quantity: quantity,
+                productId: product.id,
+                variantSku: selectedVariant.sku,
             };
             addToCart(cartItem);
         }
