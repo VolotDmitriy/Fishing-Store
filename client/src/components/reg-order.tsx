@@ -156,7 +156,7 @@ const OrderForm = forwardRef<
                                 value={firstName}
                                 onChange={(e) => setFirstName(e.target.value)}
                                 placeholder="Your first name"
-                                className="rounded-none bg-transparent border-[B1B1B1] border-2 text-white placeholder-gray-500 h-14"
+                                className="rounded-none bg-transparent border-[B1B1B1] border-2 text-white placeholder-gray-500 h-10"
                             />
                         </div>
                         <div>
@@ -164,7 +164,7 @@ const OrderForm = forwardRef<
                                 value={phone}
                                 onChange={(e) => setPhone(e.target.value)}
                                 placeholder="+38(095) 123-45-67"
-                                className="rounded-none bg-transparent border-[B1B1B1] border-2 text-white placeholder-gray-500 h-14"
+                                className="rounded-none bg-transparent border-[B1B1B1] border-2 text-white placeholder-gray-500 h-10"
                             />
                         </div>
                         <div>
@@ -172,7 +172,7 @@ const OrderForm = forwardRef<
                                 value={secondName}
                                 onChange={(e) => setSecondName(e.target.value)}
                                 placeholder="Your second name"
-                                className="rounded-none bg-transparent border-[B1B1B1] border-2 text-white placeholder-gray-500 h-14"
+                                className="rounded-none bg-transparent border-[B1B1B1] border-2 text-white placeholder-gray-500 h-10"
                             />
                         </div>
                         <div>
@@ -180,7 +180,7 @@ const OrderForm = forwardRef<
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 placeholder="example@gmail.com"
-                                className="rounded-none bg-transparent border-[B1B1B1] gray-700 border-2 text-white placeholder-gray-500 h-14"
+                                className="rounded-none bg-transparent border-[B1B1B1] gray-700 border-2 text-white placeholder-gray-500 h-10"
                             />
                         </div>
                         <div className="col-span-2">
