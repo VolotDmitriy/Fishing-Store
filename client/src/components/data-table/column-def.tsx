@@ -154,6 +154,7 @@ export const productColumns: ColumnDef<z.infer<typeof productSchema>>[] = [
         accessorKey: 'description',
         header: 'Описание',
         cell: ({ row }) => row.original.description || 'Описание отсутствует',
+        enableHiding: true,
     },
     {
         accessorKey: 'variants',
@@ -200,6 +201,7 @@ export const productColumns: ColumnDef<z.infer<typeof productSchema>>[] = [
         accessorKey: 'images',
         header: 'Изображения',
         cell: ({ row }) => row.original.images.join(', ') || 'Нет изображений',
+        enableHiding: true,
     },
     {
         accessorKey: 'discountId',
@@ -271,13 +273,17 @@ export const discountColumns: ColumnDef<z.infer<typeof discountSchema>>[] = [
         accessorKey: 'startDate',
         header: 'Начало',
         cell: ({ row }) =>
-            row.original.startDate ? new Date(row.original.startDate).toLocaleDateString() : 'Нет данных',
+            row.original.startDate
+                ? new Date(row.original.startDate).toLocaleDateString()
+                : 'Нет данных',
     },
     {
         accessorKey: 'endDate',
         header: 'Конец',
         cell: ({ row }) =>
-            row.original.endDate ? new Date(row.original.endDate).toLocaleDateString() : 'Нет данных',
+            row.original.endDate
+                ? new Date(row.original.endDate).toLocaleDateString()
+                : 'Нет данных',
     },
     {
         id: 'actions',
