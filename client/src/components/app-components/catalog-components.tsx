@@ -48,7 +48,7 @@ export const CatalogComponents: React.FC<Props> = ({ className, category }) => {
         : categories.flatMap((cat) => cat.products || []);
 
     return (
-        <div className={cn(className, 'flex flex-row my-10')}>
+        <div className={cn(className, 'flex flex-row my-10 gap-[50px]')}>
             <Filter
                 className="w-[290px]"
                 categories={categories}
