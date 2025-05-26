@@ -16,13 +16,6 @@ import { ShoppingCart } from 'lucide-react';
 import Link from 'next/link';
 import React, { useEffect, useRef, useState } from 'react';
 
-const images = [
-    'Products/1.jpg',
-    'Products/2.jpg',
-    'Products/3.jpg',
-    'Products/4.jpg',
-];
-
 interface ProductCardProps {
     item: ProductType;
 }
@@ -47,7 +40,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
                 productId: item.id,
                 name: item.name,
                 variantSku: currentVariant.sku,
-                imgURL: item.images[0] || images[0],
+                imgURL: item.images[0],
                 price: parseFloat(currentVariant.price),
                 quantity: 1,
             };
@@ -72,7 +65,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
     return (
         <div
             ref={cardRef}
-            className="w-full max-w-[360px] max-h-fit bg-black text-white flex flex-col justify-between gap-[30px] px-[20px] pt-[20px] pb-[30px] mx-[10px] rounded-[16px] border-solid border-white border-[1px] shadow-lg relative"
+            className="w-full max-w-[360px] h-fit min-h-[540px] bg-black text-white flex flex-col justify-between gap-[30px] px-[20px] pt-[20px] pb-[30px] mx-[10px] rounded-[16px] border-solid border-white border-[1px] shadow-lg relative"
         >
             <AnimatePresence>
                 {isFlying && (
@@ -88,7 +81,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
                         transition={{ duration: 1, ease: 'easeInOut' }}
                     >
                         <img
-                            src={item.images[0] || images[0]}
+                            src={item.images[0]}
                             alt={item.name}
                             className="object-cover w-full h-full rounded-[12px]"
                         />
@@ -96,11 +89,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
                 )}
             </AnimatePresence>
 
-            <div className="w-full h-full flex justify-center items-center overflow-hidden rounded-[12px] outline-solid outline-white outline-[1px]">
+            <div className="w-full h-full h-[340px] flex justify-center items-center overflow-hidden rounded-[12px] outline-solid outline-white outline-[1px]">
                 <img
-                    src={item.images[0] || images[0]}
+                    src={item.images[0]}
                     alt={item.name}
-                    className="object-cover w-full h-full"
+                    className="object-cover aspect-square w-full h-full"
                 />
             </div>
 
@@ -160,7 +153,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
             <div className="flex items-center justify-between mt-auto">
                 <span className="text-[24px] font-bold">
                     {currentVariant
-                        ? `${currentVariant.price} $`
+                        ? `${Number(currentVariant.price).toFixed(2)} $`
                         : 'Цена не указана'}
                 </span>
                 <Button
