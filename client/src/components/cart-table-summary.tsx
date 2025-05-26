@@ -2,30 +2,36 @@
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { getCart, setCart } from '@/utils/cartUtils';
+import { checkDiscount } from '@/utils/requests';
+import { CartItem } from '@/utils/types';
 import { Minus, Plus, X } from 'lucide-react';
-import { useState } from 'react';
-
-interface CartItem {
-    id: number;
-    name: string;
-    price: number;
-    quantity: number;
-}
+import { useEffect, useState } from 'react';
 
 const Cart = () => {
-    const [cartItems, setCartItems] = useState<CartItem[]>([
-        { id: 1, name: 'Болты розничный SquidBerry', price: 570, quantity: 2 },
-        { id: 2, name: 'Болты розничный SquidBerry', price: 570, quantity: 2 },
-        { id: 3, name: 'Болты розничный SquidBerry', price: 570, quantity: 2 },
-        { id: 4, name: 'Болты розничный SquidBerry', price: 570, quantity: 2 },
-    ]);
-
+    const [cartItems, setCartItems] = useState<CartItem[]>([]);
+    const [isMounted, setIsMounted] = useState(false);
     const [showCouponInput, setShowCouponInput] = useState(false);
     const [couponCode, setCouponCode] = useState('');
-    const [isCouponApplied, setIsCouponApplied] = useState(false);
+    const [discountPercentage, setDiscountPercentage] = useState(0);
     const [error, setError] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
-    const updateQuantity = (id: number, delta: number) => {
+    useEffect(() => {
+        const cart = getCart();
+        setCartItems(cart);
+        setIsMounted(true);
+    }, []);
+
+    useEffect(() => {
+        if (isMounted) {
+            console.log('Saving cart:', cartItems);
+            setCart(cartItems);
+        }
+    }, [cartItems, isMounted]);
+
+    const updateQuantity = (id: string, delta: number) => {
         setCartItems((prevItems) =>
             prevItems
                 .map((item) =>
@@ -40,8 +46,39 @@ const Cart = () => {
         );
     };
 
-    const handleRemoveItem = (id: number) => {
+    const handleRemoveItem = (id: string) => {
         setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
+    };
+
+    const handleApplyCoupon = async () => {
+        if (!couponCode.trim()) {
+            setError('Coupon code cannot be empty');
+            setSuccessMessage('');
+            return;
+        }
+
+        setIsLoading(true);
+        try {
+            const data = await checkDiscount(couponCode.trim());
+            if (data.discount) {
+                setDiscountPercentage(data.discount.percentage);
+                setError('');
+                setSuccessMessage(
+                    data.message || 'Coupon applied successfully',
+                );
+                setCouponCode('');
+            } else {
+                setDiscountPercentage(0);
+                setError(data.message || 'Invalid coupon');
+                setSuccessMessage('');
+            }
+        } catch (error) {
+            setDiscountPercentage(0);
+            setError('Failed to apply coupon');
+            setSuccessMessage('');
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const subtotal = cartItems.reduce(
@@ -49,18 +86,10 @@ const Cart = () => {
         0,
     );
     const salesTax = subtotal * 0.1;
-    const discount = isCouponApplied ? (subtotal + salesTax) * 0.1 : 0;
+    const discount = discountPercentage
+        ? (subtotal + salesTax) * (discountPercentage / 100)
+        : 0;
     const grandTotal = subtotal + salesTax - discount;
-
-    const handleApplyCoupon = () => {
-        if (couponCode.trim().toLowerCase() === 'save10') {
-            setIsCouponApplied(true);
-            setError('');
-        } else {
-            setIsCouponApplied(false);
-            setError('Invalid coupon');
-        }
-    };
 
     const CartTable = () => (
         <div className="flex flex-col w-full gap-[10px]">
@@ -79,12 +108,14 @@ const Cart = () => {
                             className="grid grid-cols-[100px_1fr_150px_150px_150px] gap-4 items-center border border-white px-5 py-4"
                         >
                             <img
-                                src="Products/1.jpg"
+                                src={item.imgURL}
                                 alt={item.name}
                                 className="w-full h-full max-w-20 max-h-20 object-cover rounded-[10px]"
                             />
                             <div>
-                                <p>{item.name}</p>
+                                <p>
+                                    {item.name} ({item.variantSku})
+                                </p>
                                 <p className="text-sm text-gray-500">
                                     57,000.yn/wt
                                 </p>
@@ -128,7 +159,7 @@ const Cart = () => {
                 </>
             ) : (
                 <div className="text-center text-gray-400 py-10 text-lg border border-white rounded-lg">
-                    Ваша корзина пуста 🛒
+                    Your cart is empty 🛒
                 </div>
             )}
         </div>
@@ -145,7 +176,10 @@ const Cart = () => {
                     <span>Sales Tax</span>
                     <span>{salesTax.toLocaleString()} €</span>
                 </div>
-
+                <div className="flex justify-between">
+                    <span>Discount</span>
+                    <span>{discount.toLocaleString()} €</span>
+                </div>
                 <div className="flex justify-between items-start gap-2">
                     <span className="pt-2">Coupon code</span>
                     <div className="flex flex-col relative">
@@ -173,8 +207,9 @@ const Cart = () => {
                                         size="sm"
                                         className="font-jakarta h-8 text-xs px-3"
                                         onClick={handleApplyCoupon}
+                                        disabled={isLoading}
                                     >
-                                        Apply
+                                        {isLoading ? 'Checking...' : 'Apply'}
                                     </Button>
                                 </div>
                                 {error && (
@@ -182,24 +217,22 @@ const Cart = () => {
                                         {error}
                                     </span>
                                 )}
-                                {isCouponApplied && (
+                                {successMessage && (
                                     <span className="absolute -top-5 left-0 text-green-400 text-xs">
-                                        Coupon applied
+                                        {successMessage}
                                     </span>
                                 )}
                             </>
                         )}
                     </div>
                 </div>
-
                 <div className="flex justify-between items-center text-lg font-bold pb-2 border-b border-gray-500">
                     <span>Grand total</span>
                     <span className="text-[22px]">
                         {grandTotal.toLocaleString()} €
                     </span>
                 </div>
-
-                <Button className="w-full bg-white text-black text-lg py-6  hover:bg-gray-200">
+                <Button className="w-full bg-white text-black text-lg py-6 hover:bg-gray-200">
                     Place Order
                 </Button>
             </div>
@@ -212,7 +245,6 @@ const Cart = () => {
                         Check out the catalog—maybe you’ll find something useful
                     </p>
                 </div>
-
                 <Button
                     variant="link"
                     className="w-full font-bold text-[20px] font-jakarta h-auto text-white"
@@ -226,14 +258,20 @@ const Cart = () => {
     return (
         <div className="p-6 bg-black text-white min-h-fit">
             <h1 className="text-4xl font-bold mb-6">SHOPPING CART</h1>
-            <div className="flex gap-[10px]">
-                <div className="flex-1">
-                    <CartTable />
+            {isMounted ? (
+                <div className="flex gap-[10px]">
+                    <div className="flex-1">
+                        <CartTable />
+                    </div>
+                    <div className="w-[500px]">
+                        <CartSummary />
+                    </div>
                 </div>
-                <div className="w-[500px]">
-                    <CartSummary />
+            ) : (
+                <div className="text-center text-gray-400 py-10 text-lg border border-white rounded-lg">
+                    Loading cart...
                 </div>
-            </div>
+            )}
         </div>
     );
 };

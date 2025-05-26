@@ -82,7 +82,7 @@ const SearchBar = () => {
                 !error &&
                 showList &&
                 filteredProducts.length > 0 && (
-                    <div className="absolute top-full left-0 w-full max-h-60 overflow-y-auto mt-2 bg-[#141414] border border-gray-300 rounded-md z-10">
+                    <div className="absolute top-full left-0 w-full max-h-60 overflow-y-auto scrollbar bg-[#141414] border border-gray-300 rounded-md z-10">
                         {filteredProducts.map((product) => (
                             <div
                                 key={product.id}

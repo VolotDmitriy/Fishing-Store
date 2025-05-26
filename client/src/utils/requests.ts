@@ -5,6 +5,7 @@ import {
     ProductType,
     VariantTypeType,
 } from '@/components/data-table/types';
+import { DiscountResponse } from '@/utils/types';
 import axios from 'axios';
 
 type FetchCategoriesResponse<T extends boolean> = T extends true
@@ -72,6 +73,24 @@ export async function fetchVariantTypes(
         return response.data;
     } catch (error) {
         console.error('Ошибка при получении типов вариантов:', error);
+        throw error;
+    }
+}
+
+export async function checkDiscount(code: string): Promise<DiscountResponse> {
+    try {
+        const response = await axios.post(
+            `${process.env.NEXT_PUBLIC_SERVER_URL}/discount/check`,
+            { code },
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            },
+        );
+        return response.data;
+    } catch (error) {
+        console.error('Ошибка при проверке скидки:', error);
         throw error;
     }
 }

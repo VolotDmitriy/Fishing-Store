@@ -9,6 +9,8 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
+import { addToCart } from '@/utils/cartUtils';
+import { CartItem } from '@/utils/types';
 import { ShoppingCart } from 'lucide-react';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
@@ -19,6 +21,7 @@ const images = [
     'Products/3.jpg',
     'Products/4.jpg',
 ];
+
 interface ProductCardProps {
     item: ProductType;
 }
@@ -34,11 +37,27 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
 
     const currentVariant = item.variants.find((v) => v.sku === selectedSku);
 
+    const handleAddToCart = () => {
+        if (currentVariant) {
+            const cartItem: CartItem = {
+                id: currentVariant.id,
+                productId: item.id,
+                name: item.name,
+                variantSku: currentVariant.sku,
+                imgURL: item.images[0] || images[0],
+                price: parseFloat(currentVariant.price),
+                quantity: 1,
+            };
+            addToCart(cartItem);
+            alert(`${item.name} (${currentVariant.sku}) добавлен в корзину!`);
+        }
+    };
+
     return (
         <div className="w-full max-w-[360px] max-h-fit bg-black text-white flex flex-col justify-between gap-[30px] px-[20px] pt-[20px] pb-[30px] mx-[10px] rounded-[16px] border-solid! border-white border-[1px] shadow-lg">
             <div className="w-full h-full flex justify-center items-center overflow-hidden rounded-[12px] outline-solid! outline-white outline-[1px]">
                 <img
-                    src={images[0]} // Затычка
+                    src={item.images[0] || images[0]} // Используем изображение товара или заглушку
                     alt={item.name}
                     className="object-cover w-full h-full"
                 />
@@ -106,6 +125,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
                 <Button
                     variant="custom_outline"
                     className="text-white border-white hover:bg-white hover:text-black cursor-pointer"
+                    onClick={handleAddToCart}
                 >
                     <ShoppingCart className="mr-[8px] h-5 w-5" />В корзину
                 </Button>

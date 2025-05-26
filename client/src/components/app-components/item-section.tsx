@@ -1,4 +1,5 @@
 'use client';
+
 import { productSchema, ProductType } from '@/components/data-table/types';
 import { Button } from '@/components/ui/button';
 import {
@@ -8,6 +9,8 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
+import { addToCart } from '@/utils/cartUtils';
+import { CartItem } from '@/utils/types';
 import { ShoppingCart } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -29,7 +32,7 @@ interface ItemSectionProps {
 }
 
 function ItemSection({ id }: ItemSectionProps) {
-    const [selectedSku, setSelectedSku] = useState<string>('');
+    const [selectedVariantId, setSelectedVariantId] = useState<string>('');
     const [product, setProduct] = useState<ProductType | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -40,7 +43,9 @@ function ItemSection({ id }: ItemSectionProps) {
             try {
                 const data = await getProduct(id);
                 setProduct(data);
-                setSelectedSku(data.variants?.[0]?.sku || '');
+                if (data.variants?.length > 0) {
+                    setSelectedVariantId(data.variants[0].id);
+                }
             } catch (err) {
                 setError(err instanceof Error ? err.message : 'Unknown error');
             } finally {
@@ -51,12 +56,12 @@ function ItemSection({ id }: ItemSectionProps) {
         loadProduct();
     }, [id]);
 
-    const selectVariant =
-        product?.variants?.find((v) => v.sku === selectedSku) ||
+    const selectedVariant =
+        product?.variants?.find((v) => v.id === selectedVariantId) ||
         product?.variants?.[0];
-    const maxQuantity = selectVariant?.inStock || 1;
-    const unitPrice = selectVariant?.price
-        ? parseFloat(selectVariant.price)
+    const maxQuantity = selectedVariant?.inStock || 1;
+    const unitPrice = selectedVariant?.price
+        ? parseFloat(selectedVariant.price)
         : 0;
     const totalPrice = (unitPrice * quantity).toFixed(2);
 
@@ -72,16 +77,29 @@ function ItemSection({ id }: ItemSectionProps) {
         }
     };
 
+    const handleAddToCart = () => {
+        if (product && selectedVariant) {
+            const cartItem: CartItem = {
+                id: selectedVariant.id,
+                name: `${product.name} - ${selectedVariant.sku}`,
+                imgURL: product.images?.[0] || '/default-image.jpg',
+                price: parseFloat(selectedVariant.price),
+                quantity: quantity,
+                productId: product.id,
+                variantSku: selectedVariant.sku,
+            };
+            addToCart(cartItem);
+        }
+    };
+
     if (loading) return <div>Загрузка...</div>;
     if (error) return <div className="text-red-500">{error}</div>;
     if (!product) return <div>Товар не найден</div>;
 
-    const selectedVariant =
-        product.variants?.find((v) => v.sku === selectedSku) ||
-        product.variants?.[0];
     const price = selectedVariant?.price
         ? parseFloat(selectedVariant.price).toFixed(2)
         : '0.00';
+
     try {
         return (
             <div className="w-full flex justify-center px-[100px]">
@@ -213,15 +231,15 @@ function ItemSection({ id }: ItemSectionProps) {
                                         </span>
                                         <div className="w-full max-w-[300px]">
                                             <Select
-                                                value={selectedSku}
+                                                value={selectedVariantId}
                                                 onValueChange={(value) => {
-                                                    setSelectedSku(value);
+                                                    setSelectedVariantId(value);
                                                     setQuantity(1);
                                                 }}
                                             >
                                                 <SelectTrigger className="h-[40px] bg-black border border-white rounded-[10px] text-white">
                                                     <SelectValue placeholder="Выберите вариант">
-                                                        {selectedSku ||
+                                                        {selectedVariant?.sku ||
                                                             product
                                                                 .variants?.[0]
                                                                 ?.sku}
@@ -233,7 +251,7 @@ function ItemSection({ id }: ItemSectionProps) {
                                                             <SelectItem
                                                                 key={variant.id}
                                                                 value={
-                                                                    variant.sku
+                                                                    variant.id
                                                                 }
                                                                 className="hover:bg-gray-800"
                                                             >
@@ -281,7 +299,6 @@ function ItemSection({ id }: ItemSectionProps) {
                                         </div>
                                     </div>
                                 </div>
-
                                 <div className="w-full flex flex-row items-center rounded">
                                     <span className="text-white font-plus-jakarta-sans font-medium text-[28px]">
                                         Total: ${totalPrice}
@@ -296,10 +313,11 @@ function ItemSection({ id }: ItemSectionProps) {
                                             Купить
                                         </button>
                                     </Link>
-                                    <div className=" h-full flex flex-row justify-center items-center">
+                                    <div className="h-full flex flex-row justify-center items-center">
                                         <Button
                                             variant="custom_outline"
                                             className="w-full h-full text-white text-[14px] border-white cursor-pointer hover:bg-white hover:text-black active:brightness-80 active:opacity-80 transition-all duration-300"
+                                            onClick={handleAddToCart}
                                         >
                                             <ShoppingCart className="mr-[8px] h-5 w-5" />
                                             Добавить в корзину
@@ -307,7 +325,6 @@ function ItemSection({ id }: ItemSectionProps) {
                                     </div>
                                 </div>
                             </div>
-
                             <div className="w-full flex flex-col items-start px-[20px] py-[20px] gap-[20px] border border-white box-border">
                                 <div className="w-full flex flex-col justify-center items-start px-[10px] py-[10px] border-b-4 border-[#474747]">
                                     <span className="w-full text-white font-plus-jakarta-sans font-medium text-[24px] leading-[1] flex items-center">
