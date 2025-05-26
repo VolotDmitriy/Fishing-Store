@@ -22,8 +22,6 @@ async function getRecommendedProduct(
     const res = await axios.get(
         `http://localhost:4200/product/category/${categoryId}?full=true`,
     );
-    console.log('12312312312312312312');
-    console.log(res.data);
     if (!(res.status === 200)) throw new Error('Failed to fetch category');
 
     const data = res.data;
@@ -48,7 +46,7 @@ async function ProductRecomend({ categoryId }: ItemSectionProps) {
                         RECOMMENDED FOR YOU
                     </h2>
 
-                    <UniversalCarousel itemsPerView={5}>
+                    <UniversalCarousel itemsPerView={4}>
                         {recomProducts.map((product: ProductType) => (
                             <ProductCard key={product.id} item={product} />
                         ))}
