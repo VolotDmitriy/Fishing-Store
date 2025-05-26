@@ -98,7 +98,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
             </div>
 
             <div className="flex flex-col gap-[18px]">
-                <h3 className="text-lg overflow-hidden text-[20px] leading-[1] whitespace-nowrap text-ellipsis">
+                <h3 className="text-lg overflow-hidden text-[20px] whitespace-nowrap text-ellipsis">
                     <Link href={`/${item.id}`} passHref legacyBehavior>
                         <a className="inline-block">{item.name}</a>
                     </Link>
