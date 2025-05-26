@@ -188,15 +188,15 @@ export const discounts = [
         id: 'disc001',
         name: 'save10',
         percentage: 10.0,
-        startDate: new Date('2025-09-01T00:00:00.000Z'),
-        endDate: new Date('2025-09-30T23:59:59.999Z'),
+        startDate: new Date('2025-01-01T00:00:00.000Z'),
+        endDate: new Date('2025-12-30T23:59:59.999Z'),
     },
     {
         id: 'disc002',
         name: 'HotSpring',
         percentage: 15.0,
-        startDate: new Date('2025-09-01T00:00:00.000Z'),
-        endDate: new Date('2025-09-30T23:59:59.999Z'),
+        startDate: new Date('2025-03-01T00:00:00.000Z'),
+        endDate: new Date('2025-04-30T23:59:59.999Z'),
     },
 ];
 
@@ -207,7 +207,12 @@ export const products = [
         description:
             'Высококачественный спиннинг для начинающих и опытных рыболовов, известный своей прочностью и производительностью.',
         categoryId: 'cat002',
-        images: ['https://example.com/st-croix-triumph.jpg'],
+        images: [
+            'https://trofey.ua/images/cache/udilishha/1418021002-01-490x327.webp',
+            'https://trofey.ua/images/cache/udilishha/1418021002-01-108x72.webp',
+            'https://trofey.ua/images/cache/udilishha/1418021002-02-108x72.webp',
+            'https://trofey.ua/images/cache/udilishha/1418021002-04-108x72.webp',
+        ],
         discountId: null,
     },
     {
@@ -216,7 +221,10 @@ export const products = [
         description:
             'Спиннинг с удобной ручкой и катушкодержателем, предлагающий отличное соотношение цены и качества.',
         categoryId: 'cat002',
-        images: ['https://example.com/fenwick-hmg.jpg'],
+        images: [
+            'https://trofey.ua/images/cache/udilishha/1417001001-01-490x327.webp',
+            'https://trofey.ua/images/cache/udilishha/1417001001-02-108x72.webp',
+        ],
         discountId: null,
     },
     {
@@ -225,7 +233,12 @@ export const products = [
         description:
             'Бюджетный спиннинг, подходящий для нечастых рыбалок, но требующий осторожного обращения.',
         categoryId: 'cat002',
-        images: ['https://example.com/shimano-scimitar.jpg'],
+        images: [
+            'https://trofey.ua/images/cache/udilishha/1403120001-01-490x327.webp',
+            'https://trofey.ua/images/cache/udilishha/1403120001-02-108x72.webp',
+            'https://trofey.ua/images/cache/udilishha/1403120001-03-108x72.webp',
+            'https://trofey.ua/images/cache/udilishha/1403120001-04-108x72.webp',
+        ],
         discountId: null,
     },
     {
@@ -234,7 +247,14 @@ export const products = [
         description:
             'Доступный вариант для начинающих рыболовов, подходящий для спокойной ловли.',
         categoryId: 'cat002',
-        images: ['https://example.com/bass-pro-graphite.jpg'],
+        images: [
+            'https://trofey.ua/images/cache/udilishha/1406030001-01-490x327.webp',
+            'https://trofey.ua/images/cache/udilishha/1406030001-02-108x72.webp',
+            'https://trofey.ua/images/cache/udilishha/1406030001-03-108x72.webp',
+            'https://trofey.ua/images/cache/udilishha/1406030001-04-108x72.webp',
+            'https://trofey.ua/images/cache/udilishha/1406030001-05-108x72.webp',
+        ],
+
         discountId: null,
     },
     {
@@ -243,7 +263,14 @@ export const products = [
         description:
             'Обновленная версия Ugly Stik Tiger, идеальная для искусственных приманок и искусственной ловли.',
         categoryId: 'cat002',
-        images: ['https://example.com/ugly-stik-bigwater.jpg'],
+        images: [
+            'https://trofey.ua/images/cache/udilishha/1403090002-01-490x327.webp',
+            'https://trofey.ua/images/cache/udilishha/1403090002-02-108x72.webp',
+            'https://trofey.ua/images/cache/udilishha/1403090002-03-108x72.webp',
+            'https://trofey.ua/images/cache/udilishha/1403090002-04-108x72.webp',
+            'https://trofey.ua/images/cache/udilishha/1403090002-05-108x72.webp',
+        ],
+
         discountId: null,
     },
     {
@@ -252,7 +279,14 @@ export const products = [
         description:
             'Высокооцененный спиннинг, идеальный для соревнований и матчинговой ловли.',
         categoryId: 'cat002',
-        images: ['https://example.com/daiwa-matchman.jpg'],
+        images: [
+            'https://trofey.ua/images/cache/udilishha/1403090001-01-490x327.webp',
+            'https://trofey.ua/images/cache/udilishha/1403090001-02-108x72.webp',
+            'https://trofey.ua/images/cache/udilishha/1403090001-03-108x72.webp',
+            'https://trofey.ua/images/cache/udilishha/1403090001-04-108x72.webp',
+            'https://trofey.ua/images/cache/udilishha/1403090001-05-108x72.webp',
+        ],
+
         discountId: null,
     },
     {
@@ -260,7 +294,14 @@ export const products = [
         name: 'Tsunami Airwave Elite Surf Spinning Rod',
         description: 'Легкий и прочный спиннинг для ловли в прибрежных волнах.',
         categoryId: 'cat002',
-        images: ['https://example.com/tsunami-airwave.jpg'],
+        images: [
+            'https://trofey.ua/images/cache/udilishha/1422014001-01-490x327.webp',
+            'https://trofey.ua/images/cache/udilishha/1422014001-02-108x72.webp',
+            'https://trofey.ua/images/cache/udilishha/1422014001-03-108x72.webp',
+            'https://trofey.ua/images/cache/udilishha/1422014001-04-108x72.webp',
+            'https://trofey.ua/images/cache/udilishha/1422014001-05-108x72.webp',
+        ],
+
         discountId: null,
     },
     {
@@ -269,7 +310,14 @@ export const products = [
         description:
             'Универсальная фидерная удочка, подходящая для ловли мелкой и средней рыбы в реках и озерах.',
         categoryId: 'cat003',
-        images: ['https://example.com/daiwa-nzon.jpg'],
+        images: [
+            'https://trofey.ua/images/cache/udilishha/1609017002-01-490x327.webp',
+            'https://trofey.ua/images/cache/udilishha/1609017002-02-108x72.webp',
+            'https://trofey.ua/images/cache/udilishha/1609017002-03-108x72.webp',
+            'https://trofey.ua/images/cache/udilishha/1609017002-04-108x72.webp',
+            'https://trofey.ua/images/cache/udilishha/1609017002-05-108x72.webp',
+            'https://trofey.ua/images/cache/udilishha/1609017002-06-108x72.webp',
+        ],
         discountId: null,
     },
     {
@@ -278,7 +326,13 @@ export const products = [
         description:
             'Качественная фидерная удочка для матчинговой ловли, с отличной чувствительностью и мощностью.',
         categoryId: 'cat003',
-        images: ['https://example.com/shimano-match-feeder.jpg'],
+        images: [
+            'https://trofey.ua/images/cache/udilishha/1612009001-01-490x327.webp',
+            'https://trofey.ua/images/cache/udilishha/1612009001-02-108x72.webp',
+            'https://trofey.ua/images/cache/udilishha/1612009001-03-108x72.webp',
+            'https://trofey.ua/images/cache/udilishha/1612009001-04-108x72.webp',
+            'https://trofey.ua/images/cache/udilishha/1612009001-05-108x72.webp',
+        ],
         discountId: null,
     },
     {
@@ -287,7 +341,12 @@ export const products = [
         description:
             'Прочная и чувствительная фидерная удочка, идеальная для ловли в различных условиях.',
         categoryId: 'cat003',
-        images: ['https://example.com/matrix-feeder.jpg'],
+        images: [
+            'https://trofey.ua/images/cache/udilishha/1609016001-01-490x327.webp',
+            'https://trofey.ua/images/cache/udilishha/1609016001-02-108x72.webp',
+            'https://trofey.ua/images/cache/udilishha/1609016001-03-108x72.webp',
+            'https://trofey.ua/images/cache/udilishha/1609016001-04-108x72.webp',
+        ],
         discountId: null,
     },
     {
@@ -296,7 +355,13 @@ export const products = [
         description:
             'Фидерная удочка с балансом чувствительности и мощности, подходящая для различных условий ловли.',
         categoryId: 'cat003',
-        images: ['https://example.com/browning-feeder.jpg'],
+        images: [
+            'https://trofey.ua/images/cache/udilishha/1609017004-01-490x327.webp',
+            'https://trofey.ua/images/cache/udilishha/1609017004-02-108x72.webp',
+            'https://trofey.ua/images/cache/udilishha/1609017004-03-108x72.webp',
+            'https://trofey.ua/images/cache/udilishha/1609017004-04-108x72.webp',
+            'https://trofey.ua/images/cache/udilishha/1609017004-05-108x72.webp',
+        ],
         discountId: null,
     },
     {
@@ -305,7 +370,14 @@ export const products = [
         description:
             'Легкая фидерная удочка, идеальная для ловли с методфидерной техникой.',
         categoryId: 'cat003',
-        images: ['https://example.com/paradox-feeder.jpg'],
+        images: [
+            'https://trofey.ua/images/cache/udilishha/1609010001-01-490x327.webp',
+            'https://trofey.ua/images/cache/udilishha/1609010001-02-108x72.webp',
+            'https://trofey.ua/images/cache/udilishha/1609010001-03-108x72.webp',
+            'https://trofey.ua/images/cache/udilishha/1609010001-04-108x72.webp',
+            'https://trofey.ua/images/cache/udilishha/1609010001-05-108x72.webp',
+            'https://trofey.ua/images/cache/udilishha/1609010001-06-108x72.webp',
+        ],
         discountId: null,
     },
     {
@@ -314,7 +386,13 @@ export const products = [
         description:
             'Начальная фидерная удочка с заменяемыми кончиками, подходящая для обучения технике.',
         categoryId: 'cat003',
-        images: ['https://example.com/zite-feeder.jpg'],
+        images: [
+            'https://trofey.ua/images/cache/udilishha/1612018001-01-490x327.webp',
+            'https://trofey.ua/images/cache/udilishha/1612018001-02-108x72.webp',
+            'https://trofey.ua/images/cache/udilishha/1612018001-03-108x72.webp',
+            'https://trofey.ua/images/cache/udilishha/1612018001-04-108x72.webp',
+            'https://trofey.ua/images/cache/udilishha/1612018001-05-108x72.webp',
+        ],
         discountId: null,
     },
     {
@@ -323,7 +401,13 @@ export const products = [
         description:
             'Фидерная удочка с возможностью продления, позволяющая делать дальние забросы.',
         categoryId: 'cat003',
-        images: ['https://example.com/harilla-feeder.jpg'],
+        images: [
+            'https://trofey.ua/images/cache/udilishha/1601040023-01-490x327.webp',
+            'https://trofey.ua/images/cache/udilishha/1601040023-02-108x72.webp',
+            'https://trofey.ua/images/cache/udilishha/1601040023-03-108x72.webp',
+            'https://trofey.ua/images/cache/udilishha/1601040023-04-108x72.webp',
+            'https://trofey.ua/images/cache/udilishha/1601040023-05-108x72.webp',
+        ],
         discountId: null,
     },
     {
@@ -332,7 +416,10 @@ export const products = [
         description:
             'Универсальная и надежная спиннинговая катушка, подходящая как для новичков, так и для опытных рыболовов.',
         categoryId: 'cat005',
-        images: ['https://example.com/daiwa-bg.jpg'],
+        images: [
+            'https://trofey.ua/images/cache/katushki/2129004001-01-490x327.webp',
+            'https://trofey.ua/images/cache/katushki/2129004001-02-108x72.webp',
+        ],
         discountId: null,
     },
     {
@@ -341,7 +428,11 @@ export const products = [
         description:
             'Высокопроизводительная спиннинговая катушка с плавным фрикционом и отличными характеристиками заброса.',
         categoryId: 'cat005',
-        images: ['https://example.com/penn-battle.jpg'],
+        images: [
+            'https://trofey.ua/images/cache/katushki/2202000001-01-490x327.webp',
+            'https://trofey.ua/images/cache/katushki/2202000001-02-108x72.webp',
+            'https://trofey.ua/images/cache/katushki/2202000001-03-108x72.webp',
+        ],
         discountId: null,
     },
     {
@@ -350,7 +441,10 @@ export const products = [
         description:
             'Универсальная спиннинговая катушка, подходящая для различных пресноводных техник ловли.',
         categoryId: 'cat005',
-        images: ['https://example.com/shimano-sedona.jpg'],
+        images: [
+            'https://trofey.ua/images/cache/katushki/2129005002-01-490x327.webp',
+            'https://trofey.ua/images/cache/katushki/2129005002-02-108x72.webp',
+        ],
         discountId: null,
     },
     {
@@ -359,7 +453,10 @@ export const products = [
         description:
             'Версатильная спиннинговая катушка, подходящая как для пресной, так и для соленой воды.',
         categoryId: 'cat005',
-        images: ['https://example.com/okuma-ceymar.jpg'],
+        images: [
+            'https://trofey.ua/images/cache/katushki/2102180008-01-490x327.webp',
+            'https://trofey.ua/images/cache/katushki/2102180008-02-108x72.webp',
+        ],
         discountId: null,
     },
     {
@@ -368,7 +465,12 @@ export const products = [
         description:
             'Доступная и надежная спиннинговая катушка, идеальная для рыболовов с ограниченным бюджетом.',
         categoryId: 'cat005',
-        images: ['https://example.com/plusinno-ha3000.jpg'],
+        images: [
+            'https://trofey.ua/images/cache/katushki/2106034004-01-490x327.webp',
+            'https://trofey.ua/images/cache/katushki/2106034004-02-108x72.webp',
+            'https://trofey.ua/images/cache/katushki/2106034004-03-108x72.webp',
+            'https://trofey.ua/images/cache/katushki/2106034004-04-108x72.webp',
+        ],
         discountId: null,
     },
     {
@@ -377,7 +479,12 @@ export const products = [
         description:
             'Высококлассная спиннинговая катушка для рыболовов, требующих максимальной производительности.',
         categoryId: 'cat005',
-        images: ['https://example.com/abu-garcia-revo.jpg'],
+        images: [
+            'https://trofey.ua/images/cache/katushki/2116003001-01-490x327.webp',
+            'https://trofey.ua/images/cache/katushki/2116003001-02-108x72.webp',
+            'https://trofey.ua/images/cache/katushki/2116003001-03-108x72.webp',
+            'https://trofey.ua/images/cache/katushki/2116003001-04-108x72.webp',
+        ],
         discountId: null,
     },
     {
@@ -386,7 +493,12 @@ export const products = [
         description:
             'Высокопроизводительная спиннинговая катушка с продвинутыми функциями для серьезных рыболовов.',
         categoryId: 'cat005',
-        images: ['https://example.com/kastking-royale.jpg'],
+        images: [
+            'https://trofey.ua/images/cache/katushki/2207060003-01-490x327.webp',
+            'https://trofey.ua/images/cache/katushki/2207060003-02-108x72.webp',
+            'https://trofey.ua/images/cache/katushki/2207060003-03-108x72.webp',
+            'https://trofey.ua/images/cache/katushki/2207060003-04-108x72.webp',
+        ],
         discountId: null,
     },
     {
@@ -395,7 +507,12 @@ export const products = [
         description:
             'Классический воблер, любимый рыболовами десятилетиями за свою реалистичную игру.',
         categoryId: 'cat007',
-        images: ['https://example.com/rapala-minnow.jpg'],
+        images: [
+            'https://trofey.ua/images/cache/voblery/4108002008-01-490x327.webp',
+            'https://trofey.ua/images/cache/voblery/4108002010-01-108x72.webp',
+            'https://trofey.ua/images/cache/voblery/4108002001-01-108x72.webp',
+            'https://trofey.ua/images/cache/voblery/4108002002-01-108x72.webp',
+        ],
         discountId: null,
     },
     {
@@ -404,7 +521,12 @@ export const products = [
         description:
             'Легендарный воблер с уникальным дизайном, позволяющий нырять глубоко и обходить препятствия.',
         categoryId: 'cat007',
-        images: ['https://example.com/bomber-long-a.jpg'],
+        images: [
+            'https://trofey.ua/images/cache/voblery/4109056212-01-490x327.webp',
+            'https://trofey.ua/images/cache/voblery/4109056211-01-108x72.webp',
+            'https://trofey.ua/images/cache/voblery/4109055673-01-108x72.webp',
+            'https://trofey.ua/images/cache/voblery/4109055669-01-108x72.webp',
+        ],
         discountId: null,
     },
     {
@@ -413,7 +535,12 @@ export const products = [
         description:
             'Маленький универсальный воблер, идеальный для ловли окуня в мелководье.',
         categoryId: 'cat007',
-        images: ['https://example.com/rebel-wee-r.jpg'],
+        images: [
+            'https://trofey.ua/images/cache/voblery/4109050039-01-490x327.webp',
+            'https://trofey.ua/images/cache/voblery/4109050052-01-108x72.webp',
+            'https://trofey.ua/images/cache/voblery/4109050056-01-108x72.webp',
+            'https://trofey.ua/images/cache/voblery/4109050054-01-108x72.webp',
+        ],
         discountId: null,
     },
     {
@@ -422,7 +549,12 @@ export const products = [
         description:
             'Высокопроизводительный воблер с плотной вибрацией и отличной дальностью заброса.',
         categoryId: 'cat007',
-        images: ['https://example.com/strike-king-series3.jpg'],
+        images: [
+            'https://trofey.ua/images/cache/voblery/4101597240-01-490x327.webp',
+            'https://trofey.ua/images/cache/voblery/4101597265-01-108x72.webp',
+            'https://trofey.ua/images/cache/voblery/4101597275-01-108x72.webp',
+            'https://trofey.ua/images/cache/voblery/4101597266-01-108x72.webp',
+        ],
         discountId: null,
     },
     {
@@ -431,7 +563,12 @@ export const products = [
         description:
             'Глубоководный воблер, идеальный для ловли в глубоких водах или у структур.',
         categoryId: 'cat007',
-        images: ['https://example.com/norman-deep-little-n.jpg'],
+        images: [
+            'https://trofey.ua/images/cache/voblery/4101536334-01-490x327.webp',
+            'https://trofey.ua/images/cache/voblery/4101536399-01-108x72.webp',
+            'https://trofey.ua/images/cache/voblery/4101536316-01-108x72.webp',
+            'https://trofey.ua/images/cache/voblery/4101536387-01-108x72.webp',
+        ],
         discountId: null,
     },
     {
@@ -440,7 +577,12 @@ export const products = [
         description:
             'Воблер с квадратным клювом, идеальный для ловли у мелководных укрытий и камней.',
         categoryId: 'cat007',
-        images: ['https://example.com/spro-little-john.jpg'],
+        images: [
+            'https://trofey.ua/images/cache/voblery/4130001023-01-490x327.webp',
+            'https://trofey.ua/images/cache/voblery/4130001002-01-108x72.webp',
+            'https://trofey.ua/images/cache/voblery/4130001004-01-108x72.webp',
+            'https://trofey.ua/images/cache/voblery/4130001032-01-108x72.webp',
+        ],
         discountId: null,
     },
     {
@@ -449,7 +591,12 @@ export const products = [
         description:
             'Воблер с плоскими боками и уникальным 3D дизайном, обеспечивающий отличную игру.',
         categoryId: 'cat007',
-        images: ['https://example.com/yo-zuri-3drx.jpg'],
+        images: [
+            'https://trofey.ua/images/cache/voblery/4109055248-01-490x327.webp',
+            'https://trofey.ua/images/cache/voblery/4109055243-01-108x72.webp',
+            'https://trofey.ua/images/cache/voblery/4109055247-01-108x72.webp',
+            'https://trofey.ua/images/cache/voblery/4109055241-01-108x72.webp',
+        ],
         discountId: null,
     },
     {
@@ -458,7 +605,9 @@ export const products = [
         description:
             'Бюджетная монофильная леска с отличной прочностью и долговечностью.',
         categoryId: 'cat008',
-        images: ['https://example.com/berkley-trilene-xl.jpg'],
+        images: [
+            'https://trofey.ua/images/cache/leski/3109050129-01-490x327.webp',
+        ],
         discountId: null,
     },
     {
@@ -467,7 +616,9 @@ export const products = [
         description:
             'Высокопроизводительная плетеная леска с отличной прочностью и низкой видимостью.',
         categoryId: 'cat008',
-        images: ['https://example.com/spiderwire-stealth.jpg'],
+        images: [
+            'https://trofey.ua/images/cache/leski/3101010011-01-490x327.webp',
+        ],
         discountId: null,
     },
     {
@@ -476,7 +627,9 @@ export const products = [
         description:
             'Флюорокарбоновая леска, практически невидимая под водой, идеальна для чистой воды.',
         categoryId: 'cat008',
-        images: ['https://example.com/seaguar-invizx.jpg'],
+        images: [
+            'https://trofey.ua/images/cache/leski/3113040003-01-490x327.webp',
+        ],
         discountId: null,
     },
     {
@@ -485,7 +638,9 @@ export const products = [
         description:
             'Плетеная леска с повышенной устойчивостью к истиранию и плавным забросом.',
         categoryId: 'cat008',
-        images: ['https://example.com/powerpro-superslick.jpg'],
+        images: [
+            'https://trofey.ua/images/cache/leski/3113010004-01-490x327.webp',
+        ],
         discountId: null,
     },
     {
@@ -494,7 +649,9 @@ export const products = [
         description:
             'Премиальная монофильная леска, известная своей прочностью и управляемостью.',
         categoryId: 'cat008',
-        images: ['https://example.com/momoi-diamond.jpg'],
+        images: [
+            'https://trofey.ua/images/cache/leski/3102030005-01-490x327.webp',
+        ],
         discountId: null,
     },
     {
@@ -503,7 +660,9 @@ export const products = [
         description:
             'Флюорокарбоновая леска с отличной прочностью узлов и низкой памятью.',
         categoryId: 'cat008',
-        images: ['https://example.com/berkley-vanish.jpg'],
+        images: [
+            'https://trofey.ua/images/cache/leski/3117002008-01-490x327.webp',
+        ],
         discountId: null,
     },
     {
@@ -512,7 +671,9 @@ export const products = [
         description:
             'Качественная монофильная леска с высокой чувствительностью и долговечностью.',
         categoryId: 'cat008',
-        images: ['https://example.com/ande-premium.jpg'],
+        images: [
+            'https://trofey.ua/images/cache/leski/3102010005-01-490x327.webp',
+        ],
         discountId: null,
     },
     {
@@ -521,7 +682,10 @@ export const products = [
         description:
             'Легкие крючки, идеальные для наживки с мальками, сохраняют наживку живой дольше.',
         categoryId: 'cat009',
-        images: ['https://example.com/eagle-claw-aberdeen.jpg'],
+        images: [
+            'https://trofey.ua/images/cache/krjuchki/6115037003-01-490x327.webp',
+            'https://trofey.ua/images/cache/krjuchki/6115037003-02-108x72.webp',
+        ],
         discountId: null,
     },
     {
@@ -530,7 +694,10 @@ export const products = [
         description:
             'Универсальные круговые крючки, подходящие для живой и кусковой наживки, идеальны для новичков.',
         categoryId: 'cat009',
-        images: ['https://example.com/mustad-circle.jpg'],
+        images: [
+            'https://trofey.ua/images/cache/krjuchki/6110004004-01-490x327.webp',
+            'https://trofey.ua/images/cache/krjuchki/6110004004-02-108x72.webp',
+        ],
         discountId: null,
     },
     {
@@ -539,7 +706,10 @@ export const products = [
         description:
             'Прочные и острые крючки, подходящие для различных видов рыбалки.',
         categoryId: 'cat009',
-        images: ['https://example.com/gamakatsu-octopus.jpg'],
+        images: [
+            'https://trofey.ua/images/cache/krjuchki/6115001002-01-490x327.webp',
+            'https://trofey.ua/images/cache/krjuchki/6115001002-02-108x72.webp',
+        ],
         discountId: null,
     },
     {
@@ -548,7 +718,9 @@ export const products = [
         description:
             'Тройные крючки, идеальные для крепления к искусственным приманкам, таким как воблеры.',
         categoryId: 'cat009',
-        images: ['https://example.com/eagle-claw-treble.jpg'],
+        images: [
+            'https://trofey.ua/images/cache/krjuchki/6312001002-01-490x327.webp',
+        ],
         discountId: null,
     },
     {
@@ -557,7 +729,10 @@ export const products = [
         description:
             'Тяжелые крючки, предназначенные для крупной рыбы и сложных условий.',
         categoryId: 'cat009',
-        images: ['https://example.com/mustad-big-gun.jpg'],
+        images: [
+            'https://trofey.ua/images/cache/krjuchki/6101015006-01-490x327.webp',
+            'https://trofey.ua/images/cache/krjuchki/6101015006-02-108x72.webp',
+        ],
         discountId: null,
     },
     {
@@ -566,7 +741,10 @@ export const products = [
         description:
             'Легкие и чувствительные крючки, идеальные для техник фидерной ловли.',
         categoryId: 'cat009',
-        images: ['https://example.com/gamakatsu-finesse.jpg'],
+        images: [
+            'https://trofey.ua/images/cache/krjuchki/6110039001-01-490x327.webp',
+            'https://trofey.ua/images/cache/krjuchki/6110039001-02-108x72.webp',
+        ],
         discountId: null,
     },
 ];
