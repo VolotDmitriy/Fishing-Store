@@ -65,7 +65,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
     return (
         <div
             ref={cardRef}
-            className="w-full max-w-[360px] h-fit min-h-[540px] bg-black text-white flex flex-col justify-between gap-[30px] px-[20px] pt-[20px] pb-[30px] mx-[10px] rounded-[16px] border-solid border-white border-[1px] shadow-lg relative"
+            className="w-full max-w-[360px] h-fit min-h-[540px] bg-black text-white flex flex-col justify-between gap-[30px] px-[20px] pt-[20px] pb-[30px] mx-[10px] my-[1px] rounded-[16px] border-solid border-white border-[1px] shadow-lg relative"
         >
             <AnimatePresence>
                 {isFlying && (
