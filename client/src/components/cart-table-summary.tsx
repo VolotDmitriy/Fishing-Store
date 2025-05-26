@@ -2,11 +2,22 @@
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { getCart, setCart } from '@/utils/cartUtils';
-import { checkDiscount } from '@/utils/requests';
-import { CartItem } from '@/utils/types';
+import {
+    getCart,
+    removeFromCart,
+    setCart,
+    updateCartItem,
+} from '@/utils/cartUtils';
+import { checkDiscount, getProduct } from '@/utils/requests';
 import { Minus, Plus, X } from 'lucide-react';
+import Link from 'next/link';
 import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
+import { ProductType } from './data-table/types';
+
+interface CartProductType extends ProductType {
+    quantity: number;
+    selectedVariantId: string;
+}
 
 interface CartProps {
     onPlaceOrder: (orderDetails: any) => void;
@@ -14,7 +25,7 @@ interface CartProps {
 
 const Cart = forwardRef<{ reset: () => void }, CartProps>(
     ({ onPlaceOrder }, ref) => {
-        const [cartItems, setCartItems] = useState<CartItem[]>([]);
+        const [cartItems, setCartItems] = useState<CartProductType[]>([]);
         const [isMounted, setIsMounted] = useState(false);
         const [showCouponInput, setShowCouponInput] = useState(false);
         const [couponCode, setCouponCode] = useState('');
@@ -22,6 +33,7 @@ const Cart = forwardRef<{ reset: () => void }, CartProps>(
         const [error, setError] = useState('');
         const [successMessage, setSuccessMessage] = useState('');
         const [isLoading, setIsLoading] = useState(false);
+        const [stockError, setStockError] = useState<string>('');
 
         useImperativeHandle(ref, () => ({
             reset: () => {
@@ -31,13 +43,41 @@ const Cart = forwardRef<{ reset: () => void }, CartProps>(
                 setError('');
                 setSuccessMessage('');
                 setShowCouponInput(false);
+                setStockError('');
+                setCart([]);
             },
         }));
 
         useEffect(() => {
-            const cart = getCart();
-            setCartItems(cart);
-            setIsMounted(true);
+            const loadCart = async () => {
+                const storedCart = getCart();
+                const fullCartItems: CartProductType[] = [];
+
+                for (const item of storedCart) {
+                    try {
+                        const product = await getProduct(item.id);
+                        fullCartItems.push({
+                            ...product,
+                            quantity: item.quantity,
+                            selectedVariantId: item.selectedVariantId,
+                        });
+                    } catch (err) {
+                        console.error(
+                            `Failed to fetch product ${item.id}:`,
+                            err,
+                        );
+                        setError(
+                            `Failed to load product ${item.name}. It may have been removed.`,
+                        );
+                        setTimeout(() => setError(''), 5000);
+                    }
+                }
+
+                setCartItems(fullCartItems);
+                setIsMounted(true);
+            };
+
+            loadCart();
         }, []);
 
         useEffect(() => {
@@ -47,25 +87,67 @@ const Cart = forwardRef<{ reset: () => void }, CartProps>(
             }
         }, [cartItems, isMounted]);
 
-        const updateQuantity = (id: string, delta: number) => {
+        const updateQuantity = (
+            id: string,
+            delta: number,
+            variantId: string,
+        ) => {
             setCartItems((prevItems) =>
                 prevItems
-                    .map((item) =>
-                        item.id === id
-                            ? {
-                                  ...item,
-                                  quantity: Math.max(0, item.quantity + delta),
-                              }
-                            : item,
-                    )
+                    .map((item) => {
+                        if (
+                            item.id === id &&
+                            item.selectedVariantId === variantId
+                        ) {
+                            const currentVariant = item.variants?.find(
+                                (v) => v.id === variantId,
+                            );
+                            if (!currentVariant) {
+                                setStockError('Selected variant not found');
+                                setTimeout(() => setStockError(''), 3000);
+                                return item;
+                            }
+                            const newQuantity = Math.max(
+                                0,
+                                item.quantity + delta,
+                            );
+                            return {
+                                ...item,
+                                quantity: newQuantity,
+                            };
+                        }
+                        return item;
+                    })
                     .filter((item) => item.quantity > 0),
             );
+
+            try {
+                const item = cartItems.find(
+                    (i) => i.id === id && i.selectedVariantId === variantId,
+                );
+                if (item) {
+                    const newQuantity = Math.max(0, item.quantity + delta);
+                    updateCartItem(id, newQuantity, variantId);
+                }
+            } catch (error: any) {
+                setStockError(error.message);
+                setTimeout(() => setStockError(''), 3000);
+                setCartItems(getCart());
+            }
         };
 
-        const handleRemoveItem = (id: string) => {
+        const handleRemoveItem = (id: string, variantId: string) => {
             setCartItems((prevItems) =>
-                prevItems.filter((item) => item.id !== id),
+                prevItems.filter(
+                    (item) =>
+                        !(
+                            item.id === id &&
+                            item.selectedVariantId === variantId
+                        ),
+                ),
             );
+            removeFromCart(id, variantId);
+            setStockError('');
         };
 
         const handleApplyCoupon = async () => {
@@ -99,16 +181,6 @@ const Cart = forwardRef<{ reset: () => void }, CartProps>(
             }
         };
 
-        const subtotal = cartItems.reduce(
-            (sum, item) => sum + item.price * item.quantity,
-            0,
-        );
-        const salesTax = subtotal * 0.1;
-        const discount = discountPercentage
-            ? (subtotal + salesTax) * (discountPercentage / 100)
-            : 0;
-        const grandTotal = subtotal + salesTax - discount;
-
         const handlePlaceOrderClick = () => {
             const cartData = {
                 items: cartItems,
@@ -121,6 +193,20 @@ const Cart = forwardRef<{ reset: () => void }, CartProps>(
             onPlaceOrder(cartData);
         };
 
+        const subtotal = cartItems.reduce((sum, item) => {
+            const variant = item.variants?.find(
+                (v) => v.id === item.selectedVariantId,
+            );
+            return (
+                sum + (variant ? parseFloat(variant.price) * item.quantity : 0)
+            );
+        }, 0);
+        const salesTax = subtotal * 0.1;
+        const discount = discountPercentage
+            ? (subtotal + salesTax) * (discountPercentage / 100)
+            : 0;
+        const grandTotal = subtotal + salesTax - discount;
+
         const CartTable = () => (
             <div className="flex flex-col w-full gap-[10px]">
                 {cartItems.length > 0 ? (
@@ -132,69 +218,124 @@ const Cart = forwardRef<{ reset: () => void }, CartProps>(
                             <div>Quantity</div>
                             <div>Total</div>
                         </div>
-                        {cartItems.map((item) => (
-                            <div
-                                key={item.id}
-                                className="grid grid-cols-[100px_1fr_150px_150px_150px] gap-4 items-center border border-white px-5 py-4"
-                            >
-                                <img
-                                    src={item.imgURL}
-                                    alt={item.name}
-                                    className="w-full h-full max-w-20 max-h-20 object-cover rounded-[10px]"
-                                />
-                                <div>
-                                    <p>
-                                        {item.name} ({item.variantSku})
-                                    </p>
-                                    <p className="text-sm text-gray-500">
-                                        57,000.yn/wt
-                                    </p>
-                                </div>
-                                <div>{item.price} €</div>
-                                <div className="flex items-center outline outline-white rounded-[10px] w-fit leading-[1] gap-4 px-2.5">
-                                    <Button
-                                        variant="ghost_custom"
-                                        size="icon"
-                                        onClick={() =>
-                                            updateQuantity(item.id, -1)
-                                        }
-                                        className={'w-fit'}
+                        {cartItems.map((item) => {
+                            const currentVariant = item.variants?.find(
+                                (v) => v.id === item.selectedVariantId,
+                            );
+                            if (!currentVariant) {
+                                return (
+                                    <div
+                                        key={`${item.id}-${item.selectedVariantId}`}
+                                        className="grid grid-cols-[100px_1fr_150px_150px_150px] gap-4 items-center border border-white px-5 py-4 text-red-500"
                                     >
-                                        <Minus className="h-3 w-3" />
-                                    </Button>
-                                    <span className="font-jakarta text-[18px] leading-[1] mb-1 min-w-[26px] text-center">
-                                        {item.quantity}
-                                    </span>
-                                    <Button
-                                        variant="ghost_custom"
-                                        size="icon"
-                                        onClick={() =>
-                                            updateQuantity(item.id, 1)
+                                        <div>
+                                            Error: Variant not found for{' '}
+                                            {item.name}
+                                        </div>
+                                    </div>
+                                );
+                            }
+                            return (
+                                <div
+                                    key={`${item.id}-${item.selectedVariantId}`}
+                                    className="grid grid-cols-[100px_1fr_150px_150px_150px] gap-4 items-center border border-white px-5 py-4"
+                                >
+                                    <img
+                                        src={
+                                            item.images[0] || '/placeholder.jpg'
                                         }
-                                        className={'w-fit'}
-                                    >
-                                        <Plus className="h-4 w-4" />
-                                    </Button>
+                                        alt={item.name}
+                                        className="w-full h-full max-w-20 max-h-20 object-cover rounded-[10px]"
+                                    />
+                                    <div>
+                                        <p>
+                                            {item.name} (
+                                            {currentVariant.sku || 'N/A'})
+                                        </p>
+                                        <p
+                                            className={`text-sm ${
+                                                item.quantity ===
+                                                currentVariant.inStock
+                                                    ? 'text-red-500'
+                                                    : 'text-gray-500'
+                                            }`}
+                                        >
+                                            {item.quantity}/
+                                            {currentVariant.inStock} units
+                                        </p>
+                                    </div>
+                                    <div>
+                                        {parseFloat(
+                                            currentVariant.price,
+                                        ).toFixed(2)}{' '}
+                                        €
+                                    </div>
+                                    <div className="flex items-center outline outline-white rounded-[10px] w-fit leading-[1] gap-4 px-2.5">
+                                        <Button
+                                            variant="ghost_custom"
+                                            size="icon"
+                                            onClick={() =>
+                                                updateQuantity(
+                                                    item.id,
+                                                    -1,
+                                                    item.selectedVariantId,
+                                                )
+                                            }
+                                            className={'w-fit'}
+                                        >
+                                            <Minus className="h-3 w-3" />
+                                        </Button>
+                                        <span className="font-jakarta text-[18px] leading-[1] mb-1 min-w-[26px] text-center">
+                                            {item.quantity}
+                                        </span>
+                                        <Button
+                                            variant="ghost_custom"
+                                            size="icon"
+                                            onClick={() =>
+                                                updateQuantity(
+                                                    item.id,
+                                                    1,
+                                                    item.selectedVariantId,
+                                                )
+                                            }
+                                            className={'w-fit'}
+                                        >
+                                            <Plus className="h-4 w-4" />
+                                        </Button>
+                                    </div>
+                                    <div className="flex items-center justify-end gap-2 pr-4">
+                                        <span className="flex-1">
+                                            {(
+                                                parseFloat(
+                                                    currentVariant.price,
+                                                ) * item.quantity
+                                            ).toFixed(2)}{' '}
+                                            €
+                                        </span>
+                                        <Button
+                                            variant="ghost"
+                                            size="icon"
+                                            onClick={() =>
+                                                handleRemoveItem(
+                                                    item.id,
+                                                    item.selectedVariantId,
+                                                )
+                                            }
+                                        >
+                                            <X className="h-4 w-4" />
+                                        </Button>
+                                    </div>
                                 </div>
-                                <div className="flex items-center justify-end gap-2 pr-4">
-                                    <span className="flex-1">
-                                        {item.price * item.quantity} €
-                                    </span>
-                                    <Button
-                                        variant="ghost"
-                                        size="icon"
-                                        onClick={() =>
-                                            handleRemoveItem(item.id)
-                                        }
-                                    >
-                                        <X className="h-4 w-4" />
-                                    </Button>
-                                </div>
+                            );
+                        })}
+                        {stockError && (
+                            <div className="text-red-500 text-sm mt-2">
+                                {stockError}
                             </div>
-                        ))}
+                        )}
                     </>
                 ) : (
-                    <div className="text-center text-gray-400 py-10 text-lg border border-white rounded-lg">
+                    <div className="text-center text-gray-400 py-10 text-lg border border-white">
                         Your cart is empty 🛒
                     </div>
                 )}
@@ -287,12 +428,14 @@ const Cart = forwardRef<{ reset: () => void }, CartProps>(
                             useful
                         </p>
                     </div>
-                    <Button
-                        variant="link"
-                        className="w-full font-bold text-[20px] font-jakarta h-auto text-white"
-                    >
-                        Return to Shopping
-                    </Button>
+                    <Link href="/catalog" passHref>
+                        <Button
+                            variant="link"
+                            className="w-full font-bold text-[20px] font-jakarta h-auto text-white"
+                        >
+                            Return to Shopping
+                        </Button>
+                    </Link>
                 </div>
             </div>
         );
