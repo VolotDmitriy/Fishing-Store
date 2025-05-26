@@ -3,49 +3,34 @@
 import { CategoryTypeF } from '@/components/data-table/types';
 import { cn } from '@/lib/utils';
 import { slugify } from '@/utils/convert-cyrillic';
-import { fetchCategories } from '@/utils/requests';
 import { ChevronDown } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
-import { toast } from 'sonner';
 import { Skeleton } from '../ui/skeleton';
 
 interface Props {
     className?: string;
+    categories: CategoryTypeF[];
+    isLoading: boolean;
 }
 
-export const Filter: React.FC<Props> = ({ className }) => {
+export const Filter: React.FC<Props> = ({
+    className,
+    categories,
+    isLoading,
+}) => {
     const pathname = usePathname();
 
-    const [isLoading, setIsLoading] = useState(true);
     const [openCategories, setOpenCategories] = useState<{
         [key: string]: boolean;
     }>({});
-    const [categories, setCategories] = useState<CategoryTypeF[]>([]);
 
     const currentSegment =
         pathname
             .split('/')
             .filter((segment) => segment !== '')
             .pop() || '';
-
-    useEffect(() => {
-        const loadData = async () => {
-            setIsLoading(true);
-            try {
-                const [fetchedCategories] = await Promise.all([
-                    fetchCategories(true),
-                ]);
-                setCategories(fetchedCategories);
-            } catch (error) {
-                toast.error('Failed to load data' + error);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-        loadData();
-    }, []);
 
     useEffect(() => {
         const initialOpenState = categories.reduce(
@@ -169,6 +154,7 @@ export const Filter: React.FC<Props> = ({ className }) => {
                             <div className="border-b-[1px] border-white"></div>
                         </div>
                     ))}
+                { }
             </div>
         </div>
     );
