@@ -1,6 +1,10 @@
 'use client';
 
-import { productSchema, ProductType } from '@/components/data-table/types';
+import {
+    productSchema,
+    ProductType,
+    VariantTypeType,
+} from '@/components/data-table/types';
 import { Button } from '@/components/ui/button';
 import {
     Select,
@@ -10,12 +14,12 @@ import {
     SelectValue,
 } from '@/components/ui/select';
 import { addToCart } from '@/utils/cartUtils';
+import { fetchVariantTypes } from '@/utils/requests';
 import { CartItem } from '@/utils/types';
 import { ShoppingCart } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import MainPhoto from './public/img/Main Photo.png';
 
 async function getProduct(id: string): Promise<ProductType> {
     if (!id) throw new Error('Product ID is required');
@@ -37,15 +41,26 @@ function ItemSection({ id }: ItemSectionProps) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [quantity, setQuantity] = useState(1);
+    const [typeMap, setTypeMap] = useState<Map<string, string>>(new Map());
 
     useEffect(() => {
-        const loadProduct = async () => {
+        const loadData = async () => {
             try {
-                const data = await getProduct(id);
-                setProduct(data);
-                if (data.variants?.length > 0) {
-                    setSelectedVariantId(data.variants[0].id);
+                const [productData, typeData] = await Promise.all([
+                    getProduct(id),
+                    fetchVariantTypes(false),
+                ]);
+
+                setProduct(productData);
+                if (productData.variants?.length > 0) {
+                    setSelectedVariantId(productData.variants[0].id);
                 }
+
+                const map = new Map<string, string>();
+                typeData.forEach((type: VariantTypeType) => {
+                    map.set(type.id, type.name);
+                });
+                setTypeMap(map);
             } catch (err) {
                 setError(err instanceof Error ? err.message : 'Unknown error');
             } finally {
@@ -53,7 +68,7 @@ function ItemSection({ id }: ItemSectionProps) {
             }
         };
 
-        loadProduct();
+        loadData();
     }, [id]);
 
     const selectedVariant =
@@ -114,44 +129,31 @@ function ItemSection({ id }: ItemSectionProps) {
                         <div className="w-full max-w-[1080px] min-w-[376px] h-full flex flex-col items-start gap-[20px]">
                             <div className="w-full flex flex-row items-start gap-[20px] overflow-hidden">
                                 <Image
-                                    src={MainPhoto}
+                                    src={product.images[0]}
                                     alt="Additional Photo 1"
                                     width={200}
                                     height={220}
                                     className="w-full max-w-[800px] object-cover"
                                 />
-                                <div className="w-full max-w-[250px] h-full flex items-start overflow-hidden relative">
-                                    <div className="w-full min-w-[100px] h-full flex flex-col gap-[20px] overflow-y-auto absolute inset-0 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                                        <Image
-                                            src={MainPhoto}
-                                            alt="Additional Photo 1"
-                                            width={200}
-                                            height={220}
-                                            className="w-full object-cover"
-                                        />
-                                        <Image
-                                            src={MainPhoto}
-                                            alt="Additional Photo 2"
-                                            width={200}
-                                            height={220}
-                                            className="w-full object-cover"
-                                        />
-                                        <Image
-                                            src={MainPhoto}
-                                            alt="Additional Photo 3"
-                                            width={200}
-                                            height={220}
-                                            className="w-full object-cover"
-                                        />
-                                        <Image
-                                            src={MainPhoto}
-                                            alt="Additional Photo 4"
-                                            width={200}
-                                            height={220}
-                                            className="w-full object-cover"
-                                        />
-                                    </div>
-                                </div>
+                                {product.images &&
+                                    product.images.length > 1 && (
+                                        <div className="w-full max-w-[250px] h-full flex items-start overflow-hidden relative">
+                                            <div className="w-full min-w-[100px] h-full flex flex-col gap-[20px] overflow-y-auto absolute inset-0 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                                                {product.images
+                                                    .slice(1)
+                                                    .map((image, index) => (
+                                                        <Image
+                                                            key={`additional-photo-${index}`}
+                                                            src={image}
+                                                            alt={`Additional Photo ${index + 1}`}
+                                                            width={200}
+                                                            height={220}
+                                                            className="w-full object-cover"
+                                                        />
+                                                    ))}
+                                            </div>
+                                        </div>
+                                    )}
                             </div>
                             <div className="w-full flex flex-col items-start py-[20px] gap-[20px] box-border">
                                 <div className="w-full flex flex-col justify-center items-start px-[20px] pb-[10px] border-b-4 border-[#474747]">
@@ -162,15 +164,6 @@ function ItemSection({ id }: ItemSectionProps) {
                                 <div className="w-full flex flex-col items-start px-5">
                                     <p className="text-white font-plus-jakarta-sans font-medium text-[18px] flex items-center text-justify">
                                         {product.description}
-                                        Рыболовные застёжки — это удобный и
-                                        надёжный аксессуар для быстрой смены
-                                        крючков или приманок. Изготовлены из
-                                        прочных материалов с антикоррозийным
-                                        покрытием, что гарантирует долговечность
-                                        и защиту от ржавчины. Идеальны для
-                                        рыбалки в любых условиях — от
-                                        пресноводных водоёмов до морской
-                                        рыбалки.
                                     </p>
                                 </div>
                             </div>
@@ -179,24 +172,27 @@ function ItemSection({ id }: ItemSectionProps) {
                         <div className="w-full max-w-[780px] h-full flex flex-col gap-[20px]">
                             <div className="w-full flex flex-col px-[20px] py-[16px] gap-[20px] border border-white rounded box-border">
                                 <div className="w-full flex flex-col justify-center items-start pb-[10px] gap-[10px] border-b-4 border-[#4B4B4B] box-border">
-                                    <span className="w-full text-white font-plus-jakarta-sans font-medium text-[24px] flex items-center">
+                                    <span className="text-white font-plus-jakarta-sans font-medium text-[24px] flex items-center">
                                         {product.name}
                                     </span>
                                     <span className="w-full text-[#474747] font-plus-jakarta-sans font-medium text-[16px] flex items-center">
-                                        Discount text
+                                        {selectedVariant?.sku}
                                     </span>
                                 </div>
                                 <div className="w-full flex flex-row items-start gap-[10px] leading-[1]">
-                                    <div className="w-full max-w-[160px] h-full bg-[#F8D7DA] border border-[#FD3F2B] rounded-[16px] flex justify-center items-center">
-                                        <span className="text-[#FD3F2B] font-plus-jakarta-sans text-[16px] py-[8px]">
-                                            Out of stock
-                                        </span>
-                                    </div>
-                                    <div className="w-full max-w-[160px] h-full bg-[#CFFFE5] border border-[#009739] rounded-[16px] flex justify-center items-center">
-                                        <span className="text-[#009739] font-plus-jakarta-sans text-[16px] py-[8px]">
-                                            In stock
-                                        </span>
-                                    </div>
+                                    {maxQuantity > 0 ? (
+                                        <div className="w-full max-w-[160px] h-full bg-[#CFFFE5] border border-[#009739] rounded-[16px] flex justify-center items-center">
+                                            <span className="text-[#009739] font-plus-jakarta-sans text-[16px] py-[8px]">
+                                                In stock: {maxQuantity}
+                                            </span>
+                                        </div>
+                                    ) : (
+                                        <div className="w-full max-w-[160px] h-full bg-[#F8D7DA] border border-[#FD3F2B] rounded-[16px] flex justify-center items-center">
+                                            <span className="text-[#FD3F2B] font-plus-jakarta-sans text-[16px] py-[8px]">
+                                                Out of stock
+                                            </span>
+                                        </div>
+                                    )}
                                 </div>
                                 <div className="w-full flex flex-row items-start gap-[40px]">
                                     <div className="h-full flex flex-row items-center gap-[24px]">
@@ -282,6 +278,12 @@ function ItemSection({ id }: ItemSectionProps) {
                                                                                         }
                                                                                         className="block"
                                                                                     >
+                                                                                        {typeMap.get(
+                                                                                            attr.typeId,
+                                                                                        ) ||
+                                                                                            attr.typeId}
+
+                                                                                        :{' '}
                                                                                         {
                                                                                             attr.value
                                                                                         }
@@ -332,37 +334,52 @@ function ItemSection({ id }: ItemSectionProps) {
                                     </span>
                                 </div>
                                 <div className="w-full flex flex-col items-start text-[16px] leading-[1] font-brigend">
-                                    {product.attributes.length === 0 &&
-                                        [
-                                            {
-                                                label: 'Material',
-                                                value: 'Stainless Steel',
-                                            },
-                                            {
-                                                label: 'Coating',
-                                                value: 'Anti-corrosion',
-                                            },
-                                            {
-                                                label: 'Use Case',
-                                                value: 'Freshwater & Saltwater',
-                                            },
-                                        ].map((item, index) => (
-                                            <div
-                                                key={index}
-                                                className={`w-full flex flex-row justify-center items-center px-[12px] py-[12px] rounded-[6px] gap-[10px] ${
-                                                    index % 2 === 0
-                                                        ? 'bg-[#252525]'
-                                                        : 'bg-[#141414]'
-                                                }`}
-                                            >
-                                                <span className="w-full justify-start text-white flex items-center">
-                                                    {item.label}
-                                                </span>
-                                                <span className="w-full justify-end text-white flex items-center text-right">
-                                                    {item.value}
-                                                </span>
-                                            </div>
-                                        ))}
+                                    {product.attributes.map((item, index) => (
+                                        <div
+                                            key={`product-attr-${item.id}`}
+                                            className={`w-full flex flex-row justify-center items-center px-[12px] py-[12px] rounded-[6px] gap-[10px] ${
+                                                index % 2 === 0
+                                                    ? 'bg-[#252525]'
+                                                    : 'bg-[#141414]'
+                                            }`}
+                                        >
+                                            <span className="w-full justify-start text-white flex items-center">
+                                                {typeMap.get(item.typeId) ||
+                                                    item.typeId}
+                                            </span>
+                                            <span className="w-full justify-end text-white flex items-center text-right">
+                                                {item.value}
+                                            </span>
+                                        </div>
+                                    ))}
+                                    {selectedVariant &&
+                                        selectedVariant.attributes?.length >
+                                            0 &&
+                                        selectedVariant.attributes.map(
+                                            (attr, index) => (
+                                                <div
+                                                    key={`variant-attr-${attr.id}`}
+                                                    className={`w-full flex flex-row justify-center items-center px-[12px] py-[12px] rounded-[6px] gap-[10px] ${
+                                                        (index +
+                                                            product.attributes
+                                                                .length) %
+                                                            2 ===
+                                                        0
+                                                            ? 'bg-[#252525]'
+                                                            : 'bg-[#141414]'
+                                                    }`}
+                                                >
+                                                    <span className="w-full justify-start text-white flex items-center">
+                                                        {typeMap.get(
+                                                            attr.typeId,
+                                                        ) || attr.typeId}
+                                                    </span>
+                                                    <span className="w-full justify-end text-white flex items-center text-right">
+                                                        {attr.value}
+                                                    </span>
+                                                </div>
+                                            ),
+                                        )}
                                 </div>
                             </div>
                         </div>
