@@ -1,6 +1,6 @@
 'use client';
 
-import { Filter } from '@/components/app-components/filter';
+import { CatalogComponents } from '@/components/app-components/catalog-components';
 import Footer from '@/components/app-components/footer';
 import Header from '@/components/app-components/header';
 import { PathBreadcrumb } from '@/components/path-breadcrumb';
@@ -11,9 +11,8 @@ export default function CatalogPage() {
             <Header />
             <div className="ml-10 flex flex-col">
                 <PathBreadcrumb />
-                <Filter className="w-[290px]" />
+                <CatalogComponents />
             </div>
-
             <Footer />
         </div>
     );
