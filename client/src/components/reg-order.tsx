@@ -240,6 +240,7 @@ const OrderForm = forwardRef<
                             місцезнаходження, натисніть "Змінити".
                         </p>
                     </div>
+
                     <div>
                         <h2 className="text-lg font-semibold mb-4">Delivery</h2>
                         {isLoading ? (
@@ -251,62 +252,82 @@ const OrderForm = forwardRef<
                                     setDeliveryMethod(value as DeliveryMethod);
                                     setSelectedDeliveryPoint('');
                                 }}
-                                className="space-y-4"
                             >
-                                <div className="flex items-center space-x-4">
+                                {/* Green Stripe Divider */}
+                                <hr className="border-t-1 border-green-500 my-2" />
+
+                                <div className="flex items-center space-x-8 my-4">
                                     <RadioGroupItem
                                         value="warehouse"
                                         id="warehouse"
+                                        className="border-[#0DC85D] data-[state=checked]:border-[#0DC85D] data-[state=checked]:[&_svg]:fill-[#0DC85D] w-6 h-6"
                                     />
+
                                     <Label
                                         htmlFor="warehouse"
-                                        className="text-white"
+                                        className="flex flex-1 text-white text-xl font-jakarta"
                                     >
-                                        Відділення NovaPost
+                                        Post office NovaPosta
                                     </Label>
-                                    <WarehouseSelector
-                                        warehouses={warehouses.warehouse}
-                                        selectedWarehouse={
-                                            deliveryMethod === 'warehouse'
-                                                ? selectedDeliveryPoint
-                                                : ''
-                                        }
-                                        setSelectedWarehouse={(point: string) =>
-                                            onDeliveryPointSelect(
-                                                point,
-                                                'warehouse',
-                                            )
-                                        }
-                                        warehouseType="warehouse"
-                                    />
+                                    <div className="flex items-center gap-2">
+                                        <WarehouseSelector
+                                            warehouses={warehouses.warehouse}
+                                            selectedWarehouse={
+                                                deliveryMethod === 'warehouse'
+                                                    ? selectedDeliveryPoint
+                                                    : ''
+                                            }
+                                            setSelectedWarehouse={(
+                                                point: string,
+                                            ) =>
+                                                onDeliveryPointSelect(
+                                                    point,
+                                                    'warehouse',
+                                                )
+                                            }
+                                            warehouseType="warehouse"
+                                        />
+                                    </div>
                                 </div>
-                                <div className="flex items-center space-x-4">
+
+                                {/* Green Stripe Divider */}
+                                <hr className="border-t-1 border-green-500 my-2" />
+
+                                <div className="flex items-center space-x-8 my-4">
                                     <RadioGroupItem
-                                        value="postomat"
-                                        id="postomat"
+                                        value="warehouse"
+                                        id="warehouse"
+                                        className="border-[#0DC85D] data-[state=checked]:border-[#0DC85D] data-[state=checked]:[&_svg]:fill-[#0DC85D] w-6 h-6"
                                     />
                                     <Label
                                         htmlFor="postomat"
-                                        className="text-white"
+                                        className="flex flex-1 text-white text-xl font-jakarta"
                                     >
-                                        Поштомат NovaPost
+                                        Parcel locker NovaPosta
                                     </Label>
-                                    <WarehouseSelector
-                                        warehouses={warehouses.postomat}
-                                        selectedWarehouse={
-                                            deliveryMethod === 'postomat'
-                                                ? selectedDeliveryPoint
-                                                : ''
-                                        }
-                                        setSelectedWarehouse={(point: string) =>
-                                            onDeliveryPointSelect(
-                                                point,
-                                                'postomat',
-                                            )
-                                        }
-                                        warehouseType="postomat"
-                                    />
+                                    <div className="flex items-center gap-2">
+                                        <WarehouseSelector
+                                            warehouses={warehouses.postomat}
+                                            selectedWarehouse={
+                                                deliveryMethod === 'postomat'
+                                                    ? selectedDeliveryPoint
+                                                    : ''
+                                            }
+                                            setSelectedWarehouse={(
+                                                point: string,
+                                            ) =>
+                                                onDeliveryPointSelect(
+                                                    point,
+                                                    'postomat',
+                                                )
+                                            }
+                                            warehouseType="postomat"
+                                        />
+                                    </div>
                                 </div>
+
+                                {/* Green Stripe Divider */}
+                                <hr className="border-t-1 border-green-500 my-2" />
                             </RadioGroup>
                         )}
                     </div>
