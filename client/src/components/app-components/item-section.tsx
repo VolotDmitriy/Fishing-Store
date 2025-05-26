@@ -366,7 +366,10 @@ function ItemSection({ id }: ItemSectionProps) {
                                         href="/cart"
                                         className="w-full max-w-[300px] h-full"
                                     >
-                                        <button className="w-full max-w-[300px] h-full bg-white border-[2px] border-black rounded-[4px] text-black font-plus-jakarta-sans font-medium text-[20px] cursor-pointer hover:brightness-80 hover:border-[0px] active:brightness-80 active:opacity-80 transition-all duration-100">
+                                        <button
+                                            className="w-full max-w-[300px] h-full bg-white border-[2px] border-black rounded-[4px] text-black font-plus-jakarta-sans font-medium text-[20px] cursor-pointer hover:brightness-80 hover:border-[0px] active:brightness-80 active:opacity-80 transition-all duration-100"
+                                            onClick={handleAddToCart}
+                                        >
                                             Купить
                                         </button>
                                     </Link>
