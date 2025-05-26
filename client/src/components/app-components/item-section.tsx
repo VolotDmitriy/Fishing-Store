@@ -1,10 +1,6 @@
 'use client';
 
-import {
-    productSchema,
-    ProductType,
-    VariantTypeType,
-} from '@/components/data-table/types';
+import { ProductType, VariantTypeType } from '@/components/data-table/types';
 import { Button } from '@/components/ui/button';
 import {
     Select,
@@ -14,22 +10,11 @@ import {
     SelectValue,
 } from '@/components/ui/select';
 import { addToCart } from '@/utils/cartUtils';
-import { fetchVariantTypes } from '@/utils/requests';
-import { CartItem } from '@/utils/types';
+import { fetchVariantTypes, getProduct } from '@/utils/requests';
 import { ShoppingCart } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-
-async function getProduct(id: string): Promise<ProductType> {
-    if (!id) throw new Error('Product ID is required');
-
-    const res = await fetch(`http://localhost:4200/product/${id}?full=true`);
-    if (!res.ok) throw new Error('Failed to fetch product');
-
-    const data = await res.json();
-    return productSchema.parse(data);
-}
 
 interface ItemSectionProps {
     id: string;
@@ -177,26 +162,13 @@ function ItemSection({ id }: ItemSectionProps) {
 
     const handleAddToCart = () => {
         if (product && selectedVariant) {
-            const cartItem: CartItem = {
-                id: selectedVariant.id,
-                name: `${product.name} - ${selectedVariant.sku}`,
-                imgURL: product.images?.[0] || '/default-image.jpg',
-                price: parseFloat(selectedVariant.price),
-                quantity: quantity,
-                productId: product.id,
-                variantSku: selectedVariant.sku,
-            };
-            addToCart(cartItem);
+            addToCart(product, quantity, selectedVariant.id);
         }
     };
 
     if (loading) return <Skeleton />;
     if (error) return <div className="text-red-500">{error}</div>;
     if (!product) return <div>Товар не найден</div>;
-
-    const price = selectedVariant?.price
-        ? parseFloat(selectedVariant.price).toFixed(2)
-        : '0.00';
 
     try {
         return (

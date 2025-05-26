@@ -10,7 +10,6 @@ import {
     SelectValue,
 } from '@/components/ui/select';
 import { addToCart } from '@/utils/cartUtils';
-import { CartItem } from '@/utils/types';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ShoppingCart } from 'lucide-react';
 import Link from 'next/link';
@@ -35,16 +34,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
 
     const handleAddToCart = () => {
         if (currentVariant) {
-            const cartItem: CartItem = {
-                id: currentVariant.id,
-                productId: item.id,
-                name: item.name,
-                variantSku: currentVariant.sku,
-                imgURL: item.images[0],
-                price: parseFloat(currentVariant.price),
-                quantity: 1,
-            };
-            addToCart(cartItem);
+            addToCart(item, 1, currentVariant.id);
             setIsFlying(true);
             setTimeout(() => {
                 setIsFlying(false);

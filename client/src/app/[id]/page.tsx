@@ -1,20 +1,8 @@
 import ItemSection from '@/components/app-components/item-section';
 import ProductRecomend from '@/components/app-components/product-recomend';
-import { productSchema, ProductType } from '@/components/data-table/types';
+import { getProduct } from '@/utils/requests';
 import Footer from '../.././components/app-components/footer';
 import Header from '../.././components/app-components/header';
-
-async function getProduct(id: string): Promise<ProductType> {
-    if (!id) throw new Error('Product ID is required');
-
-    const res = await fetch(`http://localhost:4200/product/${id}?full=true`, {
-        cache: 'no-store', // Отключаем кэширование для динамических данных
-    });
-    if (!res.ok) throw new Error('Failed to fetch product');
-
-    const data = await res.json();
-    return productSchema.parse(data);
-}
 
 export default async function ProductPage({
     params,
