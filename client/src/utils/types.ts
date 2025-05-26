@@ -37,4 +37,9 @@ export interface Warehouse {
     TypeOfWarehouse: string;
 }
 
+export interface DiscountResponse {
+    discount?: { id: string; name: string; percentage: number };
+    message?: string;
+}
+
 export type DeliveryMethod = 'warehouse' | 'postomat';

@@ -3,17 +3,18 @@ import { CartItem } from '@/utils/types';
 const CART_KEY = 'shopping_cart';
 
 export const getCart = (): CartItem[] => {
-    //if (typeof window === 'undefined') return [];
+    if (typeof window === 'undefined') {
+        return [];
+    }
     const cart = localStorage.getItem(CART_KEY);
     console.log('cart', cart);
     return cart ? JSON.parse(cart) : [];
 };
 
 export const setCart = (cart: CartItem[]) => {
-    // if (typeof window !== 'undefined') {
-    //
-    // }
-    localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    if (typeof window !== 'undefined') {
+        localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    }
 };
 
 export const addToCart = (item: CartItem) => {
