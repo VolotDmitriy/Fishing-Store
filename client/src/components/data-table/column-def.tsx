@@ -1,32 +1,26 @@
 'use client';
 
-import { CategoryDrawer } from '@/components/data-table/drawers/CaterogyDrawer';
+import { CategoryDrawer } from '@/components/data-table/drawers/CategoryDrawer';
 import { DiscountDrawer } from '@/components/data-table/drawers/DiscountDrawer';
 import { ProductDrawer } from '@/components/data-table/drawers/ProductDrawer';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import {
     fetchCategories,
     fetchDiscounts,
     fetchProducts,
 } from '@/utils/requests';
-import { IconDotsVertical } from '@tabler/icons-react';
 import { ColumnDef } from '@tanstack/react-table';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import { z } from 'zod';
+import { ActionsCell } from './actions-cell';
 import { TableCellViewer } from './table-cell-viewer';
 import { categorySchema, discountSchema, productSchema } from './types';
 
-const dataCategories = await fetchCategories(false);
-const dataProducts = await fetchProducts(true);
-const dataDiscount = await fetchDiscounts(false);
+export const dataCategories = await fetchCategories(false);
+export const dataProducts = await fetchProducts(true);
+export const dataDiscount = await fetchDiscounts(false);
 
 export const categoryColumns: ColumnDef<z.infer<typeof categorySchema>>[] = [
     {
@@ -62,11 +56,16 @@ export const categoryColumns: ColumnDef<z.infer<typeof categorySchema>>[] = [
         accessorKey: 'name',
         header: 'Название',
         cell: ({ row }) => (
-            <TableCellViewer itemName={row.original.name}>
+            <TableCellViewer
+                itemName={row.original.name}
+                itemId={row.original.id}
+                entityType="category"
+            >
                 <CategoryDrawer
                     item={row.original}
                     data={dataCategories}
-                ></CategoryDrawer>
+                    onChange={() => {}}
+                />
             </TableCellViewer>
         ),
         enableHiding: false,
@@ -75,7 +74,10 @@ export const categoryColumns: ColumnDef<z.infer<typeof categorySchema>>[] = [
         accessorKey: 'parentId',
         header: 'Родительский ID',
         cell: ({ row }) => (
-            <Badge variant="outline">{row.original.parentId || 'Нет'}</Badge>
+            <Badge variant="outline">
+                {dataCategories.find((c) => c.id === row.original.parentId)
+                    ?.name || 'Нет'}
+            </Badge>
         ),
     },
     {
@@ -92,18 +94,8 @@ export const categoryColumns: ColumnDef<z.infer<typeof categorySchema>>[] = [
     },
     {
         id: 'actions',
-        cell: () => (
-            <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="icon">
-                        <IconDotsVertical />
-                    </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-32">
-                    <DropdownMenuItem>Edit</DropdownMenuItem>
-                    <DropdownMenuItem>Delete</DropdownMenuItem>
-                </DropdownMenuContent>
-            </DropdownMenu>
+        cell: ({ row }) => (
+            <ActionsCell entityType="category" item={row.original} />
         ),
     },
 ];
@@ -142,13 +134,18 @@ export const productColumns: ColumnDef<z.infer<typeof productSchema>>[] = [
         accessorKey: 'name',
         header: 'Название',
         cell: ({ row }) => (
-            <TableCellViewer itemName={row.original.name}>
+            <TableCellViewer
+                itemName={row.original.name}
+                itemId={row.original.id}
+                entityType="product"
+            >
                 <ProductDrawer
                     item={row.original}
                     data={dataProducts}
                     categoriesData={dataCategories}
                     discountsData={dataDiscount}
-                ></ProductDrawer>
+                    onChange={() => {}}
+                />
             </TableCellViewer>
         ),
         enableHiding: false,
@@ -211,18 +208,8 @@ export const productColumns: ColumnDef<z.infer<typeof productSchema>>[] = [
     },
     {
         id: 'actions',
-        cell: () => (
-            <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="icon">
-                        <IconDotsVertical />
-                    </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-32">
-                    <DropdownMenuItem>Edit</DropdownMenuItem>
-                    <DropdownMenuItem>Delete</DropdownMenuItem>
-                </DropdownMenuContent>
-            </DropdownMenu>
+        cell: ({ row }) => (
+            <ActionsCell entityType="product" item={row.original} />
         ),
     },
 ];
@@ -261,11 +248,16 @@ export const discountColumns: ColumnDef<z.infer<typeof discountSchema>>[] = [
         accessorKey: 'name',
         header: 'Название',
         cell: ({ row }) => (
-            <TableCellViewer itemName={row.original.name}>
+            <TableCellViewer
+                itemName={row.original.name}
+                itemId={row.original.id}
+                entityType="discount"
+            >
                 <DiscountDrawer
                     item={row.original}
                     data={dataDiscount}
-                ></DiscountDrawer>
+                    onChange={() => {}}
+                />
             </TableCellViewer>
         ),
         enableHiding: false,
@@ -289,18 +281,8 @@ export const discountColumns: ColumnDef<z.infer<typeof discountSchema>>[] = [
     },
     {
         id: 'actions',
-        cell: () => (
-            <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="icon">
-                        <IconDotsVertical />
-                    </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-32">
-                    <DropdownMenuItem>Edit</DropdownMenuItem>
-                    <DropdownMenuItem>Delete</DropdownMenuItem>
-                </DropdownMenuContent>
-            </DropdownMenu>
+        cell: ({ row }) => (
+            <ActionsCell entityType="discount" item={row.original} />
         ),
     },
 ];
