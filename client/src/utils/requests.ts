@@ -4,6 +4,7 @@ import {
     DiscountType,
     ProductType,
     VariantTypeType,
+    productSchema,
 } from '@/components/data-table/types';
 import { DiscountResponse } from '@/utils/types';
 import axios from 'axios';
@@ -25,6 +26,18 @@ export async function fetchCategories<T extends boolean>(
         console.error('Ошибка при получении категорий:', error);
         throw error;
     }
+}
+
+export async function getProduct(id: string): Promise<ProductType> {
+    if (!id) throw new Error('Product ID is required');
+
+    const res = await fetch(`http://localhost:4200/product/${id}?full=true`, {
+        cache: 'no-store',
+    });
+    if (!res.ok) throw new Error('Failed to fetch product');
+
+    const data = await res.json();
+    return productSchema.parse(data);
 }
 
 export async function fetchCategoryById(full: boolean): Promise<CategoryType> {
