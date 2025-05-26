@@ -206,7 +206,7 @@ export const updateCategoryById: RouterHandler = async (req, res) => {
 export const deleteCategoryById: RouterHandler = async (req, res) => {
     try {
         const { id } = req.params;
-        const { newId, name, parentId } = req.body;
+        // const { newId, name, parentId } = req.body;
         const { force } = req.query;
 
         if (force !== undefined && force !== 'true' && force !== 'false') {
@@ -297,9 +297,12 @@ export const deleteCategoryById: RouterHandler = async (req, res) => {
                 });
             });
         } else {
-            await prisma.category.update({
+            // await prisma.category.update({
+            //     where: { id },
+            //     data: { id: newId, name, parentId },
+            // });
+            await prisma.category.delete({
                 where: { id },
-                data: { id: newId, name, parentId },
             });
         }
 
