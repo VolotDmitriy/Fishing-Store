@@ -35,6 +35,89 @@ interface ItemSectionProps {
     id: string;
 }
 
+function Skeleton() {
+    return (
+        <div className="w-full flex justify-center px-[100px]">
+            <section className="w-full max-w-[1920px] flex flex-col gap-[50px]">
+                <div className="w-full flex flex-row items-end pt-[60px]">
+                    <div className="h-8 w-48 bg-gray-700 rounded animate-pulse" />
+                </div>
+
+                <div className="w-full flex flex-row justify-between gap-[30px]">
+                    <div className="w-full max-w-[1080px] min-w-[376px] h-full flex flex-col items-start gap-[20px]">
+                        <div className="w-full flex flex-row items-start gap-[20px] overflow-hidden">
+                            <div className="w-full max-w-[800px] h-[440px] bg-gray-700 rounded animate-pulse" />
+                            <div className="w-full max-w-[250px] h-full flex flex-col gap-[20px]">
+                                <div className="w-full h-[220px] bg-gray-700 rounded animate-pulse" />
+                                <div className="w-full h-[220px] bg-gray-700 rounded animate-pulse" />
+                            </div>
+                        </div>
+                        <div className="w-full flex flex-col items-start py-[20px] gap-[20px] box-border">
+                            <div className="w-full flex flex-col justify-center items-start px-[20px] pb-[10px] border-b-4 border-[#474747]">
+                                <div className="h-6 w-32 bg-gray-700 rounded animate-pulse" />
+                            </div>
+                            <div className="w-full flex flex-col items-start px-5 gap-2">
+                                <div className="h-4 w-full bg-gray-700 rounded animate-pulse" />
+                                <div className="h-4 w-3/4 bg-gray-700 rounded animate-pulse" />
+                                <div className="h-4 w-1/2 bg-gray-700 rounded animate-pulse" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="w-full max-w-[780px] h-full flex flex-col gap-[20px]">
+                        <div className="w-full flex flex-col px-[20px] py-[16px] gap-[20px] border border-white rounded box-border">
+                            <div className="w-full flex flex-col justify-center items-start pb-[10px] gap-[10px] border-b-4 border-[#4B4B4B] box-border">
+                                <div className="h-6 w-64 bg-gray-700 rounded animate-pulse" />
+                                <div className="h-4 w-32 bg-gray-700 rounded animate-pulse" />
+                            </div>
+                            <div className="w-full flex flex-row items-start gap-[10px] leading-[1]">
+                                <div className="w-full max-w-[160px] h-8 bg-gray-700 rounded-[16px] animate-pulse" />
+                            </div>
+                            <div className="w-full flex flex-row items-start gap-[40px]">
+                                <div className="h-full flex flex-row items-center gap-[24px]">
+                                    <div className="h-5 w-20 bg-gray-700 rounded animate-pulse" />
+                                    <div className="h-10 w-24 bg-gray-700 rounded-[10px] animate-pulse" />
+                                </div>
+                                <div className="h-full flex flex-row items-center gap-[24px]">
+                                    <div className="h-5 w-16 bg-gray-700 rounded animate-pulse" />
+                                    <div className="h-10 w-48 bg-gray-700 rounded-[10px] animate-pulse" />
+                                </div>
+                            </div>
+                            <div className="w-full flex flex-row items-center rounded">
+                                <div className="h-7 w-32 bg-gray-700 rounded animate-pulse" />
+                            </div>
+                            <div className="w-full h-[50px] flex flex-row justify-start items-center gap-[20px]">
+                                <div className="w-full max-w-[300px] h-full bg-gray-700 rounded-[4px] animate-pulse" />
+                                <div className="w-full max-w-[200px] h-full bg-gray-700 rounded animate-pulse" />
+                            </div>
+                        </div>
+                        <div className="w-full flex flex-col items-start px-[20px] py-[20px] gap-[20px] border border-white box-border">
+                            <div className="w-full flex flex-col justify-center items-start px-[10px] py-[10px] border-b-4 border-[#474747]">
+                                <div className="h-6 w-40 bg-gray-700 rounded animate-pulse" />
+                            </div>
+                            <div className="w-full flex flex-col items-start text-[16px] leading-[1] font-brigend">
+                                {[0, 1, 2, 3].map((index) => (
+                                    <div
+                                        key={`skeleton-spec-${index}`}
+                                        className={`w-full flex flex-row justify-center items-center px-[12px] py-[12px] rounded-[6px] gap-[10px] ${
+                                            index % 2 === 0
+                                                ? 'bg-[#252525]'
+                                                : 'bg-[#141414]'
+                                        }`}
+                                    >
+                                        <div className="w-full h-4 bg-gray-700 rounded animate-pulse" />
+                                        <div className="w-full h-4 bg-gray-700 rounded animate-pulse" />
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    );
+}
+
 function ItemSection({ id }: ItemSectionProps) {
     const [selectedVariantId, setSelectedVariantId] = useState<string>('');
     const [product, setProduct] = useState<ProductType | null>(null);
@@ -107,7 +190,7 @@ function ItemSection({ id }: ItemSectionProps) {
         }
     };
 
-    if (loading) return <div>Загрузка...</div>;
+    if (loading) return <Skeleton />;
     if (error) return <div className="text-red-500">{error}</div>;
     if (!product) return <div>Товар не найден</div>;
 
