@@ -37,17 +37,18 @@ export const CatalogComponents: React.FC<Props> = ({ className, category }) => {
     const products: ProductType[] = category
         ? category.parentId !== null
             ? category.products || []
-            : category.children?.flatMap((child) =>
-                  categories
-                      .filter((cat) => cat.id === child.id)
-                      .flatMap((cat) => cat.products || []),
-              ) || []
+            : [
+                  ...(category.products || []),
+                  ...(category.children?.flatMap((child) =>
+                      categories
+                          .filter((cat) => cat.id === child.id)
+                          .flatMap((cat) => cat.products || []),
+                  ) || []),
+              ]
         : categories.flatMap((cat) => cat.products || []);
 
-    console.log(products);
-
     return (
-        <div className={cn(className, 'flex flex-row')}>
+        <div className={cn(className, 'flex flex-row my-10')}>
             <Filter
                 className="w-[290px]"
                 categories={categories}

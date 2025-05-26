@@ -51,7 +51,7 @@ export const Filter: React.FC<Props> = ({
     };
 
     const renderSkeleton = () => (
-        <div className={cn(className, 'mt-10')}>
+        <div className={cn(className)}>
             <div className="w-full gap-8 flex flex-col overflow-auto scrollbar max-h-[calc(100vh-120px)] pr-3">
                 {[...Array(7)].map((_, index) => (
                     <div key={index} className="flex flex-col gap-8">
@@ -78,7 +78,7 @@ export const Filter: React.FC<Props> = ({
     }
 
     return (
-        <div className={cn(className, 'mt-10')}>
+        <div className={cn(className)}>
             <div className="w-full gap-8 flex flex-col overflow-auto scrollbar max-h-[calc(100vh-120px)] pr-3">
                 {categories
                     .filter((category) => category.parentId === null)
@@ -154,7 +154,6 @@ export const Filter: React.FC<Props> = ({
                             <div className="border-b-[1px] border-white"></div>
                         </div>
                     ))}
-                { }
             </div>
         </div>
     );
