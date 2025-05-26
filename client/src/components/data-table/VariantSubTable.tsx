@@ -10,16 +10,42 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table';
-import { fetchDiscounts } from '@/utils/requests';
-import { ProductVariantType } from './types';
+
+import { fetchDiscounts, fetchVariantTypes } from '@/utils/requests';
+import { useEffect, useState } from 'react';
+import { ProductVariantType, VariantTypeType } from './types';
 
 interface VariantSubTableProps {
     variants: ProductVariantType[];
 }
 
-const dataDiscount = await fetchDiscounts(false);
-
 export function VariantSubTable({ variants }: VariantSubTableProps) {
+    const [discounts, setDiscounts] = useState<any[]>([]);
+    const [typeMap, setTypeMap] = useState<Map<string, string>>(new Map());
+
+    useEffect(() => {
+        const loadData = async () => {
+            try {
+                const [discountData, typeData] = await Promise.all([
+                    fetchDiscounts(false),
+                    fetchVariantTypes(false),
+                ]);
+
+                setDiscounts(discountData);
+
+                const map = new Map<string, string>();
+                typeData.forEach((type: VariantTypeType) => {
+                    map.set(type.id, type.name);
+                });
+                setTypeMap(map);
+            } catch (err) {
+                console.error('Ошибка при загрузке данных:', err);
+            }
+        };
+
+        loadData();
+    }, []);
+
     return (
         <Table>
             <TableHeader className="bg-muted sticky top-0 z-10">
@@ -41,8 +67,8 @@ export function VariantSubTable({ variants }: VariantSubTableProps) {
                                 <VariantDrawer
                                     item={variant}
                                     data={variants}
-                                    discountsData={dataDiscount}
-                                ></VariantDrawer>
+                                    discountsData={discounts}
+                                />
                             </TableCellViewer>
                         </TableCell>
                         <TableCell>{variant.price} ₴</TableCell>
@@ -50,8 +76,12 @@ export function VariantSubTable({ variants }: VariantSubTableProps) {
                         <TableCell>{variant.discountId || 'Нет'}</TableCell>
                         <TableCell>
                             {variant.attributes
-                                .map((attr) => `${attr.typeId}: ${attr.value}`)
-                                .join(',  ')}
+                                .map((attr) => {
+                                    const typeName =
+                                        typeMap.get(attr.typeId) || attr.typeId;
+                                    return `${typeName}: ${attr.value}`;
+                                })
+                                .join(', ')}
                         </TableCell>
                     </TableRow>
                 ))}
