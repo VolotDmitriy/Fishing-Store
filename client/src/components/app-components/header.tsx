@@ -45,7 +45,7 @@ const Header: React.FC = () => {
 
                 <div className="flex justify-end px-[36px]">
                     <div className="flex flex-row justify-center items-center gap-[8px] ">
-                        <button className="w-[40px] h-[40px] bg-[#292929] rounded-[20px] flex justify-center items-center">
+                        <button className="cart-icon w-[40px] h-[40px] bg-[#292929] rounded-[20px] flex justify-center items-center">
                             <Link href="/cart" className="">
                                 <Image
                                     src={Cart}
