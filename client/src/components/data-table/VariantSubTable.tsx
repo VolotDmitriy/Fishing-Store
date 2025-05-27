@@ -11,10 +11,10 @@ import {
     TableRow,
 } from '@/components/ui/table';
 import { fetchDiscounts } from '@/utils/requests';
-import { VariantType } from './types';
+import { ProductVariantType } from './types';
 
 interface VariantSubTableProps {
-    variants: VariantType[];
+    variants: ProductVariantType[];
 }
 
 const dataDiscount = await fetchDiscounts(false);

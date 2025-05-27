@@ -64,25 +64,6 @@ export function VariantForm({
             </div>
             <div className="space-y-2">
                 <div className="flex items-center gap-6">
-                    <FormLabel className="w-20">SKU:</FormLabel>
-                    <FormField
-                        control={form.control}
-                        name={`variants.${index}.sku`}
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormControl>
-                                    <Input
-                                        placeholder="Variant SKU"
-                                        className="w-64"
-                                        {...field}
-                                    />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                </div>
-                <div className="flex items-center gap-6">
                     <FormLabel className="w-20">Price:</FormLabel>
                     <FormField
                         control={form.control}

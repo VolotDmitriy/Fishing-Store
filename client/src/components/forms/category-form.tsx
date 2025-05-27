@@ -21,15 +21,17 @@ import {
 } from '@/components/ui/select';
 import { fetchCategories, fetchProducts } from '@/utils/requests';
 import { zodResolver } from '@hookform/resolvers/zod';
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
+import { LoadingOverlay } from '../loading-overlay';
 import { ItemSelector } from './item-selector';
 import { categoryFormSchema, CategoryFormValues } from './types';
 
 const defaultValues: Partial<CategoryFormValues> = {
     name: '',
-    parentId: '',
+    parentId: 'null',
     products: [],
     childCategories: [],
 };
@@ -38,6 +40,7 @@ export function CategoryForm() {
     const [products, setProducts] = useState<ProductType[]>([]);
     const [categories, setCategories] = useState<CategoryTypeF[]>([]);
     const [loading, setLoading] = useState(true);
+    const [createLoading, setCreateLoading] = useState(false);
 
     const form = useForm<CategoryFormValues>({
         resolver: zodResolver(categoryFormSchema),
@@ -76,7 +79,7 @@ export function CategoryForm() {
                 setProducts(fetchedProducts);
                 setCategories(fetchedCategories);
             } catch (error) {
-                toast.error('Failed to load data');
+                toast.error('Failed to load data' + error);
             } finally {
                 setLoading(false);
             }
@@ -84,16 +87,60 @@ export function CategoryForm() {
         loadData();
     }, []);
 
-    function onSubmit(data: CategoryFormValues) {
-        toast('You submitted the following values:', {
-            description: (
-                <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                    <code className="text-white">
-                        {JSON.stringify(data, null, 2)}
-                    </code>
-                </pre>
-            ),
-        });
+    async function onSubmit(data: CategoryFormValues) {
+        setCreateLoading(true);
+        try {
+            const response = await axios.post(
+                `${process.env.NEXT_PUBLIC_SERVER_URL}/category`,
+
+                data,
+                {
+                    withCredentials: true,
+                },
+            );
+            if (response.status === 200 || response.status === 201) {
+                const resData = response.data;
+
+                Object.keys(resData.data).forEach((key) => {
+                    if (Array.isArray(resData.data[key])) {
+                        if (resData.data[key].length <= 0) {
+                            delete resData.data[key];
+                        } else {
+                            resData.data[key] = resData.data[key].length;
+                        }
+                    } else {
+                        resData.data[key] = 1;
+                    }
+                });
+
+                toast('You submitted the following values:', {
+                    description: (
+                        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                            <code className="text-white">
+                                {`${resData.message}\nCreated/Updated: ${JSON.stringify(
+                                    resData.data,
+                                    null,
+                                    2,
+                                )}`}
+                            </code>
+                        </pre>
+                    ),
+                });
+                form.reset();
+            }
+        } catch (error) {
+            toast('Error submitting form:', {
+                description: (
+                    <pre className="mt-2  w-[340px] rounded-md bg-slate-950 p-4">
+                        <code className="text-white text-wrap">
+                            {'Please try again later. \n' + error}
+                        </code>
+                    </pre>
+                ),
+            });
+        } finally {
+            setCreateLoading(false);
+        }
     }
 
     const handleProductsSelected = (
@@ -149,6 +196,7 @@ export function CategoryForm() {
 
     return (
         <div className="hidden space-y-6 p-10 pb-16 md:block">
+            <LoadingOverlay isLoading={createLoading} />{' '}
             <div className="flex flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
                 <div className="flex-1 lg:max-w-2xl">
                     <Form {...form}>
@@ -217,7 +265,9 @@ export function CategoryForm() {
                                 <FormLabel>Дочерние категории</FormLabel>
                                 <div className="space-y-2">
                                     <ItemSelector
-                                        onSelected={handleCategoriesSelected}
+                                        onSelectedAction={
+                                            handleCategoriesSelected
+                                        }
                                         initialSelected={categoryFields.map(
                                             (field) => ({
                                                 id: field.categoryId,
@@ -268,7 +318,9 @@ export function CategoryForm() {
                                 <FormLabel>Товары</FormLabel>
                                 <div className="space-y-2">
                                     <ItemSelector
-                                        onSelected={handleProductsSelected}
+                                        onSelectedAction={
+                                            handleProductsSelected
+                                        }
                                         initialSelected={productFields.map(
                                             (field) => ({
                                                 id: field.productId,
@@ -314,7 +366,7 @@ export function CategoryForm() {
                                 </FormDescription>
                                 <FormMessage />
                             </FormItem>
-                            <Button type="submit">Обновить категорию</Button>
+                            <Button type="submit">Создать категорию</Button>
                         </form>
                     </Form>
                 </div>

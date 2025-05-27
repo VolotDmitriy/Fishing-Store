@@ -1,4 +1,5 @@
-import { PrismaClient } from '@prisma/client';
+import { Category, PrismaClient, Product } from '@prisma/client';
+import { Request } from 'express';
 import { ErrorHandler, RouterHandler } from '../utils/controllerUtils';
 
 const prisma = new PrismaClient();
@@ -93,31 +94,86 @@ export const getCategoryById: RouterHandler = async (req, res) => {
     }
 };
 
-export const createCategory: RouterHandler = async (req, res) => {
+export const createCategory: RouterHandler = async (
+    req: Request<
+        {},
+        {},
+        {
+            name: string;
+            parentId?: string;
+            products?: { productId: string; name: string }[];
+            childCategories?: { categoryId: string; name: string }[];
+        }
+    >,
+    res,
+) => {
     try {
-        const { name, parentId } = req.body;
-
-        if (parentId) {
+        const { name, parentId, products, childCategories } = req.body;
+        if (parentId && parentId !== 'null') {
             const parentExists = await prisma.category.findUnique({
                 where: { id: parentId },
             });
 
             if (!parentExists) {
-                res.status(400).json({ error: 'Parent category not found' });
+                res.status(400).json({
+                    error: 'Parent category not found',
+                });
                 return;
             }
         }
 
-        const newCategory = await prisma.category.create({
-            data: {
-                name,
-                parentId,
-            },
-        });
+        const resultData: {
+            category: Category;
+            childCategories?: Category[];
+            products?: Product[];
+        } = { category: null as any, products: [] };
 
+        const transactionResult = await prisma.$transaction(async (tx) => {
+            const newCategory = await tx.category.create({
+                data: {
+                    name,
+                    parentId: parentId === 'null' ? null : parentId,
+                },
+            });
+            resultData.category = newCategory;
+
+            if (childCategories) {
+                for (const childCategory of childCategories) {
+                    await tx.category.update({
+                        where: { id: childCategory.categoryId },
+                        data: {
+                            parentId: newCategory.id,
+                        },
+                    });
+                }
+
+                const updatedChildCategories = await tx.category.findMany({
+                    where: { parentId: newCategory.id },
+                });
+                resultData.childCategories = updatedChildCategories;
+            }
+
+            if (products) {
+                for (const product of products) {
+                    await tx.product.update({
+                        where: { id: product.productId },
+                        data: {
+                            categoryId: newCategory.id,
+                        },
+                    });
+                }
+
+                const updatedProducts = await tx.product.findMany({
+                    where: { categoryId: newCategory.id },
+                });
+                resultData.products = updatedProducts;
+            }
+
+            return resultData;
+        });
         res.status(201).json({
             message: 'Category created successfully',
-            data: newCategory,
+            data: transactionResult,
         });
     } catch (error) {
         ErrorHandler(error, res);

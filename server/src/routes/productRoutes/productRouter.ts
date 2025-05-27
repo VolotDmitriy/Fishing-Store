@@ -17,12 +17,12 @@ const router = Router();
 
 router.use('/attribute', verifyToken, productAttributeRouter);
 router.use('/variant', verifyToken, productVariantRouter);
-router.use('/type', verifyToken, variantTypeRouter);
+router.use('/type', variantTypeRouter);
 router.use('/variant_attribute', verifyToken, productVariantAttributeRouter);
 
 router.get('/', getAllProducts);
 router.get('/:id', getProductById);
-router.get('/category/:categoryId', verifyToken, getProductByCategory);
+router.get('/category/:categoryId', getProductByCategory);
 router.post('/', verifyToken, createProduct);
 router.put('/:id', verifyToken, updateProductById);
 router.delete('/:id', verifyToken, deleteProductById);

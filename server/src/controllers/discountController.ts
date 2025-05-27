@@ -71,15 +71,14 @@ export const getDiscountById: RouterHandler = async (req, res) => {
 
 export const createDiscount: RouterHandler = async (req, res) => {
     try {
-        const { name, percentage, startDate, endDate, products, variants } =
-            req.body;
+        const { name, percentage, date, products, variants } = req.body;
 
         const newDiscount = await prisma.discount.create({
             data: {
                 name,
                 percentage,
-                startDate: startDate ? new Date(startDate) : undefined,
-                endDate: endDate ? new Date(endDate) : undefined,
+                startDate: date.from ? new Date(date.from) : undefined,
+                endDate: date.to ? new Date(date.to) : undefined,
             },
         });
 
@@ -92,8 +91,7 @@ export const createDiscount: RouterHandler = async (req, res) => {
 export const updateDiscount: RouterHandler = async (req, res) => {
     try {
         const id = req.params.id;
-        const { name, percentage, startDate, endDate, products, variants } =
-            req.body;
+        const { name, percentage, date, products, variants } = req.body;
 
         const existingDiscount = await prisma.discount.findUnique({
             where: { id },
@@ -109,12 +107,12 @@ export const updateDiscount: RouterHandler = async (req, res) => {
                 name,
                 percentage,
                 startDate:
-                    startDate !== undefined
-                        ? new Date(startDate)
+                    date.from !== undefined
+                        ? new Date(date.from)
                         : existingDiscount.startDate,
                 endDate:
-                    endDate !== undefined
-                        ? new Date(endDate)
+                    date.to !== undefined
+                        ? new Date(date.to)
                         : existingDiscount.endDate,
             },
         });

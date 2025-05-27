@@ -19,7 +19,7 @@ interface SelectableItem {
 }
 
 interface ItemSelectorProps<T extends SelectableItem> {
-    onSelected: (selectedItems: T[]) => void;
+    onSelectedAction: (selectedItems: T[]) => void;
     initialSelected?: T[];
     triggerButtonText?: string;
     items: T[];
@@ -27,7 +27,7 @@ interface ItemSelectorProps<T extends SelectableItem> {
 }
 
 export function ItemSelector<T extends SelectableItem>({
-    onSelected,
+    onSelectedAction,
     initialSelected = [],
     triggerButtonText = 'Выбрать элементы',
     items,
@@ -59,7 +59,7 @@ export function ItemSelector<T extends SelectableItem>({
     };
 
     const handleSubmit = () => {
-        onSelected(selectedItems);
+        onSelectedAction(selectedItems);
         setIsOpen(false);
     };
 

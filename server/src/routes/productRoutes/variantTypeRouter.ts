@@ -6,13 +6,14 @@ import {
     getVariantTypeById,
     updateVariantTypeById,
 } from '../../controllers/variantTypeController';
+import { verifyToken } from '../../middlewares/cookieJwtAuth';
 
 const router = Router();
 
 router.get('/', getAllVariantTypes);
 router.get('/:id', getVariantTypeById);
-router.post('/', createVariantType);
-router.put('/:id', updateVariantTypeById);
-router.delete('/:id', deleteVariantTypeById);
+router.post('/', verifyToken, createVariantType);
+router.put('/:id', verifyToken, updateVariantTypeById);
+router.delete('/:id', verifyToken, deleteVariantTypeById);
 
 export default router;

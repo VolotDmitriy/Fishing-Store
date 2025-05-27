@@ -22,9 +22,11 @@ import {
 import { cn } from '@/lib/utils';
 import { fetchCategories, fetchDiscounts } from '@/utils/requests';
 import { zodResolver } from '@hookform/resolvers/zod';
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
+import { LoadingOverlay } from '../loading-overlay';
 import { Textarea } from '../ui/textarea';
 import { productFormSchema, ProductFormValues } from './types';
 import { VariantForm } from './variant-form';
@@ -35,6 +37,7 @@ const defaultValues: Partial<ProductFormValues> = {
     description: '',
     categoryId: 'null',
     images: [{ value: '' }],
+    attributes: [],
     variants: [],
 };
 
@@ -42,6 +45,7 @@ export function ProductForm() {
     const [discounts, setDiscounts] = useState<DiscountType[]>([]);
     const [categories, setCategories] = useState<CategoryTypeF[]>([]);
     const [loading, setLoading] = useState(true);
+    const [createLoading, setCreateLoading] = useState(false);
 
     const form = useForm<ProductFormValues>({
         resolver: zodResolver(productFormSchema),
@@ -67,6 +71,15 @@ export function ProductForm() {
         control: form.control,
     });
 
+    const {
+        fields: attributeFields,
+        append: appendAttribute,
+        remove: removeAttribute,
+    } = useFieldArray({
+        name: 'attributes',
+        control: form.control,
+    });
+
     useEffect(() => {
         const loadData = async () => {
             setLoading(true);
@@ -77,7 +90,7 @@ export function ProductForm() {
                 setCategories(fetchedCategories);
                 setDiscounts(fetchedDiscounts);
             } catch (error) {
-                toast.error('Failed to load data');
+                toast.error('Failed to load data! ' + error);
             } finally {
                 setLoading(false);
             }
@@ -85,16 +98,60 @@ export function ProductForm() {
         loadData();
     }, [form]);
 
-    function onSubmit(data: ProductFormValues) {
-        toast('You submitted the following values:', {
-            description: (
-                <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                    <code className="text-white">
-                        {JSON.stringify(data, null, 2)}
-                    </code>
-                </pre>
-            ),
-        });
+    async function onSubmit(data: ProductFormValues) {
+        setCreateLoading(true);
+        try {
+            const response = await axios.post(
+                `${process.env.NEXT_PUBLIC_SERVER_URL}/product`,
+
+                data,
+                {
+                    withCredentials: true,
+                },
+            );
+            if (response.status === 200 || response.status === 201) {
+                const resData = response.data;
+
+                Object.keys(resData.data).forEach((key) => {
+                    if (Array.isArray(resData.data[key])) {
+                        if (resData.data[key].length <= 0) {
+                            delete resData.data[key];
+                        } else {
+                            resData.data[key] = resData.data[key].length;
+                        }
+                    } else {
+                        resData.data[key] = 1;
+                    }
+                });
+
+                toast('You submitted the following values:', {
+                    description: (
+                        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                            <code className="text-white">
+                                {`${resData.message}\nCreated/Updated: ${JSON.stringify(
+                                    resData.data,
+                                    null,
+                                    2,
+                                )}`}
+                            </code>
+                        </pre>
+                    ),
+                });
+                form.reset();
+            }
+        } catch (error) {
+            toast('Error submitting form:', {
+                description: (
+                    <pre className="mt-2  w-[340px] rounded-md bg-slate-950 p-4">
+                        <code className="text-white text-wrap">
+                            {'Please try again later. \n' + error}
+                        </code>
+                    </pre>
+                ),
+            });
+        } finally {
+            setCreateLoading(false);
+        }
     }
 
     if (loading) {
@@ -123,6 +180,7 @@ export function ProductForm() {
 
     return (
         <div className="hidden space-y-6 p-10 pb-16 md:block">
+            <LoadingOverlay isLoading={createLoading} />{' '}
             <div className="flex flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
                 <div className="flex-1 lg:max-w-2xl">
                     <Form {...form}>
@@ -260,6 +318,78 @@ export function ProductForm() {
                                     Add URL
                                 </Button>
                             </div>
+
+                            <div className="mt-4">
+                                <div className="flex flex-row gap-15 mb-2">
+                                    <div className="flex flex-col gap-2 mb-2">
+                                        <FormLabel>Attributes</FormLabel>
+                                        <FormDescription>
+                                            Add attributes for this variant.
+                                        </FormDescription>
+                                    </div>
+                                    <Button
+                                        type="button"
+                                        variant="outline"
+                                        size="sm"
+                                        onClick={() =>
+                                            appendAttribute({
+                                                name: '',
+                                                value: '',
+                                            })
+                                        }
+                                    >
+                                        Add Attribute
+                                    </Button>
+                                </div>
+                                {attributeFields.map((attrField, attrIndex) => (
+                                    <div
+                                        key={attrField.id}
+                                        className="flex items-center gap-2 mb-2"
+                                    >
+                                        <FormField
+                                            control={form.control}
+                                            name={`attributes.${attrIndex}.name`}
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormControl>
+                                                        <Input
+                                                            placeholder="Attribute name"
+                                                            {...field}
+                                                        />
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                        <FormField
+                                            control={form.control}
+                                            name={`attributes.${attrIndex}.value`}
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormControl>
+                                                        <Input
+                                                            placeholder="Attribute value"
+                                                            {...field}
+                                                        />
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                        <Button
+                                            type="button"
+                                            variant="ghost"
+                                            size="icon"
+                                            onClick={() =>
+                                                removeAttribute(attrIndex)
+                                            }
+                                        >
+                                            ✖
+                                        </Button>
+                                    </div>
+                                ))}
+                            </div>
+
                             <div>
                                 {variantFields.length === 0 ? (
                                     <div className="flex flex-row justify-between items-start">
@@ -277,7 +407,6 @@ export function ProductForm() {
                                             className="mt-2"
                                             onClick={() =>
                                                 appendVariant({
-                                                    sku: '',
                                                     price: 0,
                                                     inStock: 0,
                                                     discountId: null,
@@ -309,7 +438,6 @@ export function ProductForm() {
                                         className="mt-2"
                                         onClick={() =>
                                             appendVariant({
-                                                sku: '',
                                                 price: 0,
                                                 inStock: 0,
                                                 discountId: null,
@@ -321,7 +449,7 @@ export function ProductForm() {
                                     </Button>
                                 )}
                             </div>
-                            <Button type="submit">Update profile</Button>
+                            <Button type="submit">Create product</Button>
                         </form>
                     </Form>
                 </div>
