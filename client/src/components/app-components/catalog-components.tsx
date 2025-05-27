@@ -54,7 +54,7 @@ export const CatalogComponents: React.FC<Props> = ({ className, category }) => {
                 categories={categories}
                 isLoading={isLoading}
             />
-            <CatalogProducts products={products} />
+            <CatalogProducts products={products} isLoading={isLoading} />
         </div>
     );
 };

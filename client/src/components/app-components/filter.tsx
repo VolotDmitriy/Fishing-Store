@@ -56,17 +56,17 @@ export const Filter: React.FC<Props> = ({
                 {[...Array(7)].map((_, index) => (
                     <div key={index} className="flex flex-col gap-8">
                         <div className="flex flex-row justify-between items-center">
-                            <Skeleton className="h-6 w-48 rounded-md" />
-                            <Skeleton className="h-6 w-6 rounded-full" />
+                            <Skeleton className="h-6 w-48 rounded-md bg-gray-800" />
+                            <Skeleton className="h-6 w-6 rounded-full bg-gray-800" />
                         </div>
                         <div className="gap-4 flex flex-col">
                             {[...Array(2)].map((_, subIndex) => (
                                 <div key={subIndex} className="pl-5">
-                                    <Skeleton className="h-5 w-28 rounded-md" />
+                                    <Skeleton className="h-5 w-28 rounded-md bg-gray-800" />
                                 </div>
                             ))}
                         </div>
-                        <Skeleton className="h-px w-full" />
+                        <Skeleton className="h-px w-full bg-gray-800" />
                     </div>
                 ))}
             </div>
