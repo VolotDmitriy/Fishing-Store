@@ -1,0 +1,61 @@
+model Product {
+  id          String             @id @default(cuid()) // "prod001"
+  name        String // "Смартфон Samsung Galaxy S24"
+  description String? // "Флагманский смартфон с топовыми характеристиками."
+  categoryId  String // "cat001"
+  category    Category           @relation(fields: [categoryId], references: [id])
+  images      String[] // ["https://example.com/samsung_s24.jpg"]
+  variants    ProductVariant[]
+  attributes  ProductAttribute[]
+  discountId  String? // "disc001"
+  discount    Discount?          @relation(fields: [discountId], references: [id])
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+}
+
+model ProductAttribute {
+  id        String      @id @default(cuid()) // "attr001"
+  productId String // "prod001"
+  product   Product     @relation(fields: [productId], references: [id])
+  typeId    String // "varType002"
+  type      VariantType @relation(fields: [typeId], references: [id])
+  value     String // "Snapdragon 8 Gen 3"
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+}
+
+model ProductVariant {
+  id         String                    @id @default(cuid()) // "var001"
+  productId  String // "prod001"
+  product    Product                   @relation(fields: [productId], references: [id])
+  sku        String                    @unique // "SAMSUNG-S24-256GB-BLACK"
+  price      Decimal // 89999.00
+  inStock    Int                       @default(10) // 10 штук на складе
+  attributes ProductVariantAttribute[]
+  discountId String? // null (нет скидки)
+  discount   Discount?                 @relation(fields: [discountId], references: [id])
+  createdAt  DateTime                  @default(now())
+  updatedAt  DateTime                  @updatedAt
+}
+
+model ProductVariantAttribute {
+  id        String         @id @default(cuid()) // "varAttr001"
+  variantId String // "var001"
+  variant   ProductVariant @relation(fields: [variantId], references: [id])
+  typeId    String // "varType001"
+  type      VariantType    @relation(fields: [typeId], references: [id])
+  value     String // "256 ГБ"
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+}
+
+model VariantType {
+  id                       String                    @id @default(cuid()) // "varType003"
+  categoryId               String // "cat001"
+  category                 Category                  @relation(fields: [categoryId], references: [id])
+  name                     String // "Производитель"
+  productAttributes        ProductAttribute[]
+  productVariantAttributes ProductVariantAttribute[]
+  createdAt                DateTime                  @default(now())
+  updatedAt                DateTime                  @updatedAt
+}

@@ -1,0 +1,86 @@
+[
+    {
+        "id": "cat002",
+        "name": "Спиннинги",
+        "parentId": "cat001",
+        "createdAt": "2025-03-11T16:49:07.626Z",
+        "updatedAt": "2025-03-11T16:49:07.626Z"
+    },
+    {
+        "id": "cat004",
+        "name": "Катушки",
+        "parentId": null,
+        "createdAt": "2025-03-11T16:49:07.626Z",
+        "updatedAt": "2025-03-11T16:49:07.626Z"
+    },
+    {
+        "id": "cat005",
+        "name": "Безынерционные катушки",
+        "parentId": "cat004",
+        "createdAt": "2025-03-11T16:49:07.626Z",
+        "updatedAt": "2025-03-11T16:49:07.626Z"
+    },
+    {
+        "id": "cat006",
+        "name": "Приманки",
+        "parentId": null,
+        "createdAt": "2025-03-11T16:49:07.626Z",
+        "updatedAt": "2025-03-11T16:49:07.626Z"
+    },
+    {
+        "id": "cat007",
+        "name": "Воблеры",
+        "parentId": "cat006",
+        "createdAt": "2025-03-11T16:49:07.626Z",
+        "updatedAt": "2025-03-11T16:49:07.626Z"
+    },
+    {
+        "id": "cat008",
+        "name": "Леска",
+        "parentId": null,
+        "createdAt": "2025-03-11T16:49:07.626Z",
+        "updatedAt": "2025-03-11T16:49:07.626Z"
+    },
+    {
+        "id": "cat009",
+        "name": "Крючки",
+        "parentId": null,
+        "createdAt": "2025-03-11T16:49:07.626Z",
+        "updatedAt": "2025-03-11T16:49:07.626Z"
+    },
+    {
+        "id": "cat010",
+        "name": "Снаряжение",
+        "parentId": null,
+        "createdAt": "2025-03-11T16:49:07.626Z",
+        "updatedAt": "2025-03-11T16:49:07.626Z"
+    },
+    {
+        "id": "cat001",
+        "name": "Удочки test",
+        "parentId": null,
+        "createdAt": "2025-03-11T16:49:07.626Z",
+        "updatedAt": "2025-03-11T16:49:07.626Z"
+    },
+    {
+        "id": "cat003",
+        "name": "Удочки test2",
+        "parentId": null,
+        "createdAt": "2025-03-11T16:49:07.626Z",
+        "updatedAt": "2025-03-11T16:49:07.626Z"
+    },
+    {
+        "id": "cm893am9k0001ug6wi5uncqtl",
+        "name": "test",
+        "parentId": null,
+        "createdAt": "2025-03-14T18:06:38.648Z",
+        "updatedAt": "2025-03-14T18:06:38.648Z"
+    },
+    {
+        "id": "cm89380bg0001ugjwl79qwy1q",
+        "name": "Удочки test2",
+        "parentId": null,
+        "createdAt": "2025-03-14T18:04:36.889Z",
+        "updatedAt": "2025-03-14T18:08:12.716Z"
+    }
+]
