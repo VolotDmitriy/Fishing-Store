@@ -2,8 +2,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import Cart from './public/Cart icon.png';
-import User from './public/user.png';
 import Logo from './public/game-icons_fishing-net.png';
+import User from './public/user.png';
 import SearchBar from './searchBar';
 
 const Header: React.FC = () => {
@@ -57,7 +57,7 @@ const Header: React.FC = () => {
                                 />
                             </Link>
                         </button>
-                        <button className="w-[40px] h-[40px] bg-[#292929] rounded-[20px] flex justify-center items-center">
+                        <button className="cart-icon w-[40px] h-[40px] bg-[#292929] rounded-[20px] flex justify-center items-center">
                             <Link href="/cart">
                                 <Image
                                     src={Cart}
