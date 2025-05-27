@@ -19,8 +19,21 @@ import {
     Warehouse,
 } from '@/utils/types';
 import { MapPin } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
+import { Input } from './ui/input';
+import { Textarea } from './ui/textarea';
 import WarehouseSelector from './warehouse-selector';
+
+interface OrderData {
+    firstName: string;
+    secondName: string;
+    phone: string;
+    email: string;
+    comment: string;
+    location: LocationData;
+    deliveryMethod: DeliveryMethod;
+    selectedDeliveryPoint: string;
+}
 
 const defaultSettlement = {
     Ref: 'e718a680-4b33-11e4-ab6d-005056801329',
@@ -44,7 +57,10 @@ const defaultPosition: Position = {
     lng: parseFloat(defaultLocationData.lon),
 };
 
-const OrderForm = () => {
+const OrderForm = forwardRef<
+    { getOrderData: () => OrderData; reset: () => void },
+    {}
+>((props, ref) => {
     const [dialogOpen, setDialogOpen] = useState<boolean>(false);
     const [locationData, setLocationData] =
         useState<LocationData>(defaultLocationData);
@@ -61,10 +77,39 @@ const OrderForm = () => {
         warehouse: [],
         postomat: [],
     });
-    const [isLoading, setIsLoading] = useState<boolean>(true); // Ініціалізуємо true, щоб показати "Loading..." одразу
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [firstName, setFirstName] = useState('');
+    const [secondName, setSecondName] = useState('');
+    const [phone, setPhone] = useState('');
+    const [email, setEmail] = useState('');
+    const [comment, setComment] = useState('');
+
+    useImperativeHandle(ref, () => ({
+        getOrderData: () => ({
+            firstName,
+            secondName,
+            phone,
+            email,
+            comment,
+            location: locationData,
+            deliveryMethod,
+            selectedDeliveryPoint,
+        }),
+        reset: () => {
+            setFirstName('');
+            setSecondName('');
+            setPhone('');
+            setEmail('');
+            setComment('');
+            setLocationData(defaultLocationData);
+            setMarkerPosition(defaultPosition);
+            setDeliveryMethod('warehouse');
+            setSelectedDeliveryPoint('');
+        },
+    }));
 
     useEffect(() => {
-        setIsLoading(true); // Встановлюємо true перед початком запиту
+        setIsLoading(true);
         const fetchAllWarehouses = async () => {
             try {
                 const [warehouseData, postomatData] = await Promise.all([
@@ -79,10 +124,9 @@ const OrderForm = () => {
             } catch (error) {
                 console.error('Помилка при завантаженні відділень:', error);
             } finally {
-                setIsLoading(false); // Завантаження завершено, незалежно від результату
+                setIsLoading(false);
             }
         };
-
         fetchAllWarehouses();
     }, [locationData.settlement.Ref]);
 
@@ -102,6 +146,53 @@ const OrderForm = () => {
                 REGISTRATION OF AN ORDER
             </h1>
             <div className="flex flex-row gap-6 min-h-0 h-full">
+                <div className="flex flex-col w-1/2 gap-6 flex-1">
+                    <h2 className="text-lg font-semibold mb-4">
+                        Your contact information
+                    </h2>
+                    <div className="grid grid-cols-2 gap-6 text-xl">
+                        <div>
+                            <Input
+                                value={firstName}
+                                onChange={(e) => setFirstName(e.target.value)}
+                                placeholder="Your first name"
+                                className="rounded-none bg-transparent border-[B1B1B1] border-2 text-white placeholder-gray-500 h-10"
+                            />
+                        </div>
+                        <div>
+                            <Input
+                                value={phone}
+                                onChange={(e) => setPhone(e.target.value)}
+                                placeholder="+38(095) 123-45-67"
+                                className="rounded-none bg-transparent border-[B1B1B1] border-2 text-white placeholder-gray-500 h-10"
+                            />
+                        </div>
+                        <div>
+                            <Input
+                                value={secondName}
+                                onChange={(e) => setSecondName(e.target.value)}
+                                placeholder="Your second name"
+                                className="rounded-none bg-transparent border-[B1B1B1] border-2 text-white placeholder-gray-500 h-10"
+                            />
+                        </div>
+                        <div>
+                            <Input
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                placeholder="example@gmail.com"
+                                className="rounded-none bg-transparent border-[B1B1B1] gray-700 border-2 text-white placeholder-gray-500 h-10"
+                            />
+                        </div>
+                        <div className="col-span-2">
+                            <Textarea
+                                value={comment}
+                                onChange={(e) => setComment(e.target.value)}
+                                placeholder="Addition comment"
+                                className="rounded-none bg-transparent border-[B1B1B1] border-2 text-white placeholder-gray-500 h-32 w-full resize-none"
+                            />
+                        </div>
+                    </div>
+                </div>
                 <div className="w-1/2 grid grid-cols-1 grid-rows-2 gap-6 flex-1 pt-17">
                     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
                         <DialogTrigger asChild>
@@ -149,10 +240,11 @@ const OrderForm = () => {
                             місцезнаходження, натисніть "Змінити".
                         </p>
                     </div>
+
                     <div>
                         <h2 className="text-lg font-semibold mb-4">Delivery</h2>
                         {isLoading ? (
-                            <p>Loading...</p> // Показуємо "Loading..." під час завантаження
+                            <p>Loading...</p>
                         ) : (
                             <RadioGroup
                                 value={deliveryMethod}
@@ -160,62 +252,82 @@ const OrderForm = () => {
                                     setDeliveryMethod(value as DeliveryMethod);
                                     setSelectedDeliveryPoint('');
                                 }}
-                                className="space-y-4"
                             >
-                                <div className="flex items-center space-x-4">
+                                {/* Green Stripe Divider */}
+                                <hr className="border-t-1 border-green-500 my-2" />
+
+                                <div className="flex items-center space-x-8 my-4">
                                     <RadioGroupItem
                                         value="warehouse"
                                         id="warehouse"
+                                        className="border-[#0DC85D] data-[state=checked]:border-[#0DC85D] data-[state=checked]:[&_svg]:fill-[#0DC85D] w-6 h-6"
                                     />
+
                                     <Label
                                         htmlFor="warehouse"
-                                        className="text-white"
+                                        className="flex flex-1 text-white text-xl font-jakarta"
                                     >
-                                        Відділення NovaPost
+                                        Post office NovaPosta
                                     </Label>
-                                    <WarehouseSelector
-                                        warehouses={warehouses.warehouse}
-                                        selectedWarehouse={
-                                            deliveryMethod === 'warehouse'
-                                                ? selectedDeliveryPoint
-                                                : ''
-                                        }
-                                        setSelectedWarehouse={(point: string) =>
-                                            onDeliveryPointSelect(
-                                                point,
-                                                'warehouse',
-                                            )
-                                        }
-                                        warehouseType="warehouse"
-                                    />
+                                    <div className="flex items-center gap-2">
+                                        <WarehouseSelector
+                                            warehouses={warehouses.warehouse}
+                                            selectedWarehouse={
+                                                deliveryMethod === 'warehouse'
+                                                    ? selectedDeliveryPoint
+                                                    : ''
+                                            }
+                                            setSelectedWarehouse={(
+                                                point: string,
+                                            ) =>
+                                                onDeliveryPointSelect(
+                                                    point,
+                                                    'warehouse',
+                                                )
+                                            }
+                                            warehouseType="warehouse"
+                                        />
+                                    </div>
                                 </div>
-                                <div className="flex items-center space-x-4">
+
+                                {/* Green Stripe Divider */}
+                                <hr className="border-t-1 border-green-500 my-2" />
+
+                                <div className="flex items-center space-x-8 my-4">
                                     <RadioGroupItem
                                         value="postomat"
                                         id="postomat"
+                                        className="border-[#0DC85D] data-[state=checked]:border-[#0DC85D] data-[state=checked]:[&_svg]:fill-[#0DC85D] w-6 h-6"
                                     />
                                     <Label
                                         htmlFor="postomat"
-                                        className="text-white"
+                                        className="flex flex-1 text-white text-xl font-jakarta"
                                     >
-                                        Поштомат NovaPost
+                                        Parcel locker NovaPosta
                                     </Label>
-                                    <WarehouseSelector
-                                        warehouses={warehouses.postomat}
-                                        selectedWarehouse={
-                                            deliveryMethod === 'postomat'
-                                                ? selectedDeliveryPoint
-                                                : ''
-                                        }
-                                        setSelectedWarehouse={(point: string) =>
-                                            onDeliveryPointSelect(
-                                                point,
-                                                'postomat',
-                                            )
-                                        }
-                                        warehouseType="postomat"
-                                    />
+                                    <div className="flex items-center gap-2">
+                                        <WarehouseSelector
+                                            warehouses={warehouses.postomat}
+                                            selectedWarehouse={
+                                                deliveryMethod === 'postomat'
+                                                    ? selectedDeliveryPoint
+                                                    : ''
+                                            }
+                                            setSelectedWarehouse={(
+                                                point: string,
+                                            ) =>
+                                                onDeliveryPointSelect(
+                                                    point,
+                                                    'postomat',
+                                                )
+                                            }
+                                            warehouseType="postomat"
+                                        />
+                                    </div>
                                 </div>
+
+                                {/* Green Stripe Divider */}
+                                <hr className="border-t-1 border-green-500 my-2" />
                             </RadioGroup>
                         )}
                     </div>
@@ -223,6 +335,6 @@ const OrderForm = () => {
             </div>
         </div>
     );
-};
+});
 
 export default OrderForm;

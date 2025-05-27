@@ -3,6 +3,7 @@ import Link from 'next/link';
 import React from 'react';
 import Cart from './public/Cart icon.png';
 import Logo from './public/game-icons_fishing-net.png';
+import User from './public/user.png';
 import SearchBar from './searchBar';
 
 const Header: React.FC = () => {
@@ -46,7 +47,18 @@ const Header: React.FC = () => {
                 <div className="flex justify-end px-[36px]">
                     <div className="flex flex-row justify-center items-center gap-[8px] ">
                         <button className="w-[40px] h-[40px] bg-[#292929] rounded-[20px] flex justify-center items-center">
-                            <Link href="/cart" className="">
+                            <Link href="/auth-admin">
+                                <Image
+                                    src={User}
+                                    alt="User"
+                                    width={20}
+                                    height={20}
+                                    className="filter brightness-0 invert"
+                                />
+                            </Link>
+                        </button>
+                        <button className="cart-icon w-[40px] h-[40px] bg-[#292929] rounded-[20px] flex justify-center items-center">
+                            <Link href="/cart">
                                 <Image
                                     src={Cart}
                                     alt="Cart"

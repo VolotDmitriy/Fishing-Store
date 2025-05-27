@@ -1,3 +1,13 @@
+export interface CartItem {
+    id: string; // ID варианта
+    productId: string; // ID продукта
+    name: string; // Название продукта
+    variantSku: string; // SKU варианта
+    imgURL: string; // URL изображения
+    price: number; // Цена
+    quantity: number; // Количество
+}
+
 export interface Position {
     lat: number;
     lng: number;
@@ -25,6 +35,11 @@ export interface Warehouse {
     Number: string;
     CityDescription: string;
     TypeOfWarehouse: string;
+}
+
+export interface DiscountResponse {
+    discount?: { id: string; name: string; percentage: number };
+    message?: string;
 }
 
 export type DeliveryMethod = 'warehouse' | 'postomat';

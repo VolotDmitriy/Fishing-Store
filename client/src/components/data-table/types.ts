@@ -66,8 +66,8 @@ export const discountSchema = z.object({
     id: z.string(),
     name: z.string(),
     percentage: z.number(),
-    startDate: z.string().nullable(),
-    endDate: z.string().nullable(),
+    startDate: z.string(),
+    endDate: z.string(),
     createdAt: z.string(),
     updatedAt: z.string(),
 });

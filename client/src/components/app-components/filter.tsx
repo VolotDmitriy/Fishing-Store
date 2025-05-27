@@ -3,49 +3,34 @@
 import { CategoryTypeF } from '@/components/data-table/types';
 import { cn } from '@/lib/utils';
 import { slugify } from '@/utils/convert-cyrillic';
-import { fetchCategories } from '@/utils/requests';
 import { ChevronDown } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
-import { toast } from 'sonner';
 import { Skeleton } from '../ui/skeleton';
 
 interface Props {
     className?: string;
+    categories: CategoryTypeF[];
+    isLoading: boolean;
 }
 
-export const Filter: React.FC<Props> = ({ className }) => {
+export const Filter: React.FC<Props> = ({
+    className,
+    categories,
+    isLoading,
+}) => {
     const pathname = usePathname();
 
-    const [isLoading, setIsLoading] = useState(true);
     const [openCategories, setOpenCategories] = useState<{
         [key: string]: boolean;
     }>({});
-    const [categories, setCategories] = useState<CategoryTypeF[]>([]);
 
     const currentSegment =
         pathname
             .split('/')
             .filter((segment) => segment !== '')
             .pop() || '';
-
-    useEffect(() => {
-        const loadData = async () => {
-            setIsLoading(true);
-            try {
-                const [fetchedCategories] = await Promise.all([
-                    fetchCategories(true),
-                ]);
-                setCategories(fetchedCategories);
-            } catch (error) {
-                toast.error('Failed to load data' + error);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-        loadData();
-    }, []);
 
     useEffect(() => {
         const initialOpenState = categories.reduce(
@@ -66,22 +51,22 @@ export const Filter: React.FC<Props> = ({ className }) => {
     };
 
     const renderSkeleton = () => (
-        <div className={cn(className, 'mt-10')}>
+        <div className={cn(className)}>
             <div className="w-full gap-8 flex flex-col overflow-auto scrollbar max-h-[calc(100vh-120px)] pr-3">
                 {[...Array(7)].map((_, index) => (
                     <div key={index} className="flex flex-col gap-8">
                         <div className="flex flex-row justify-between items-center">
-                            <Skeleton className="h-6 w-48 rounded-md" />
-                            <Skeleton className="h-6 w-6 rounded-full" />
+                            <Skeleton className="h-6 w-48 rounded-md bg-gray-800" />
+                            <Skeleton className="h-6 w-6 rounded-full bg-gray-800" />
                         </div>
                         <div className="gap-4 flex flex-col">
                             {[...Array(2)].map((_, subIndex) => (
                                 <div key={subIndex} className="pl-5">
-                                    <Skeleton className="h-5 w-28 rounded-md" />
+                                    <Skeleton className="h-5 w-28 rounded-md bg-gray-800" />
                                 </div>
                             ))}
                         </div>
-                        <Skeleton className="h-px w-full" />
+                        <Skeleton className="h-px w-full bg-gray-800" />
                     </div>
                 ))}
             </div>
@@ -93,7 +78,7 @@ export const Filter: React.FC<Props> = ({ className }) => {
     }
 
     return (
-        <div className={cn(className, 'mt-10')}>
+        <div className={cn(className)}>
             <div className="w-full gap-8 flex flex-col overflow-auto scrollbar max-h-[calc(100vh-120px)] pr-3">
                 {categories
                     .filter((category) => category.parentId === null)

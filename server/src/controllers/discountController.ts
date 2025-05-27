@@ -91,7 +91,8 @@ export const createDiscount: RouterHandler = async (req, res) => {
 export const updateDiscount: RouterHandler = async (req, res) => {
     try {
         const id = req.params.id;
-        const { name, percentage, date, products, variants } = req.body;
+        const { name, percentage, startDate, endDate, products, variants } =
+            req.body;
 
         const existingDiscount = await prisma.discount.findUnique({
             where: { id },
@@ -107,12 +108,12 @@ export const updateDiscount: RouterHandler = async (req, res) => {
                 name,
                 percentage,
                 startDate:
-                    date.from !== undefined
-                        ? new Date(date.from)
+                    startDate !== undefined
+                        ? new Date(startDate)
                         : existingDiscount.startDate,
                 endDate:
-                    date.to !== undefined
-                        ? new Date(date.to)
+                    endDate !== undefined
+                        ? new Date(endDate)
                         : existingDiscount.endDate,
             },
         });
@@ -138,6 +139,37 @@ export const deleteDiscount: RouterHandler = async (req, res) => {
         const deletedDiscount = await prisma.discount.delete({ where: { id } });
 
         res.status(200).json({ message: 'Скидка удалена', deletedDiscount });
+    } catch (error) {
+        ErrorHandler(error, res);
+    }
+};
+
+export const checkDiscount: RouterHandler = async (req, res) => {
+    try {
+        const { code } = req.body;
+        const now = new Date();
+        const discount = await prisma.discount.findFirst({
+            where: {
+                name: code,
+                startDate: { lte: now },
+                endDate: { gte: now },
+            },
+        });
+        if (!discount) {
+            res.status(200).json({
+                message: 'Discount not found or not active',
+            });
+            return;
+        }
+        res.status(200).json({
+            message: 'Coupon applied successfully',
+            discount: {
+                id: discount.id,
+                name: discount.name,
+                percentage: discount.percentage,
+            },
+        });
+        return;
     } catch (error) {
         ErrorHandler(error, res);
     }

@@ -9,22 +9,20 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
+import { addToCart } from '@/utils/cartUtils';
+import { AnimatePresence, motion } from 'framer-motion';
 import { ShoppingCart } from 'lucide-react';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
-const images = [
-    'Products/1.jpg',
-    'Products/2.jpg',
-    'Products/3.jpg',
-    'Products/4.jpg',
-];
 interface ProductCardProps {
     item: ProductType;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
     const [selectedSku, setSelectedSku] = useState<string | null>(null);
+    const [isFlying, setIsFlying] = useState(false);
+    const cardRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         if (item.variants.length > 0) {
@@ -34,18 +32,63 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
 
     const currentVariant = item.variants.find((v) => v.sku === selectedSku);
 
+    const handleAddToCart = () => {
+        if (currentVariant) {
+            addToCart(item, 1, currentVariant.id);
+            setIsFlying(true);
+            setTimeout(() => {
+                setIsFlying(false);
+            }, 1000);
+        }
+    };
+
+    const cartIcon = document.querySelector('.cart-icon');
+    const cartRect = cartIcon?.getBoundingClientRect();
+    const cardRect = cardRef.current?.getBoundingClientRect();
+    let x = 0;
+    let y = 0;
+    if (cartRect && cardRect) {
+        x = cartRect.left - cardRect.left - 200;
+        y = cartRect.top - cardRect.top;
+    }
+
     return (
-        <div className="w-full max-w-[360px] max-h-fit bg-black text-white flex flex-col justify-between gap-[30px] px-[20px] pt-[20px] pb-[30px] mx-[10px] rounded-[16px] border-solid! border-white border-[1px] shadow-lg">
-            <div className="w-full h-full flex justify-center items-center overflow-hidden rounded-[12px] outline-solid! outline-white outline-[1px]">
+        <div
+            ref={cardRef}
+            className="w-full max-w-[360px] h-fit min-h-[540px] bg-black text-white flex flex-col justify-between gap-[30px] px-[20px] pt-[20px] pb-[30px] mx-[10px] my-[1px] rounded-[16px] border-solid border-white border-[1px] shadow-lg relative"
+        >
+            <AnimatePresence>
+                {isFlying && (
+                    <motion.div
+                        className="absolute top-0 left-0 w-full h-[200px] z-50"
+                        initial={{ opacity: 1, scale: 1, x: 0, y: 0 }}
+                        animate={{
+                            x: `${x}px`,
+                            y: `${y}px`,
+                            scale: 0.3,
+                            opacity: 0,
+                        }}
+                        transition={{ duration: 1, ease: 'easeInOut' }}
+                    >
+                        <img
+                            src={item.images[0]}
+                            alt={item.name}
+                            className="object-cover w-full h-full rounded-[12px]"
+                        />
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            <div className="w-full h-full h-[340px] flex justify-center items-center overflow-hidden rounded-[12px] outline-solid outline-white outline-[1px]">
                 <img
-                    src={images[0]} // Затычка
+                    src={item.images[0]}
                     alt={item.name}
-                    className="object-cover w-full h-full"
+                    className="aspect-square w-full h-full"
                 />
             </div>
 
             <div className="flex flex-col gap-[18px]">
-                <h3 className="text-lg overflow-hidden text-[20px] leading-[1] whitespace-nowrap overflow-hidden text-ellipsis">
+                <h3 className="text-lg overflow-hidden text-[20px] whitespace-nowrap text-ellipsis">
                     <Link href={`/${item.id}`} passHref legacyBehavior>
                         <a className="inline-block">{item.name}</a>
                     </Link>
@@ -58,7 +101,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
                             setSelectedSku(value);
                         }}
                     >
-                        <SelectTrigger className="w-fit h-[30px]! bg-black border-gray-600 text-white cursor-pointer">
+                        <SelectTrigger className="w-fit h-[30px] bg-black border-gray-600 text-white cursor-pointer">
                             <SelectValue placeholder="Выберите вариант">
                                 {selectedSku || item.variants[0].sku}
                             </SelectValue>
@@ -100,12 +143,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
             <div className="flex items-center justify-between mt-auto">
                 <span className="text-[24px] font-bold">
                     {currentVariant
-                        ? `${currentVariant.price} $`
+                        ? `${Number(currentVariant.price).toFixed(2)} $`
                         : 'Цена не указана'}
                 </span>
                 <Button
                     variant="custom_outline"
                     className="text-white border-white hover:bg-white hover:text-black cursor-pointer"
+                    onClick={handleAddToCart}
                 >
                     <ShoppingCart className="mr-[8px] h-5 w-5" />В корзину
                 </Button>

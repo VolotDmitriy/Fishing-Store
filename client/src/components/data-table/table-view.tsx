@@ -48,8 +48,8 @@ import {
     useReactTable,
 } from '@tanstack/react-table';
 import * as React from 'react';
-import { VariantSubTable } from './VariantSubTable';
 import { ColumnType } from './types';
+import { VariantSubTable } from './VariantSubTable';
 
 // Компонент таблицы с Customize Columns
 export function TableView({
@@ -61,7 +61,10 @@ export function TableView({
 }) {
     const [rowSelection, setRowSelection] = React.useState({});
     const [columnVisibility, setColumnVisibility] =
-        React.useState<VisibilityState>({});
+        React.useState<VisibilityState>({
+            description: false,
+            images: false,
+        });
     const [columnFilters, setColumnFilters] =
         React.useState<ColumnFiltersState>([]);
     const [sorting, setSorting] = React.useState<SortingState>([]);

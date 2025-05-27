@@ -423,7 +423,7 @@ export function ProductForm() {
                                             key={field.id}
                                             index={index}
                                             form={form}
-                                            removeVariant={() =>
+                                            removeVariantAction={() =>
                                                 removeVariant(index)
                                             }
                                             discounts={discounts}
