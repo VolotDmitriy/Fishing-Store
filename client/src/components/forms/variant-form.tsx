@@ -1,5 +1,6 @@
 'use client';
 
+import { DiscountType } from '@/components/data-table/types';
 import { Button } from '@/components/ui/button';
 import {
     FormControl,
@@ -17,9 +18,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
-import { cn } from '@/lib/utils';
 import { useFieldArray, UseFormReturn } from 'react-hook-form';
-import { DiscountType } from '@/components/data-table/types';
 import { ProductFormValues } from './types';
 
 interface VariantFormProps {
@@ -48,10 +47,8 @@ export function VariantForm({
         <FormItem className="mb-4 border-2 border-border rounded-md p-4">
             <div className="flex flex-row justify-between items-start">
                 <div className="flex flex-col gap-2">
-                    <FormLabel>
-                        Variant
-                    </FormLabel>
-                    <FormDescription className='mb-2'>
+                    <FormLabel>Variant</FormLabel>
+                    <FormDescription className="mb-2">
                         Add variant details for this product.
                     </FormDescription>
                 </div>
