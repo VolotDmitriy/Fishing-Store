@@ -295,8 +295,8 @@ const OrderForm = forwardRef<
 
                                 <div className="flex items-center space-x-8 my-4">
                                     <RadioGroupItem
-                                        value="warehouse"
-                                        id="warehouse"
+                                        value="postomat"
+                                        id="postomat"
                                         className="border-[#0DC85D] data-[state=checked]:border-[#0DC85D] data-[state=checked]:[&_svg]:fill-[#0DC85D] w-6 h-6"
                                     />
                                     <Label
