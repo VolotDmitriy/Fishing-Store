@@ -1,5 +1,8 @@
 'use client';
 
+import { CategoryDrawer } from '@/components/data-table/drawers/CaterogyDrawer';
+import { DiscountDrawer } from '@/components/data-table/drawers/DiscountDrawer';
+import { ProductDrawer } from '@/components/data-table/drawers/ProductDrawer';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -9,29 +12,47 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import {
+    fetchCategories,
+    fetchDiscounts,
+    fetchProducts,
+} from '@/utils/requests';
 import { IconDotsVertical } from '@tabler/icons-react';
 import { ColumnDef } from '@tanstack/react-table';
+import { ChevronDown, ChevronRight } from 'lucide-react';
 import { z } from 'zod';
 import { TableCellViewer } from './table-cell-viewer';
 import { categorySchema, discountSchema, productSchema } from './types';
 
-// Столбцы для каждой таблицы
+const dataCategories = await fetchCategories(false);
+const dataProducts = await fetchProducts(true);
+const dataDiscount = await fetchDiscounts(false);
+
 export const categoryColumns: ColumnDef<z.infer<typeof categorySchema>>[] = [
     {
         id: 'select',
         header: ({ table }) => (
-            <Checkbox
-                checked={table.getIsAllPageRowsSelected()}
-                onCheckedChange={(value) =>
-                    table.toggleAllPageRowsSelected(!!value)
-                }
-            />
+            <div className="flex items-center justify-center">
+                <Checkbox
+                    checked={
+                        table.getIsAllPageRowsSelected() ||
+                        (table.getIsSomePageRowsSelected() && 'indeterminate')
+                    }
+                    onCheckedChange={(value) =>
+                        table.toggleAllPageRowsSelected(!!value)
+                    }
+                    aria-label="Select all"
+                />
+            </div>
         ),
         cell: ({ row }) => (
-            <Checkbox
-                checked={row.getIsSelected()}
-                onCheckedChange={(value) => row.toggleSelected(!!value)}
-            />
+            <div className="flex items-center justify-center">
+                <Checkbox
+                    checked={row.getIsSelected()}
+                    onCheckedChange={(value) => row.toggleSelected(!!value)}
+                    aria-label="Select row"
+                />
+            </div>
         ),
         enableSorting: false,
         enableHiding: false,
@@ -40,7 +61,14 @@ export const categoryColumns: ColumnDef<z.infer<typeof categorySchema>>[] = [
     {
         accessorKey: 'name',
         header: 'Название',
-        cell: ({ row }) => <TableCellViewer item={row.original} />,
+        cell: ({ row }) => (
+            <TableCellViewer itemName={row.original.name}>
+                <CategoryDrawer
+                    item={row.original}
+                    data={dataCategories}
+                ></CategoryDrawer>
+            </TableCellViewer>
+        ),
         enableHiding: false,
     },
     {
@@ -84,18 +112,27 @@ export const productColumns: ColumnDef<z.infer<typeof productSchema>>[] = [
     {
         id: 'select',
         header: ({ table }) => (
-            <Checkbox
-                checked={table.getIsAllPageRowsSelected()}
-                onCheckedChange={(value) =>
-                    table.toggleAllPageRowsSelected(!!value)
-                }
-            />
+            <div className="flex items-center justify-center">
+                <Checkbox
+                    checked={
+                        table.getIsAllPageRowsSelected() ||
+                        (table.getIsSomePageRowsSelected() && 'indeterminate')
+                    }
+                    onCheckedChange={(value) =>
+                        table.toggleAllPageRowsSelected(!!value)
+                    }
+                    aria-label="Select all"
+                />
+            </div>
         ),
         cell: ({ row }) => (
-            <Checkbox
-                checked={row.getIsSelected()}
-                onCheckedChange={(value) => row.toggleSelected(!!value)}
-            />
+            <div className="flex items-center justify-center">
+                <Checkbox
+                    checked={row.getIsSelected()}
+                    onCheckedChange={(value) => row.toggleSelected(!!value)}
+                    aria-label="Select row"
+                />
+            </div>
         ),
         enableSorting: false,
         enableHiding: false,
@@ -104,13 +141,58 @@ export const productColumns: ColumnDef<z.infer<typeof productSchema>>[] = [
     {
         accessorKey: 'name',
         header: 'Название',
-        cell: ({ row }) => <TableCellViewer item={row.original} />,
+        cell: ({ row }) => (
+            <TableCellViewer itemName={row.original.name}>
+                <ProductDrawer
+                    item={row.original}
+                    data={dataProducts}
+                    categoriesData={dataCategories}
+                    discountsData={dataDiscount}
+                ></ProductDrawer>
+            </TableCellViewer>
+        ),
         enableHiding: false,
     },
     {
         accessorKey: 'description',
         header: 'Описание',
-        cell: ({ row }) => row.original.description,
+        cell: ({ row }) => row.original.description || 'Описание отсутствует',
+    },
+    {
+        accessorKey: 'variants',
+        header: 'Варианты',
+        cell: ({ row, table }) => {
+            const variants = row.original.variants;
+            if (!variants || variants.length === 0) {
+                return 'Нет вариантов';
+            }
+            const count = variants.length;
+            const expandedState = table.getState().expanded;
+            const isExpanded =
+                typeof expandedState === 'object'
+                    ? expandedState[row.id]
+                    : false;
+
+            return (
+                <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                        if (typeof expandedState === 'object') {
+                            table.setExpanded({
+                                ...expandedState,
+                                [row.id]: !isExpanded,
+                            });
+                        } else {
+                            table.setExpanded({ [row.id]: true });
+                        }
+                    }}
+                >
+                    {count} Вариант{count > 1 ? 'ов' : ''}{' '}
+                    {isExpanded ? <ChevronDown /> : <ChevronRight />}
+                </Button>
+            );
+        },
     },
     {
         accessorKey: 'categoryId',
@@ -120,7 +202,7 @@ export const productColumns: ColumnDef<z.infer<typeof productSchema>>[] = [
     {
         accessorKey: 'images',
         header: 'Изображения',
-        cell: ({ row }) => row.original.images.join(', '),
+        cell: ({ row }) => row.original.images.join(', ') || 'Нет изображений',
     },
     {
         accessorKey: 'discountId',
@@ -149,18 +231,27 @@ export const discountColumns: ColumnDef<z.infer<typeof discountSchema>>[] = [
     {
         id: 'select',
         header: ({ table }) => (
-            <Checkbox
-                checked={table.getIsAllPageRowsSelected()}
-                onCheckedChange={(value) =>
-                    table.toggleAllPageRowsSelected(!!value)
-                }
-            />
+            <div className="flex items-center justify-center">
+                <Checkbox
+                    checked={
+                        table.getIsAllPageRowsSelected() ||
+                        (table.getIsSomePageRowsSelected() && 'indeterminate')
+                    }
+                    onCheckedChange={(value) =>
+                        table.toggleAllPageRowsSelected(!!value)
+                    }
+                    aria-label="Select all"
+                />
+            </div>
         ),
         cell: ({ row }) => (
-            <Checkbox
-                checked={row.getIsSelected()}
-                onCheckedChange={(value) => row.toggleSelected(!!value)}
-            />
+            <div className="flex items-center justify-center">
+                <Checkbox
+                    checked={row.getIsSelected()}
+                    onCheckedChange={(value) => row.toggleSelected(!!value)}
+                    aria-label="Select row"
+                />
+            </div>
         ),
         enableSorting: false,
         enableHiding: false,
@@ -169,7 +260,14 @@ export const discountColumns: ColumnDef<z.infer<typeof discountSchema>>[] = [
     {
         accessorKey: 'name',
         header: 'Название',
-        cell: ({ row }) => <TableCellViewer item={row.original} />,
+        cell: ({ row }) => (
+            <TableCellViewer itemName={row.original.name}>
+                <DiscountDrawer
+                    item={row.original}
+                    data={dataDiscount}
+                ></DiscountDrawer>
+            </TableCellViewer>
+        ),
         enableHiding: false,
     },
     {

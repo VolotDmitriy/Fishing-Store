@@ -1,14 +1,6 @@
 'use client';
 
 import {
-    IconDots,
-    IconFolder,
-    IconShare3,
-    IconTrash,
-    type Icon,
-} from '@tabler/icons-react';
-
-import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
@@ -24,6 +16,13 @@ import {
     SidebarMenuItem,
     useSidebar,
 } from '@/components/ui/sidebar';
+import {
+    IconDots,
+    IconFolder,
+    IconShare3,
+    IconTrash,
+    type Icon,
+} from '@tabler/icons-react';
 
 export function NavDocuments({
     items,
@@ -38,7 +37,7 @@ export function NavDocuments({
 
     return (
         <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-            <SidebarGroupLabel>Documents</SidebarGroupLabel>
+            <SidebarGroupLabel>All orders</SidebarGroupLabel>
             <SidebarMenu>
                 {items.map((item) => (
                     <SidebarMenuItem key={item.name}>
@@ -80,12 +79,6 @@ export function NavDocuments({
                         </DropdownMenu>
                     </SidebarMenuItem>
                 ))}
-                <SidebarMenuItem>
-                    <SidebarMenuButton className="text-sidebar-foreground/70">
-                        <IconDots className="text-sidebar-foreground/70" />
-                        <span>More</span>
-                    </SidebarMenuButton>
-                </SidebarMenuItem>
             </SidebarMenu>
         </SidebarGroup>
     );

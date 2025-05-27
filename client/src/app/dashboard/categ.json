@@ -1,86 +1,2515 @@
 [
     {
+        "id": "cat001",
+        "name": "Удочки",
+        "parentId": null,
+        "createdAt": "2025-03-17T19:03:41.246Z",
+        "updatedAt": "2025-03-17T19:03:41.246Z",
+        "children": [
+            {
+                "id": "cat002",
+                "name": "Спиннинги",
+                "parentId": "cat001",
+                "createdAt": "2025-03-17T19:03:41.246Z",
+                "updatedAt": "2025-03-17T19:03:41.246Z"
+            },
+            {
+                "id": "cat003",
+                "name": "Фидерные удочки",
+                "parentId": "cat001",
+                "createdAt": "2025-03-17T19:03:41.246Z",
+                "updatedAt": "2025-03-17T19:03:41.246Z"
+            }
+        ],
+        "products": [],
+        "variantTypes": [
+            {
+                "id": "vt001",
+                "categoryId": "cat001",
+                "name": "Длина",
+                "createdAt": "2025-03-17T19:03:41.430Z",
+                "updatedAt": "2025-03-17T19:03:41.430Z",
+                "productAttributes": [],
+                "productVariantAttributes": [
+                    {
+                        "id": "attr01001",
+                        "variantId": "var101",
+                        "typeId": "vt001",
+                        "value": "2.4 м",
+                        "createdAt": "2025-03-17T19:03:41.822Z",
+                        "updatedAt": "2025-03-17T19:03:41.822Z"
+                    },
+                    {
+                        "id": "attr02001",
+                        "variantId": "var201",
+                        "typeId": "vt001",
+                        "value": "2.7 м",
+                        "createdAt": "2025-03-17T19:03:42.291Z",
+                        "updatedAt": "2025-03-17T19:03:42.291Z"
+                    },
+                    {
+                        "id": "attr03001",
+                        "variantId": "var301",
+                        "typeId": "vt001",
+                        "value": "2.1 м",
+                        "createdAt": "2025-03-17T19:03:42.637Z",
+                        "updatedAt": "2025-03-17T19:03:42.637Z"
+                    },
+                    {
+                        "id": "attr04001",
+                        "variantId": "var401",
+                        "typeId": "vt001",
+                        "value": "3.0 м",
+                        "createdAt": "2025-03-17T19:03:42.926Z",
+                        "updatedAt": "2025-03-17T19:03:42.926Z"
+                    },
+                    {
+                        "id": "attr05001",
+                        "variantId": "var501",
+                        "typeId": "vt001",
+                        "value": "2.4 м",
+                        "createdAt": "2025-03-17T19:03:43.212Z",
+                        "updatedAt": "2025-03-17T19:03:43.212Z"
+                    },
+                    {
+                        "id": "attr06001",
+                        "variantId": "var601",
+                        "typeId": "vt001",
+                        "value": "2.7 м",
+                        "createdAt": "2025-03-17T19:03:43.490Z",
+                        "updatedAt": "2025-03-17T19:03:43.490Z"
+                    },
+                    {
+                        "id": "attr07001",
+                        "variantId": "var701",
+                        "typeId": "vt001",
+                        "value": "2.1 м",
+                        "createdAt": "2025-03-17T19:03:43.768Z",
+                        "updatedAt": "2025-03-17T19:03:43.768Z"
+                    },
+                    {
+                        "id": "attr08001",
+                        "variantId": "var801",
+                        "typeId": "vt001",
+                        "value": "2.4 м",
+                        "createdAt": "2025-03-17T19:03:44.049Z",
+                        "updatedAt": "2025-03-17T19:03:44.049Z"
+                    },
+                    {
+                        "id": "attr09001",
+                        "variantId": "var901",
+                        "typeId": "vt001",
+                        "value": "2.7 м",
+                        "createdAt": "2025-03-17T19:03:44.372Z",
+                        "updatedAt": "2025-03-17T19:03:44.372Z"
+                    },
+                    {
+                        "id": "attr10001",
+                        "variantId": "var1001",
+                        "typeId": "vt001",
+                        "value": "3.0 м",
+                        "createdAt": "2025-03-17T19:03:44.656Z",
+                        "updatedAt": "2025-03-17T19:03:44.656Z"
+                    },
+                    {
+                        "id": "attr11001",
+                        "variantId": "var1101",
+                        "typeId": "vt001",
+                        "value": "3.6 м",
+                        "createdAt": "2025-03-17T19:03:44.994Z",
+                        "updatedAt": "2025-03-17T19:03:44.994Z"
+                    },
+                    {
+                        "id": "attr12001",
+                        "variantId": "var1201",
+                        "typeId": "vt001",
+                        "value": "3.9 м",
+                        "createdAt": "2025-03-17T19:03:45.279Z",
+                        "updatedAt": "2025-03-17T19:03:45.279Z"
+                    },
+                    {
+                        "id": "attr13001",
+                        "variantId": "var1301",
+                        "typeId": "vt001",
+                        "value": "3.3 м",
+                        "createdAt": "2025-03-17T19:03:45.561Z",
+                        "updatedAt": "2025-03-17T19:03:45.561Z"
+                    },
+                    {
+                        "id": "attr14001",
+                        "variantId": "var1401",
+                        "typeId": "vt001",
+                        "value": "3.6 м",
+                        "createdAt": "2025-03-17T19:03:45.840Z",
+                        "updatedAt": "2025-03-17T19:03:45.840Z"
+                    },
+                    {
+                        "id": "attr15001",
+                        "variantId": "var1501",
+                        "typeId": "vt001",
+                        "value": "3.9 м",
+                        "createdAt": "2025-03-17T19:03:46.125Z",
+                        "updatedAt": "2025-03-17T19:03:46.125Z"
+                    }
+                ]
+            },
+            {
+                "id": "vt002",
+                "categoryId": "cat001",
+                "name": "Тест",
+                "createdAt": "2025-03-17T19:03:41.430Z",
+                "updatedAt": "2025-03-17T19:03:41.430Z",
+                "productAttributes": [],
+                "productVariantAttributes": [
+                    {
+                        "id": "attr01002",
+                        "variantId": "var101",
+                        "typeId": "vt002",
+                        "value": "10-30 г",
+                        "createdAt": "2025-03-17T19:03:41.822Z",
+                        "updatedAt": "2025-03-17T19:03:41.822Z"
+                    },
+                    {
+                        "id": "attr02002",
+                        "variantId": "var201",
+                        "typeId": "vt002",
+                        "value": "15-40 г",
+                        "createdAt": "2025-03-17T19:03:42.291Z",
+                        "updatedAt": "2025-03-17T19:03:42.291Z"
+                    },
+                    {
+                        "id": "attr03002",
+                        "variantId": "var301",
+                        "typeId": "vt002",
+                        "value": "5-20 г",
+                        "createdAt": "2025-03-17T19:03:42.637Z",
+                        "updatedAt": "2025-03-17T19:03:42.637Z"
+                    },
+                    {
+                        "id": "attr04002",
+                        "variantId": "var401",
+                        "typeId": "vt002",
+                        "value": "20-50 г",
+                        "createdAt": "2025-03-17T19:03:42.926Z",
+                        "updatedAt": "2025-03-17T19:03:42.926Z"
+                    },
+                    {
+                        "id": "attr05002",
+                        "variantId": "var501",
+                        "typeId": "vt002",
+                        "value": "10-35 г",
+                        "createdAt": "2025-03-17T19:03:43.212Z",
+                        "updatedAt": "2025-03-17T19:03:43.212Z"
+                    },
+                    {
+                        "id": "attr06002",
+                        "variantId": "var601",
+                        "typeId": "vt002",
+                        "value": "15-45 г",
+                        "createdAt": "2025-03-17T19:03:43.490Z",
+                        "updatedAt": "2025-03-17T19:03:43.490Z"
+                    },
+                    {
+                        "id": "attr07002",
+                        "variantId": "var701",
+                        "typeId": "vt002",
+                        "value": "5-25 г",
+                        "createdAt": "2025-03-17T19:03:43.768Z",
+                        "updatedAt": "2025-03-17T19:03:43.768Z"
+                    },
+                    {
+                        "id": "attr08002",
+                        "variantId": "var801",
+                        "typeId": "vt002",
+                        "value": "10-40 г",
+                        "createdAt": "2025-03-17T19:03:44.049Z",
+                        "updatedAt": "2025-03-17T19:03:44.049Z"
+                    },
+                    {
+                        "id": "attr09002",
+                        "variantId": "var901",
+                        "typeId": "vt002",
+                        "value": "20-60 г",
+                        "createdAt": "2025-03-17T19:03:44.372Z",
+                        "updatedAt": "2025-03-17T19:03:44.372Z"
+                    },
+                    {
+                        "id": "attr10002",
+                        "variantId": "var1001",
+                        "typeId": "vt002",
+                        "value": "15-50 г",
+                        "createdAt": "2025-03-17T19:03:44.656Z",
+                        "updatedAt": "2025-03-17T19:03:44.656Z"
+                    },
+                    {
+                        "id": "attr11002",
+                        "variantId": "var1101",
+                        "typeId": "vt002",
+                        "value": "80 г",
+                        "createdAt": "2025-03-17T19:03:44.994Z",
+                        "updatedAt": "2025-03-17T19:03:44.994Z"
+                    },
+                    {
+                        "id": "attr12002",
+                        "variantId": "var1201",
+                        "typeId": "vt002",
+                        "value": "100 г",
+                        "createdAt": "2025-03-17T19:03:45.279Z",
+                        "updatedAt": "2025-03-17T19:03:45.279Z"
+                    },
+                    {
+                        "id": "attr13002",
+                        "variantId": "var1301",
+                        "typeId": "vt002",
+                        "value": "60 г",
+                        "createdAt": "2025-03-17T19:03:45.561Z",
+                        "updatedAt": "2025-03-17T19:03:45.561Z"
+                    },
+                    {
+                        "id": "attr14002",
+                        "variantId": "var1401",
+                        "typeId": "vt002",
+                        "value": "70 г",
+                        "createdAt": "2025-03-17T19:03:45.840Z",
+                        "updatedAt": "2025-03-17T19:03:45.840Z"
+                    },
+                    {
+                        "id": "attr15002",
+                        "variantId": "var1501",
+                        "typeId": "vt002",
+                        "value": "120 г",
+                        "createdAt": "2025-03-17T19:03:46.125Z",
+                        "updatedAt": "2025-03-17T19:03:46.125Z"
+                    }
+                ]
+            },
+            {
+                "id": "vt003",
+                "categoryId": "cat001",
+                "name": "Материал",
+                "createdAt": "2025-03-17T19:03:41.430Z",
+                "updatedAt": "2025-03-17T19:03:41.430Z",
+                "productAttributes": [],
+                "productVariantAttributes": []
+            }
+        ]
+    },
+    {
         "id": "cat002",
         "name": "Спиннинги",
         "parentId": "cat001",
-        "createdAt": "2025-03-11T16:49:07.626Z",
-        "updatedAt": "2025-03-11T16:49:07.626Z"
+        "createdAt": "2025-03-17T19:03:41.246Z",
+        "updatedAt": "2025-03-17T19:03:41.246Z",
+        "children": [],
+        "products": [
+            {
+                "id": "prod001",
+                "name": "Спиннинг Shimano Nexave 240",
+                "description": "Легкий спиннинг.",
+                "categoryId": "cat002",
+                "images": ["img1.jpg"],
+                "discountId": null,
+                "createdAt": "2025-03-17T19:03:41.822Z",
+                "updatedAt": "2025-03-17T19:03:41.822Z",
+                "variants": [
+                    {
+                        "id": "var101",
+                        "productId": "prod001",
+                        "sku": "SH-NX-240",
+                        "price": "5000",
+                        "inStock": 10,
+                        "discountId": null,
+                        "createdAt": "2025-03-17T19:03:41.822Z",
+                        "updatedAt": "2025-03-17T19:03:41.822Z",
+                        "attributes": [
+                            {
+                                "id": "attr01001",
+                                "variantId": "var101",
+                                "typeId": "vt001",
+                                "value": "2.4 м",
+                                "createdAt": "2025-03-17T19:03:41.822Z",
+                                "updatedAt": "2025-03-17T19:03:41.822Z"
+                            },
+                            {
+                                "id": "attr01002",
+                                "variantId": "var101",
+                                "typeId": "vt002",
+                                "value": "10-30 г",
+                                "createdAt": "2025-03-17T19:03:41.822Z",
+                                "updatedAt": "2025-03-17T19:03:41.822Z"
+                            }
+                        ]
+                    }
+                ],
+                "attributes": []
+            },
+            {
+                "id": "prod002",
+                "name": "Спиннинг Daiwa Exceler 270",
+                "description": "Прочный спиннинг.",
+                "categoryId": "cat002",
+                "images": ["img2.jpg"],
+                "discountId": null,
+                "createdAt": "2025-03-17T19:03:42.291Z",
+                "updatedAt": "2025-03-17T19:03:42.291Z",
+                "variants": [
+                    {
+                        "id": "var201",
+                        "productId": "prod002",
+                        "sku": "DW-EX-270",
+                        "price": "6000",
+                        "inStock": 8,
+                        "discountId": null,
+                        "createdAt": "2025-03-17T19:03:42.291Z",
+                        "updatedAt": "2025-03-17T19:03:42.291Z",
+                        "attributes": [
+                            {
+                                "id": "attr02001",
+                                "variantId": "var201",
+                                "typeId": "vt001",
+                                "value": "2.7 м",
+                                "createdAt": "2025-03-17T19:03:42.291Z",
+                                "updatedAt": "2025-03-17T19:03:42.291Z"
+                            },
+                            {
+                                "id": "attr02002",
+                                "variantId": "var201",
+                                "typeId": "vt002",
+                                "value": "15-40 г",
+                                "createdAt": "2025-03-17T19:03:42.291Z",
+                                "updatedAt": "2025-03-17T19:03:42.291Z"
+                            }
+                        ]
+                    }
+                ],
+                "attributes": []
+            },
+            {
+                "id": "prod003",
+                "name": "Спиннинг Abu Garcia 210",
+                "description": "Компактный спиннинг.",
+                "categoryId": "cat002",
+                "images": ["img3.jpg"],
+                "discountId": null,
+                "createdAt": "2025-03-17T19:03:42.637Z",
+                "updatedAt": "2025-03-17T19:03:42.637Z",
+                "variants": [
+                    {
+                        "id": "var301",
+                        "productId": "prod003",
+                        "sku": "AG-210",
+                        "price": "4500",
+                        "inStock": 12,
+                        "discountId": null,
+                        "createdAt": "2025-03-17T19:03:42.637Z",
+                        "updatedAt": "2025-03-17T19:03:42.637Z",
+                        "attributes": [
+                            {
+                                "id": "attr03001",
+                                "variantId": "var301",
+                                "typeId": "vt001",
+                                "value": "2.1 м",
+                                "createdAt": "2025-03-17T19:03:42.637Z",
+                                "updatedAt": "2025-03-17T19:03:42.637Z"
+                            },
+                            {
+                                "id": "attr03002",
+                                "variantId": "var301",
+                                "typeId": "vt002",
+                                "value": "5-20 г",
+                                "createdAt": "2025-03-17T19:03:42.637Z",
+                                "updatedAt": "2025-03-17T19:03:42.637Z"
+                            }
+                        ]
+                    }
+                ],
+                "attributes": []
+            },
+            {
+                "id": "prod004",
+                "name": "Спиннинг Okuma Ceymar 300",
+                "description": "Мощный спиннинг.",
+                "categoryId": "cat002",
+                "images": ["img4.jpg"],
+                "discountId": null,
+                "createdAt": "2025-03-17T19:03:42.926Z",
+                "updatedAt": "2025-03-17T19:03:42.926Z",
+                "variants": [
+                    {
+                        "id": "var401",
+                        "productId": "prod004",
+                        "sku": "OK-CEY-300",
+                        "price": "7000",
+                        "inStock": 5,
+                        "discountId": null,
+                        "createdAt": "2025-03-17T19:03:42.926Z",
+                        "updatedAt": "2025-03-17T19:03:42.926Z",
+                        "attributes": [
+                            {
+                                "id": "attr04001",
+                                "variantId": "var401",
+                                "typeId": "vt001",
+                                "value": "3.0 м",
+                                "createdAt": "2025-03-17T19:03:42.926Z",
+                                "updatedAt": "2025-03-17T19:03:42.926Z"
+                            },
+                            {
+                                "id": "attr04002",
+                                "variantId": "var401",
+                                "typeId": "vt002",
+                                "value": "20-50 г",
+                                "createdAt": "2025-03-17T19:03:42.926Z",
+                                "updatedAt": "2025-03-17T19:03:42.926Z"
+                            }
+                        ]
+                    }
+                ],
+                "attributes": []
+            },
+            {
+                "id": "prod005",
+                "name": "Спиннинг Salmo Elite 240",
+                "description": "Универсальный спиннинг.",
+                "categoryId": "cat002",
+                "images": ["img5.jpg"],
+                "discountId": null,
+                "createdAt": "2025-03-17T19:03:43.212Z",
+                "updatedAt": "2025-03-17T19:03:43.212Z",
+                "variants": [
+                    {
+                        "id": "var501",
+                        "productId": "prod005",
+                        "sku": "SAL-EL-240",
+                        "price": "5200",
+                        "inStock": 15,
+                        "discountId": null,
+                        "createdAt": "2025-03-17T19:03:43.212Z",
+                        "updatedAt": "2025-03-17T19:03:43.212Z",
+                        "attributes": [
+                            {
+                                "id": "attr05001",
+                                "variantId": "var501",
+                                "typeId": "vt001",
+                                "value": "2.4 м",
+                                "createdAt": "2025-03-17T19:03:43.212Z",
+                                "updatedAt": "2025-03-17T19:03:43.212Z"
+                            },
+                            {
+                                "id": "attr05002",
+                                "variantId": "var501",
+                                "typeId": "vt002",
+                                "value": "10-35 г",
+                                "createdAt": "2025-03-17T19:03:43.212Z",
+                                "updatedAt": "2025-03-17T19:03:43.212Z"
+                            }
+                        ]
+                    }
+                ],
+                "attributes": []
+            },
+            {
+                "id": "prod006",
+                "name": "Спиннинг Berkley Pulse 270",
+                "description": "Чувствительный спиннинг.",
+                "categoryId": "cat002",
+                "images": ["img6.jpg"],
+                "discountId": null,
+                "createdAt": "2025-03-17T19:03:43.490Z",
+                "updatedAt": "2025-03-17T19:03:43.490Z",
+                "variants": [
+                    {
+                        "id": "var601",
+                        "productId": "prod006",
+                        "sku": "BER-PUL-270",
+                        "price": "5800",
+                        "inStock": 9,
+                        "discountId": null,
+                        "createdAt": "2025-03-17T19:03:43.490Z",
+                        "updatedAt": "2025-03-17T19:03:43.490Z",
+                        "attributes": [
+                            {
+                                "id": "attr06001",
+                                "variantId": "var601",
+                                "typeId": "vt001",
+                                "value": "2.7 м",
+                                "createdAt": "2025-03-17T19:03:43.490Z",
+                                "updatedAt": "2025-03-17T19:03:43.490Z"
+                            },
+                            {
+                                "id": "attr06002",
+                                "variantId": "var601",
+                                "typeId": "vt002",
+                                "value": "15-45 г",
+                                "createdAt": "2025-03-17T19:03:43.490Z",
+                                "updatedAt": "2025-03-17T19:03:43.490Z"
+                            }
+                        ]
+                    }
+                ],
+                "attributes": []
+            },
+            {
+                "id": "prod007",
+                "name": "Спиннинг St. Croix 210",
+                "description": "Легкий и прочный.",
+                "categoryId": "cat002",
+                "images": ["img7.jpg"],
+                "discountId": null,
+                "createdAt": "2025-03-17T19:03:43.768Z",
+                "updatedAt": "2025-03-17T19:03:43.768Z",
+                "variants": [
+                    {
+                        "id": "var701",
+                        "productId": "prod007",
+                        "sku": "STC-210",
+                        "price": "6500",
+                        "inStock": 7,
+                        "discountId": null,
+                        "createdAt": "2025-03-17T19:03:43.768Z",
+                        "updatedAt": "2025-03-17T19:03:43.768Z",
+                        "attributes": [
+                            {
+                                "id": "attr07001",
+                                "variantId": "var701",
+                                "typeId": "vt001",
+                                "value": "2.1 м",
+                                "createdAt": "2025-03-17T19:03:43.768Z",
+                                "updatedAt": "2025-03-17T19:03:43.768Z"
+                            },
+                            {
+                                "id": "attr07002",
+                                "variantId": "var701",
+                                "typeId": "vt002",
+                                "value": "5-25 г",
+                                "createdAt": "2025-03-17T19:03:43.768Z",
+                                "updatedAt": "2025-03-17T19:03:43.768Z"
+                            }
+                        ]
+                    }
+                ],
+                "attributes": []
+            },
+            {
+                "id": "prod008",
+                "name": "Спиннинг Fenwick 240",
+                "description": "Для дальнего заброса.",
+                "categoryId": "cat002",
+                "images": ["img8.jpg"],
+                "discountId": null,
+                "createdAt": "2025-03-17T19:03:44.049Z",
+                "updatedAt": "2025-03-17T19:03:44.049Z",
+                "variants": [
+                    {
+                        "id": "var801",
+                        "productId": "prod008",
+                        "sku": "FEN-240",
+                        "price": "6200",
+                        "inStock": 6,
+                        "discountId": null,
+                        "createdAt": "2025-03-17T19:03:44.049Z",
+                        "updatedAt": "2025-03-17T19:03:44.049Z",
+                        "attributes": [
+                            {
+                                "id": "attr08001",
+                                "variantId": "var801",
+                                "typeId": "vt001",
+                                "value": "2.4 м",
+                                "createdAt": "2025-03-17T19:03:44.049Z",
+                                "updatedAt": "2025-03-17T19:03:44.049Z"
+                            },
+                            {
+                                "id": "attr08002",
+                                "variantId": "var801",
+                                "typeId": "vt002",
+                                "value": "10-40 г",
+                                "createdAt": "2025-03-17T19:03:44.049Z",
+                                "updatedAt": "2025-03-17T19:03:44.049Z"
+                            }
+                        ]
+                    }
+                ],
+                "attributes": []
+            },
+            {
+                "id": "prod009",
+                "name": "Спиннинг PENN Battle 270",
+                "description": "Для тяжелых приманок.",
+                "categoryId": "cat002",
+                "images": ["img9.jpg"],
+                "discountId": null,
+                "createdAt": "2025-03-17T19:03:44.372Z",
+                "updatedAt": "2025-03-17T19:03:44.372Z",
+                "variants": [
+                    {
+                        "id": "var901",
+                        "productId": "prod009",
+                        "sku": "PEN-BAT-270",
+                        "price": "7500",
+                        "inStock": 4,
+                        "discountId": null,
+                        "createdAt": "2025-03-17T19:03:44.372Z",
+                        "updatedAt": "2025-03-17T19:03:44.372Z",
+                        "attributes": [
+                            {
+                                "id": "attr09001",
+                                "variantId": "var901",
+                                "typeId": "vt001",
+                                "value": "2.7 м",
+                                "createdAt": "2025-03-17T19:03:44.372Z",
+                                "updatedAt": "2025-03-17T19:03:44.372Z"
+                            },
+                            {
+                                "id": "attr09002",
+                                "variantId": "var901",
+                                "typeId": "vt002",
+                                "value": "20-60 г",
+                                "createdAt": "2025-03-17T19:03:44.372Z",
+                                "updatedAt": "2025-03-17T19:03:44.372Z"
+                            }
+                        ]
+                    }
+                ],
+                "attributes": []
+            },
+            {
+                "id": "prod010",
+                "name": "Спиннинг KastKing 300",
+                "description": "Бюджетный спиннинг.",
+                "categoryId": "cat002",
+                "images": ["img10.jpg"],
+                "discountId": null,
+                "createdAt": "2025-03-17T19:03:44.656Z",
+                "updatedAt": "2025-03-17T19:03:44.656Z",
+                "variants": [
+                    {
+                        "id": "var1001",
+                        "productId": "prod010",
+                        "sku": "KAST-300",
+                        "price": "4800",
+                        "inStock": 20,
+                        "discountId": null,
+                        "createdAt": "2025-03-17T19:03:44.656Z",
+                        "updatedAt": "2025-03-17T19:03:44.656Z",
+                        "attributes": [
+                            {
+                                "id": "attr10001",
+                                "variantId": "var1001",
+                                "typeId": "vt001",
+                                "value": "3.0 м",
+                                "createdAt": "2025-03-17T19:03:44.656Z",
+                                "updatedAt": "2025-03-17T19:03:44.656Z"
+                            },
+                            {
+                                "id": "attr10002",
+                                "variantId": "var1001",
+                                "typeId": "vt002",
+                                "value": "15-50 г",
+                                "createdAt": "2025-03-17T19:03:44.656Z",
+                                "updatedAt": "2025-03-17T19:03:44.656Z"
+                            }
+                        ]
+                    }
+                ],
+                "attributes": []
+            }
+        ],
+        "variantTypes": []
+    },
+    {
+        "id": "cat003",
+        "name": "Фидерные удочки",
+        "parentId": "cat001",
+        "createdAt": "2025-03-17T19:03:41.246Z",
+        "updatedAt": "2025-03-17T19:03:41.246Z",
+        "children": [],
+        "products": [
+            {
+                "id": "prod011",
+                "name": "Фидер Shimano Beastmaster 360",
+                "description": "Для фидерной ловли.",
+                "categoryId": "cat003",
+                "images": ["img11.jpg"],
+                "discountId": null,
+                "createdAt": "2025-03-17T19:03:44.994Z",
+                "updatedAt": "2025-03-17T19:03:44.994Z",
+                "variants": [
+                    {
+                        "id": "var1101",
+                        "productId": "prod011",
+                        "sku": "SH-BM-360",
+                        "price": "8000",
+                        "inStock": 7,
+                        "discountId": null,
+                        "createdAt": "2025-03-17T19:03:44.994Z",
+                        "updatedAt": "2025-03-17T19:03:44.994Z",
+                        "attributes": [
+                            {
+                                "id": "attr11001",
+                                "variantId": "var1101",
+                                "typeId": "vt001",
+                                "value": "3.6 м",
+                                "createdAt": "2025-03-17T19:03:44.994Z",
+                                "updatedAt": "2025-03-17T19:03:44.994Z"
+                            },
+                            {
+                                "id": "attr11002",
+                                "variantId": "var1101",
+                                "typeId": "vt002",
+                                "value": "80 г",
+                                "createdAt": "2025-03-17T19:03:44.994Z",
+                                "updatedAt": "2025-03-17T19:03:44.994Z"
+                            }
+                        ]
+                    }
+                ],
+                "attributes": []
+            },
+            {
+                "id": "prod012",
+                "name": "Фидер Daiwa Windcast 390",
+                "description": "Мощный фидер.",
+                "categoryId": "cat003",
+                "images": ["img12.jpg"],
+                "discountId": null,
+                "createdAt": "2025-03-17T19:03:45.279Z",
+                "updatedAt": "2025-03-17T19:03:45.279Z",
+                "variants": [
+                    {
+                        "id": "var1201",
+                        "productId": "prod012",
+                        "sku": "DW-WC-390",
+                        "price": "8500",
+                        "inStock": 5,
+                        "discountId": null,
+                        "createdAt": "2025-03-17T19:03:45.279Z",
+                        "updatedAt": "2025-03-17T19:03:45.279Z",
+                        "attributes": [
+                            {
+                                "id": "attr12001",
+                                "variantId": "var1201",
+                                "typeId": "vt001",
+                                "value": "3.9 м",
+                                "createdAt": "2025-03-17T19:03:45.279Z",
+                                "updatedAt": "2025-03-17T19:03:45.279Z"
+                            },
+                            {
+                                "id": "attr12002",
+                                "variantId": "var1201",
+                                "typeId": "vt002",
+                                "value": "100 г",
+                                "createdAt": "2025-03-17T19:03:45.279Z",
+                                "updatedAt": "2025-03-17T19:03:45.279Z"
+                            }
+                        ]
+                    }
+                ],
+                "attributes": []
+            },
+            {
+                "id": "prod013",
+                "name": "Фидер Salmo Diamond 330",
+                "description": "Легкий фидер.",
+                "categoryId": "cat003",
+                "images": ["img13.jpg"],
+                "discountId": null,
+                "createdAt": "2025-03-17T19:03:45.561Z",
+                "updatedAt": "2025-03-17T19:03:45.561Z",
+                "variants": [
+                    {
+                        "id": "var1301",
+                        "productId": "prod013",
+                        "sku": "SAL-DM-330",
+                        "price": "7000",
+                        "inStock": 8,
+                        "discountId": null,
+                        "createdAt": "2025-03-17T19:03:45.561Z",
+                        "updatedAt": "2025-03-17T19:03:45.561Z",
+                        "attributes": [
+                            {
+                                "id": "attr13001",
+                                "variantId": "var1301",
+                                "typeId": "vt001",
+                                "value": "3.3 м",
+                                "createdAt": "2025-03-17T19:03:45.561Z",
+                                "updatedAt": "2025-03-17T19:03:45.561Z"
+                            },
+                            {
+                                "id": "attr13002",
+                                "variantId": "var1301",
+                                "typeId": "vt002",
+                                "value": "60 г",
+                                "createdAt": "2025-03-17T19:03:45.561Z",
+                                "updatedAt": "2025-03-17T19:03:45.561Z"
+                            }
+                        ]
+                    }
+                ],
+                "attributes": []
+            },
+            {
+                "id": "prod014",
+                "name": "Фидер Browning 360",
+                "description": "Универсальный фидер.",
+                "categoryId": "cat003",
+                "images": ["img14.jpg"],
+                "discountId": null,
+                "createdAt": "2025-03-17T19:03:45.840Z",
+                "updatedAt": "2025-03-17T19:03:45.840Z",
+                "variants": [
+                    {
+                        "id": "var1401",
+                        "productId": "prod014",
+                        "sku": "BR-360",
+                        "price": "7200",
+                        "inStock": 6,
+                        "discountId": null,
+                        "createdAt": "2025-03-17T19:03:45.840Z",
+                        "updatedAt": "2025-03-17T19:03:45.840Z",
+                        "attributes": [
+                            {
+                                "id": "attr14001",
+                                "variantId": "var1401",
+                                "typeId": "vt001",
+                                "value": "3.6 м",
+                                "createdAt": "2025-03-17T19:03:45.840Z",
+                                "updatedAt": "2025-03-17T19:03:45.840Z"
+                            },
+                            {
+                                "id": "attr14002",
+                                "variantId": "var1401",
+                                "typeId": "vt002",
+                                "value": "70 г",
+                                "createdAt": "2025-03-17T19:03:45.840Z",
+                                "updatedAt": "2025-03-17T19:03:45.840Z"
+                            }
+                        ]
+                    }
+                ],
+                "attributes": []
+            },
+            {
+                "id": "prod015",
+                "name": "Фидер Preston 390",
+                "description": "Для дальнего заброса.",
+                "categoryId": "cat003",
+                "images": ["img15.jpg"],
+                "discountId": null,
+                "createdAt": "2025-03-17T19:03:46.125Z",
+                "updatedAt": "2025-03-17T19:03:46.125Z",
+                "variants": [
+                    {
+                        "id": "var1501",
+                        "productId": "prod015",
+                        "sku": "PRES-390",
+                        "price": "9000",
+                        "inStock": 4,
+                        "discountId": null,
+                        "createdAt": "2025-03-17T19:03:46.125Z",
+                        "updatedAt": "2025-03-17T19:03:46.125Z",
+                        "attributes": [
+                            {
+                                "id": "attr15001",
+                                "variantId": "var1501",
+                                "typeId": "vt001",
+                                "value": "3.9 м",
+                                "createdAt": "2025-03-17T19:03:46.125Z",
+                                "updatedAt": "2025-03-17T19:03:46.125Z"
+                            },
+                            {
+                                "id": "attr15002",
+                                "variantId": "var1501",
+                                "typeId": "vt002",
+                                "value": "120 г",
+                                "createdAt": "2025-03-17T19:03:46.125Z",
+                                "updatedAt": "2025-03-17T19:03:46.125Z"
+                            }
+                        ]
+                    }
+                ],
+                "attributes": []
+            }
+        ],
+        "variantTypes": []
     },
     {
         "id": "cat004",
         "name": "Катушки",
         "parentId": null,
-        "createdAt": "2025-03-11T16:49:07.626Z",
-        "updatedAt": "2025-03-11T16:49:07.626Z"
+        "createdAt": "2025-03-17T19:03:41.246Z",
+        "updatedAt": "2025-03-17T19:03:41.246Z",
+        "children": [
+            {
+                "id": "cat005",
+                "name": "Безынерционные катушки",
+                "parentId": "cat004",
+                "createdAt": "2025-03-17T19:03:41.246Z",
+                "updatedAt": "2025-03-17T19:03:41.246Z"
+            }
+        ],
+        "products": [],
+        "variantTypes": [
+            {
+                "id": "vt004",
+                "categoryId": "cat004",
+                "name": "Размер",
+                "createdAt": "2025-03-17T19:03:41.430Z",
+                "updatedAt": "2025-03-17T19:03:41.430Z",
+                "productAttributes": [],
+                "productVariantAttributes": [
+                    {
+                        "id": "attr16001",
+                        "variantId": "var1601",
+                        "typeId": "vt004",
+                        "value": "3000",
+                        "createdAt": "2025-03-17T19:03:46.419Z",
+                        "updatedAt": "2025-03-17T19:03:46.419Z"
+                    },
+                    {
+                        "id": "attr17001",
+                        "variantId": "var1701",
+                        "typeId": "vt004",
+                        "value": "2500",
+                        "createdAt": "2025-03-17T19:03:47.003Z",
+                        "updatedAt": "2025-03-17T19:03:47.003Z"
+                    },
+                    {
+                        "id": "attr18001",
+                        "variantId": "var1801",
+                        "typeId": "vt004",
+                        "value": "4000",
+                        "createdAt": "2025-03-17T19:03:47.294Z",
+                        "updatedAt": "2025-03-17T19:03:47.294Z"
+                    },
+                    {
+                        "id": "attr19001",
+                        "variantId": "var1901",
+                        "typeId": "vt004",
+                        "value": "2000",
+                        "createdAt": "2025-03-17T19:03:47.589Z",
+                        "updatedAt": "2025-03-17T19:03:47.589Z"
+                    },
+                    {
+                        "id": "attr20001",
+                        "variantId": "var2001",
+                        "typeId": "vt004",
+                        "value": "3500",
+                        "createdAt": "2025-03-17T19:03:47.930Z",
+                        "updatedAt": "2025-03-17T19:03:47.930Z"
+                    },
+                    {
+                        "id": "attr21001",
+                        "variantId": "var2101",
+                        "typeId": "vt004",
+                        "value": "3000",
+                        "createdAt": "2025-03-17T19:03:48.218Z",
+                        "updatedAt": "2025-03-17T19:03:48.218Z"
+                    },
+                    {
+                        "id": "attr22001",
+                        "variantId": "var2201",
+                        "typeId": "vt004",
+                        "value": "2000",
+                        "createdAt": "2025-03-17T19:03:48.533Z",
+                        "updatedAt": "2025-03-17T19:03:48.533Z"
+                    },
+                    {
+                        "id": "attr23001",
+                        "variantId": "var2301",
+                        "typeId": "vt004",
+                        "value": "4000",
+                        "createdAt": "2025-03-17T19:03:48.819Z",
+                        "updatedAt": "2025-03-17T19:03:48.819Z"
+                    },
+                    {
+                        "id": "attr24001",
+                        "variantId": "var2401",
+                        "typeId": "vt004",
+                        "value": "2500",
+                        "createdAt": "2025-03-17T19:03:49.102Z",
+                        "updatedAt": "2025-03-17T19:03:49.102Z"
+                    },
+                    {
+                        "id": "attr25001",
+                        "variantId": "var2501",
+                        "typeId": "vt004",
+                        "value": "3000",
+                        "createdAt": "2025-03-17T19:03:49.396Z",
+                        "updatedAt": "2025-03-17T19:03:49.396Z"
+                    }
+                ]
+            }
+        ]
     },
     {
         "id": "cat005",
         "name": "Безынерционные катушки",
         "parentId": "cat004",
-        "createdAt": "2025-03-11T16:49:07.626Z",
-        "updatedAt": "2025-03-11T16:49:07.626Z"
+        "createdAt": "2025-03-17T19:03:41.246Z",
+        "updatedAt": "2025-03-17T19:03:41.246Z",
+        "children": [],
+        "products": [
+            {
+                "id": "prod016",
+                "name": "Катушка Daiwa Ninja 3000",
+                "description": "Бюджетная катушка.",
+                "categoryId": "cat005",
+                "images": ["img16.jpg"],
+                "discountId": null,
+                "createdAt": "2025-03-17T19:03:46.419Z",
+                "updatedAt": "2025-03-17T19:03:46.419Z",
+                "variants": [
+                    {
+                        "id": "var1601",
+                        "productId": "prod016",
+                        "sku": "DW-NJ-3000",
+                        "price": "3000",
+                        "inStock": 20,
+                        "discountId": null,
+                        "createdAt": "2025-03-17T19:03:46.419Z",
+                        "updatedAt": "2025-03-17T19:03:46.419Z",
+                        "attributes": [
+                            {
+                                "id": "attr16001",
+                                "variantId": "var1601",
+                                "typeId": "vt004",
+                                "value": "3000",
+                                "createdAt": "2025-03-17T19:03:46.419Z",
+                                "updatedAt": "2025-03-17T19:03:46.419Z"
+                            }
+                        ]
+                    }
+                ],
+                "attributes": []
+            },
+            {
+                "id": "prod017",
+                "name": "Катушка Shimano Catana 2500",
+                "description": "Надежная катушка.",
+                "categoryId": "cat005",
+                "images": ["img17.jpg"],
+                "discountId": null,
+                "createdAt": "2025-03-17T19:03:47.003Z",
+                "updatedAt": "2025-03-17T19:03:47.003Z",
+                "variants": [
+                    {
+                        "id": "var1701",
+                        "productId": "prod017",
+                        "sku": "SH-CA-2500",
+                        "price": "3500",
+                        "inStock": 15,
+                        "discountId": null,
+                        "createdAt": "2025-03-17T19:03:47.003Z",
+                        "updatedAt": "2025-03-17T19:03:47.003Z",
+                        "attributes": [
+                            {
+                                "id": "attr17001",
+                                "variantId": "var1701",
+                                "typeId": "vt004",
+                                "value": "2500",
+                                "createdAt": "2025-03-17T19:03:47.003Z",
+                                "updatedAt": "2025-03-17T19:03:47.003Z"
+                            }
+                        ]
+                    }
+                ],
+                "attributes": []
+            },
+            {
+                "id": "prod018",
+                "name": "Катушка Okuma Avenger 4000",
+                "description": "Мощная катушка.",
+                "categoryId": "cat005",
+                "images": ["img18.jpg"],
+                "discountId": null,
+                "createdAt": "2025-03-17T19:03:47.294Z",
+                "updatedAt": "2025-03-17T19:03:47.294Z",
+                "variants": [
+                    {
+                        "id": "var1801",
+                        "productId": "prod018",
+                        "sku": "OK-AV-4000",
+                        "price": "4000",
+                        "inStock": 10,
+                        "discountId": null,
+                        "createdAt": "2025-03-17T19:03:47.294Z",
+                        "updatedAt": "2025-03-17T19:03:47.294Z",
+                        "attributes": [
+                            {
+                                "id": "attr18001",
+                                "variantId": "var1801",
+                                "typeId": "vt004",
+                                "value": "4000",
+                                "createdAt": "2025-03-17T19:03:47.294Z",
+                                "updatedAt": "2025-03-17T19:03:47.294Z"
+                            }
+                        ]
+                    }
+                ],
+                "attributes": []
+            },
+            {
+                "id": "prod019",
+                "name": "Катушка Ryobi Excia 2000",
+                "description": "Легкая катушка.",
+                "categoryId": "cat005",
+                "images": ["img19.jpg"],
+                "discountId": null,
+                "createdAt": "2025-03-17T19:03:47.589Z",
+                "updatedAt": "2025-03-17T19:03:47.589Z",
+                "variants": [
+                    {
+                        "id": "var1901",
+                        "productId": "prod019",
+                        "sku": "RY-EX-2000",
+                        "price": "3200",
+                        "inStock": 12,
+                        "discountId": null,
+                        "createdAt": "2025-03-17T19:03:47.589Z",
+                        "updatedAt": "2025-03-17T19:03:47.589Z",
+                        "attributes": [
+                            {
+                                "id": "attr19001",
+                                "variantId": "var1901",
+                                "typeId": "vt004",
+                                "value": "2000",
+                                "createdAt": "2025-03-17T19:03:47.589Z",
+                                "updatedAt": "2025-03-17T19:03:47.589Z"
+                            }
+                        ]
+                    }
+                ],
+                "attributes": []
+            },
+            {
+                "id": "prod020",
+                "name": "Катушка PENN Spinfisher 3500",
+                "description": "Для тяжелых нагрузок.",
+                "categoryId": "cat005",
+                "images": ["img20.jpg"],
+                "discountId": null,
+                "createdAt": "2025-03-17T19:03:47.930Z",
+                "updatedAt": "2025-03-17T19:03:47.930Z",
+                "variants": [
+                    {
+                        "id": "var2001",
+                        "productId": "prod020",
+                        "sku": "PEN-SF-3500",
+                        "price": "5000",
+                        "inStock": 8,
+                        "discountId": null,
+                        "createdAt": "2025-03-17T19:03:47.930Z",
+                        "updatedAt": "2025-03-17T19:03:47.930Z",
+                        "attributes": [
+                            {
+                                "id": "attr20001",
+                                "variantId": "var2001",
+                                "typeId": "vt004",
+                                "value": "3500",
+                                "createdAt": "2025-03-17T19:03:47.930Z",
+                                "updatedAt": "2025-03-17T19:03:47.930Z"
+                            }
+                        ]
+                    }
+                ],
+                "attributes": []
+            },
+            {
+                "id": "prod021",
+                "name": "Катушка Abu Garcia Revo 3000",
+                "description": "Прочная катушка.",
+                "categoryId": "cat005",
+                "images": ["img21.jpg"],
+                "discountId": null,
+                "createdAt": "2025-03-17T19:03:48.218Z",
+                "updatedAt": "2025-03-17T19:03:48.218Z",
+                "variants": [
+                    {
+                        "id": "var2101",
+                        "productId": "prod021",
+                        "sku": "AG-RE-3000",
+                        "price": "4500",
+                        "inStock": 9,
+                        "discountId": null,
+                        "createdAt": "2025-03-17T19:03:48.218Z",
+                        "updatedAt": "2025-03-17T19:03:48.218Z",
+                        "attributes": [
+                            {
+                                "id": "attr21001",
+                                "variantId": "var2101",
+                                "typeId": "vt004",
+                                "value": "3000",
+                                "createdAt": "2025-03-17T19:03:48.218Z",
+                                "updatedAt": "2025-03-17T19:03:48.218Z"
+                            }
+                        ]
+                    }
+                ],
+                "attributes": []
+            },
+            {
+                "id": "prod022",
+                "name": "Катушка Salmo Sniper 2000",
+                "description": "Бюджетная модель.",
+                "categoryId": "cat005",
+                "images": ["img22.jpg"],
+                "discountId": null,
+                "createdAt": "2025-03-17T19:03:48.533Z",
+                "updatedAt": "2025-03-17T19:03:48.533Z",
+                "variants": [
+                    {
+                        "id": "var2201",
+                        "productId": "prod022",
+                        "sku": "SAL-SN-2000",
+                        "price": "2800",
+                        "inStock": 25,
+                        "discountId": null,
+                        "createdAt": "2025-03-17T19:03:48.533Z",
+                        "updatedAt": "2025-03-17T19:03:48.533Z",
+                        "attributes": [
+                            {
+                                "id": "attr22001",
+                                "variantId": "var2201",
+                                "typeId": "vt004",
+                                "value": "2000",
+                                "createdAt": "2025-03-17T19:03:48.533Z",
+                                "updatedAt": "2025-03-17T19:03:48.533Z"
+                            }
+                        ]
+                    }
+                ],
+                "attributes": []
+            },
+            {
+                "id": "prod023",
+                "name": "Катушка KastKing Sharky 4000",
+                "description": "Для дальнего заброса.",
+                "categoryId": "cat005",
+                "images": ["img23.jpg"],
+                "discountId": null,
+                "createdAt": "2025-03-17T19:03:48.819Z",
+                "updatedAt": "2025-03-17T19:03:48.819Z",
+                "variants": [
+                    {
+                        "id": "var2301",
+                        "productId": "prod023",
+                        "sku": "KAST-SH-4000",
+                        "price": "4200",
+                        "inStock": 10,
+                        "discountId": null,
+                        "createdAt": "2025-03-17T19:03:48.819Z",
+                        "updatedAt": "2025-03-17T19:03:48.819Z",
+                        "attributes": [
+                            {
+                                "id": "attr23001",
+                                "variantId": "var2301",
+                                "typeId": "vt004",
+                                "value": "4000",
+                                "createdAt": "2025-03-17T19:03:48.819Z",
+                                "updatedAt": "2025-03-17T19:03:48.819Z"
+                            }
+                        ]
+                    }
+                ],
+                "attributes": []
+            },
+            {
+                "id": "prod024",
+                "name": "Катушка St. Croix 2500",
+                "description": "Легкая и прочная.",
+                "categoryId": "cat005",
+                "images": ["img24.jpg"],
+                "discountId": null,
+                "createdAt": "2025-03-17T19:03:49.102Z",
+                "updatedAt": "2025-03-17T19:03:49.102Z",
+                "variants": [
+                    {
+                        "id": "var2401",
+                        "productId": "prod024",
+                        "sku": "STC-2500",
+                        "price": "3800",
+                        "inStock": 12,
+                        "discountId": null,
+                        "createdAt": "2025-03-17T19:03:49.102Z",
+                        "updatedAt": "2025-03-17T19:03:49.102Z",
+                        "attributes": [
+                            {
+                                "id": "attr24001",
+                                "variantId": "var2401",
+                                "typeId": "vt004",
+                                "value": "2500",
+                                "createdAt": "2025-03-17T19:03:49.102Z",
+                                "updatedAt": "2025-03-17T19:03:49.102Z"
+                            }
+                        ]
+                    }
+                ],
+                "attributes": []
+            },
+            {
+                "id": "prod025",
+                "name": "Катушка Fenwick Elite 3000",
+                "description": "Универсальная катушка.",
+                "categoryId": "cat005",
+                "images": ["img25.jpg"],
+                "discountId": null,
+                "createdAt": "2025-03-17T19:03:49.396Z",
+                "updatedAt": "2025-03-17T19:03:49.396Z",
+                "variants": [
+                    {
+                        "id": "var2501",
+                        "productId": "prod025",
+                        "sku": "FEN-EL-3000",
+                        "price": "4600",
+                        "inStock": 7,
+                        "discountId": null,
+                        "createdAt": "2025-03-17T19:03:49.396Z",
+                        "updatedAt": "2025-03-17T19:03:49.396Z",
+                        "attributes": [
+                            {
+                                "id": "attr25001",
+                                "variantId": "var2501",
+                                "typeId": "vt004",
+                                "value": "3000",
+                                "createdAt": "2025-03-17T19:03:49.396Z",
+                                "updatedAt": "2025-03-17T19:03:49.396Z"
+                            }
+                        ]
+                    }
+                ],
+                "attributes": []
+            }
+        ],
+        "variantTypes": []
     },
     {
         "id": "cat006",
         "name": "Приманки",
         "parentId": null,
-        "createdAt": "2025-03-11T16:49:07.626Z",
-        "updatedAt": "2025-03-11T16:49:07.626Z"
+        "createdAt": "2025-03-17T19:03:41.246Z",
+        "updatedAt": "2025-03-17T19:03:41.246Z",
+        "children": [
+            {
+                "id": "cat007",
+                "name": "Воблеры",
+                "parentId": "cat006",
+                "createdAt": "2025-03-17T19:03:41.246Z",
+                "updatedAt": "2025-03-17T19:03:41.246Z"
+            }
+        ],
+        "products": [],
+        "variantTypes": [
+            {
+                "id": "vt005",
+                "categoryId": "cat006",
+                "name": "Цвет",
+                "createdAt": "2025-03-17T19:03:41.430Z",
+                "updatedAt": "2025-03-17T19:03:41.430Z",
+                "productAttributes": [],
+                "productVariantAttributes": [
+                    {
+                        "id": "attr26001",
+                        "variantId": "var2601",
+                        "typeId": "vt005",
+                        "value": "Серебристый",
+                        "createdAt": "2025-03-17T19:03:49.683Z",
+                        "updatedAt": "2025-03-17T19:03:49.683Z"
+                    },
+                    {
+                        "id": "attr27001",
+                        "variantId": "var2701",
+                        "typeId": "vt005",
+                        "value": "Золотой",
+                        "createdAt": "2025-03-17T19:03:49.974Z",
+                        "updatedAt": "2025-03-17T19:03:49.974Z"
+                    },
+                    {
+                        "id": "attr28001",
+                        "variantId": "var2801",
+                        "typeId": "vt005",
+                        "value": "Зеленый",
+                        "createdAt": "2025-03-17T19:03:50.337Z",
+                        "updatedAt": "2025-03-17T19:03:50.337Z"
+                    },
+                    {
+                        "id": "attr29001",
+                        "variantId": "var2901",
+                        "typeId": "vt005",
+                        "value": "Красный",
+                        "createdAt": "2025-03-17T19:03:50.627Z",
+                        "updatedAt": "2025-03-17T19:03:50.627Z"
+                    },
+                    {
+                        "id": "attr30001",
+                        "variantId": "var3001",
+                        "typeId": "vt005",
+                        "value": "Черный",
+                        "createdAt": "2025-03-17T19:03:50.916Z",
+                        "updatedAt": "2025-03-17T19:03:50.916Z"
+                    },
+                    {
+                        "id": "attr31001",
+                        "variantId": "var3101",
+                        "typeId": "vt005",
+                        "value": "Синий",
+                        "createdAt": "2025-03-17T19:03:51.194Z",
+                        "updatedAt": "2025-03-17T19:03:51.194Z"
+                    },
+                    {
+                        "id": "attr32001",
+                        "variantId": "var3201",
+                        "typeId": "vt005",
+                        "value": "Белый",
+                        "createdAt": "2025-03-17T19:03:51.507Z",
+                        "updatedAt": "2025-03-17T19:03:51.507Z"
+                    },
+                    {
+                        "id": "attr33001",
+                        "variantId": "var3301",
+                        "typeId": "vt005",
+                        "value": "Оранжевый",
+                        "createdAt": "2025-03-17T19:03:51.863Z",
+                        "updatedAt": "2025-03-17T19:03:51.863Z"
+                    },
+                    {
+                        "id": "attr34001",
+                        "variantId": "var3401",
+                        "typeId": "vt005",
+                        "value": "Серый",
+                        "createdAt": "2025-03-17T19:03:52.411Z",
+                        "updatedAt": "2025-03-17T19:03:52.411Z"
+                    },
+                    {
+                        "id": "attr35001",
+                        "variantId": "var3501",
+                        "typeId": "vt005",
+                        "value": "Желтый",
+                        "createdAt": "2025-03-17T19:03:52.803Z",
+                        "updatedAt": "2025-03-17T19:03:52.803Z"
+                    }
+                ]
+            }
+        ]
     },
     {
         "id": "cat007",
         "name": "Воблеры",
         "parentId": "cat006",
-        "createdAt": "2025-03-11T16:49:07.626Z",
-        "updatedAt": "2025-03-11T16:49:07.626Z"
+        "createdAt": "2025-03-17T19:03:41.246Z",
+        "updatedAt": "2025-03-17T19:03:41.246Z",
+        "children": [],
+        "products": [
+            {
+                "id": "prod026",
+                "name": "Воблер Rapala Original 5",
+                "description": "Классический воблер.",
+                "categoryId": "cat007",
+                "images": ["img26.jpg"],
+                "discountId": null,
+                "createdAt": "2025-03-17T19:03:49.683Z",
+                "updatedAt": "2025-03-17T19:03:49.683Z",
+                "variants": [
+                    {
+                        "id": "var2601",
+                        "productId": "prod026",
+                        "sku": "RAP-OR-5",
+                        "price": "600",
+                        "inStock": 30,
+                        "discountId": null,
+                        "createdAt": "2025-03-17T19:03:49.683Z",
+                        "updatedAt": "2025-03-17T19:03:49.683Z",
+                        "attributes": [
+                            {
+                                "id": "attr26001",
+                                "variantId": "var2601",
+                                "typeId": "vt005",
+                                "value": "Серебристый",
+                                "createdAt": "2025-03-17T19:03:49.683Z",
+                                "updatedAt": "2025-03-17T19:03:49.683Z"
+                            }
+                        ]
+                    }
+                ],
+                "attributes": []
+            },
+            {
+                "id": "prod027",
+                "name": "Воблер Yo-Zuri Crystal 7",
+                "description": "Яркий воблер.",
+                "categoryId": "cat007",
+                "images": ["img27.jpg"],
+                "discountId": null,
+                "createdAt": "2025-03-17T19:03:49.974Z",
+                "updatedAt": "2025-03-17T19:03:49.974Z",
+                "variants": [
+                    {
+                        "id": "var2701",
+                        "productId": "prod027",
+                        "sku": "YZ-CR-7",
+                        "price": "650",
+                        "inStock": 25,
+                        "discountId": null,
+                        "createdAt": "2025-03-17T19:03:49.974Z",
+                        "updatedAt": "2025-03-17T19:03:49.974Z",
+                        "attributes": [
+                            {
+                                "id": "attr27001",
+                                "variantId": "var2701",
+                                "typeId": "vt005",
+                                "value": "Золотой",
+                                "createdAt": "2025-03-17T19:03:49.974Z",
+                                "updatedAt": "2025-03-17T19:03:49.974Z"
+                            }
+                        ]
+                    }
+                ],
+                "attributes": []
+            },
+            {
+                "id": "prod028",
+                "name": "Воблер Salmo Hornet 4",
+                "description": "Для щуки.",
+                "categoryId": "cat007",
+                "images": ["img28.jpg"],
+                "discountId": null,
+                "createdAt": "2025-03-17T19:03:50.337Z",
+                "updatedAt": "2025-03-17T19:03:50.337Z",
+                "variants": [
+                    {
+                        "id": "var2801",
+                        "productId": "prod028",
+                        "sku": "SAL-HOR-4",
+                        "price": "550",
+                        "inStock": 20,
+                        "discountId": null,
+                        "createdAt": "2025-03-17T19:03:50.337Z",
+                        "updatedAt": "2025-03-17T19:03:50.337Z",
+                        "attributes": [
+                            {
+                                "id": "attr28001",
+                                "variantId": "var2801",
+                                "typeId": "vt005",
+                                "value": "Зеленый",
+                                "createdAt": "2025-03-17T19:03:50.337Z",
+                                "updatedAt": "2025-03-17T19:03:50.337Z"
+                            }
+                        ]
+                    }
+                ],
+                "attributes": []
+            },
+            {
+                "id": "prod029",
+                "name": "Воблер Strike Pro 6",
+                "description": "Плавающий воблер.",
+                "categoryId": "cat007",
+                "images": ["img29.jpg"],
+                "discountId": null,
+                "createdAt": "2025-03-17T19:03:50.627Z",
+                "updatedAt": "2025-03-17T19:03:50.627Z",
+                "variants": [
+                    {
+                        "id": "var2901",
+                        "productId": "prod029",
+                        "sku": "SP-6",
+                        "price": "500",
+                        "inStock": 35,
+                        "discountId": null,
+                        "createdAt": "2025-03-17T19:03:50.627Z",
+                        "updatedAt": "2025-03-17T19:03:50.627Z",
+                        "attributes": [
+                            {
+                                "id": "attr29001",
+                                "variantId": "var2901",
+                                "typeId": "vt005",
+                                "value": "Красный",
+                                "createdAt": "2025-03-17T19:03:50.627Z",
+                                "updatedAt": "2025-03-17T19:03:50.627Z"
+                            }
+                        ]
+                    }
+                ],
+                "attributes": []
+            },
+            {
+                "id": "prod030",
+                "name": "Воблер Bomber Fat 5",
+                "description": "Для окуня.",
+                "categoryId": "cat007",
+                "images": ["img30.jpg"],
+                "discountId": null,
+                "createdAt": "2025-03-17T19:03:50.916Z",
+                "updatedAt": "2025-03-17T19:03:50.916Z",
+                "variants": [
+                    {
+                        "id": "var3001",
+                        "productId": "prod030",
+                        "sku": "BOM-FT-5",
+                        "price": "580",
+                        "inStock": 22,
+                        "discountId": null,
+                        "createdAt": "2025-03-17T19:03:50.916Z",
+                        "updatedAt": "2025-03-17T19:03:50.916Z",
+                        "attributes": [
+                            {
+                                "id": "attr30001",
+                                "variantId": "var3001",
+                                "typeId": "vt005",
+                                "value": "Черный",
+                                "createdAt": "2025-03-17T19:03:50.916Z",
+                                "updatedAt": "2025-03-17T19:03:50.916Z"
+                            }
+                        ]
+                    }
+                ],
+                "attributes": []
+            },
+            {
+                "id": "prod031",
+                "name": "Воблер Pontoon 21 7",
+                "description": "Глубоководный воблер.",
+                "categoryId": "cat007",
+                "images": ["img31.jpg"],
+                "discountId": null,
+                "createdAt": "2025-03-17T19:03:51.194Z",
+                "updatedAt": "2025-03-17T19:03:51.194Z",
+                "variants": [
+                    {
+                        "id": "var3101",
+                        "productId": "prod031",
+                        "sku": "P21-7",
+                        "price": "700",
+                        "inStock": 15,
+                        "discountId": null,
+                        "createdAt": "2025-03-17T19:03:51.194Z",
+                        "updatedAt": "2025-03-17T19:03:51.194Z",
+                        "attributes": [
+                            {
+                                "id": "attr31001",
+                                "variantId": "var3101",
+                                "typeId": "vt005",
+                                "value": "Синий",
+                                "createdAt": "2025-03-17T19:03:51.194Z",
+                                "updatedAt": "2025-03-17T19:03:51.194Z"
+                            }
+                        ]
+                    }
+                ],
+                "attributes": []
+            },
+            {
+                "id": "prod032",
+                "name": "Воблер Lucky Craft 5",
+                "description": "Для судака.",
+                "categoryId": "cat007",
+                "images": ["img32.jpg"],
+                "discountId": null,
+                "createdAt": "2025-03-17T19:03:51.507Z",
+                "updatedAt": "2025-03-17T19:03:51.507Z",
+                "variants": [
+                    {
+                        "id": "var3201",
+                        "productId": "prod032",
+                        "sku": "LC-5",
+                        "price": "620",
+                        "inStock": 18,
+                        "discountId": null,
+                        "createdAt": "2025-03-17T19:03:51.507Z",
+                        "updatedAt": "2025-03-17T19:03:51.507Z",
+                        "attributes": [
+                            {
+                                "id": "attr32001",
+                                "variantId": "var3201",
+                                "typeId": "vt005",
+                                "value": "Белый",
+                                "createdAt": "2025-03-17T19:03:51.507Z",
+                                "updatedAt": "2025-03-17T19:03:51.507Z"
+                            }
+                        ]
+                    }
+                ],
+                "attributes": []
+            },
+            {
+                "id": "prod033",
+                "name": "Воблер Megabass Vision 6",
+                "description": "Премиум воблер.",
+                "categoryId": "cat007",
+                "images": ["img33.jpg"],
+                "discountId": null,
+                "createdAt": "2025-03-17T19:03:51.863Z",
+                "updatedAt": "2025-03-17T19:03:51.863Z",
+                "variants": [
+                    {
+                        "id": "var3301",
+                        "productId": "prod033",
+                        "sku": "MB-VS-6",
+                        "price": "800",
+                        "inStock": 10,
+                        "discountId": null,
+                        "createdAt": "2025-03-17T19:03:51.863Z",
+                        "updatedAt": "2025-03-17T19:03:51.863Z",
+                        "attributes": [
+                            {
+                                "id": "attr33001",
+                                "variantId": "var3301",
+                                "typeId": "vt005",
+                                "value": "Оранжевый",
+                                "createdAt": "2025-03-17T19:03:51.863Z",
+                                "updatedAt": "2025-03-17T19:03:51.863Z"
+                            }
+                        ]
+                    }
+                ],
+                "attributes": []
+            },
+            {
+                "id": "prod034",
+                "name": "Воблер Duo Realis 5",
+                "description": "Реалистичный воблер.",
+                "categoryId": "cat007",
+                "images": ["img34.jpg"],
+                "discountId": null,
+                "createdAt": "2025-03-17T19:03:52.411Z",
+                "updatedAt": "2025-03-17T19:03:52.411Z",
+                "variants": [
+                    {
+                        "id": "var3401",
+                        "productId": "prod034",
+                        "sku": "DUO-RE-5",
+                        "price": "650",
+                        "inStock": 20,
+                        "discountId": null,
+                        "createdAt": "2025-03-17T19:03:52.411Z",
+                        "updatedAt": "2025-03-17T19:03:52.411Z",
+                        "attributes": [
+                            {
+                                "id": "attr34001",
+                                "variantId": "var3401",
+                                "typeId": "vt005",
+                                "value": "Серый",
+                                "createdAt": "2025-03-17T19:03:52.411Z",
+                                "updatedAt": "2025-03-17T19:03:52.411Z"
+                            }
+                        ]
+                    }
+                ],
+                "attributes": []
+            },
+            {
+                "id": "prod035",
+                "name": "Воблер Bandit 4",
+                "description": "Для троллинга.",
+                "categoryId": "cat007",
+                "images": ["img35.jpg"],
+                "discountId": null,
+                "createdAt": "2025-03-17T19:03:52.803Z",
+                "updatedAt": "2025-03-17T19:03:52.803Z",
+                "variants": [
+                    {
+                        "id": "var3501",
+                        "productId": "prod035",
+                        "sku": "BAN-4",
+                        "price": "600",
+                        "inStock": 25,
+                        "discountId": null,
+                        "createdAt": "2025-03-17T19:03:52.803Z",
+                        "updatedAt": "2025-03-17T19:03:52.803Z",
+                        "attributes": [
+                            {
+                                "id": "attr35001",
+                                "variantId": "var3501",
+                                "typeId": "vt005",
+                                "value": "Желтый",
+                                "createdAt": "2025-03-17T19:03:52.803Z",
+                                "updatedAt": "2025-03-17T19:03:52.803Z"
+                            }
+                        ]
+                    }
+                ],
+                "attributes": []
+            }
+        ],
+        "variantTypes": []
     },
     {
         "id": "cat008",
         "name": "Леска",
         "parentId": null,
-        "createdAt": "2025-03-11T16:49:07.626Z",
-        "updatedAt": "2025-03-11T16:49:07.626Z"
+        "createdAt": "2025-03-17T19:03:41.246Z",
+        "updatedAt": "2025-03-17T19:03:41.246Z",
+        "children": [],
+        "products": [
+            {
+                "id": "prod036",
+                "name": "Леска Berkley Trilene 0.25",
+                "description": "Прочная леска.",
+                "categoryId": "cat008",
+                "images": ["img36.jpg"],
+                "discountId": null,
+                "createdAt": "2025-03-17T19:03:53.126Z",
+                "updatedAt": "2025-03-17T19:03:53.126Z",
+                "variants": [
+                    {
+                        "id": "var3601",
+                        "productId": "prod036",
+                        "sku": "BER-TR-025",
+                        "price": "200",
+                        "inStock": 50,
+                        "discountId": null,
+                        "createdAt": "2025-03-17T19:03:53.126Z",
+                        "updatedAt": "2025-03-17T19:03:53.126Z",
+                        "attributes": [
+                            {
+                                "id": "attr36001",
+                                "variantId": "var3601",
+                                "typeId": "vt006",
+                                "value": "0.25 мм",
+                                "createdAt": "2025-03-17T19:03:53.126Z",
+                                "updatedAt": "2025-03-17T19:03:53.126Z"
+                            }
+                        ]
+                    }
+                ],
+                "attributes": []
+            },
+            {
+                "id": "prod037",
+                "name": "Леска Shimano Aspire 0.30",
+                "description": "Для тяжелых нагрузок.",
+                "categoryId": "cat008",
+                "images": ["img37.jpg"],
+                "discountId": null,
+                "createdAt": "2025-03-17T19:03:53.421Z",
+                "updatedAt": "2025-03-17T19:03:53.421Z",
+                "variants": [
+                    {
+                        "id": "var3701",
+                        "productId": "prod037",
+                        "sku": "SH-AS-030",
+                        "price": "250",
+                        "inStock": 40,
+                        "discountId": null,
+                        "createdAt": "2025-03-17T19:03:53.421Z",
+                        "updatedAt": "2025-03-17T19:03:53.421Z",
+                        "attributes": [
+                            {
+                                "id": "attr37001",
+                                "variantId": "var3701",
+                                "typeId": "vt006",
+                                "value": "0.30 мм",
+                                "createdAt": "2025-03-17T19:03:53.421Z",
+                                "updatedAt": "2025-03-17T19:03:53.421Z"
+                            }
+                        ]
+                    }
+                ],
+                "attributes": []
+            },
+            {
+                "id": "prod038",
+                "name": "Леска Sufix Advance 0.20",
+                "description": "Тонкая леска.",
+                "categoryId": "cat008",
+                "images": ["img38.jpg"],
+                "discountId": null,
+                "createdAt": "2025-03-17T19:03:53.777Z",
+                "updatedAt": "2025-03-17T19:03:53.777Z",
+                "variants": [
+                    {
+                        "id": "var3801",
+                        "productId": "prod038",
+                        "sku": "SUF-AD-020",
+                        "price": "180",
+                        "inStock": 60,
+                        "discountId": null,
+                        "createdAt": "2025-03-17T19:03:53.777Z",
+                        "updatedAt": "2025-03-17T19:03:53.777Z",
+                        "attributes": [
+                            {
+                                "id": "attr38001",
+                                "variantId": "var3801",
+                                "typeId": "vt006",
+                                "value": "0.20 мм",
+                                "createdAt": "2025-03-17T19:03:53.777Z",
+                                "updatedAt": "2025-03-17T19:03:53.777Z"
+                            }
+                        ]
+                    }
+                ],
+                "attributes": []
+            },
+            {
+                "id": "prod039",
+                "name": "Леска Daiwa J-Braid 0.28",
+                "description": "Плетеная леска.",
+                "categoryId": "cat008",
+                "images": ["img39.jpg"],
+                "discountId": null,
+                "createdAt": "2025-03-17T19:03:54.204Z",
+                "updatedAt": "2025-03-17T19:03:54.204Z",
+                "variants": [
+                    {
+                        "id": "var3901",
+                        "productId": "prod039",
+                        "sku": "DW-JB-028",
+                        "price": "300",
+                        "inStock": 30,
+                        "discountId": null,
+                        "createdAt": "2025-03-17T19:03:54.204Z",
+                        "updatedAt": "2025-03-17T19:03:54.204Z",
+                        "attributes": [
+                            {
+                                "id": "attr39001",
+                                "variantId": "var3901",
+                                "typeId": "vt006",
+                                "value": "0.28 мм",
+                                "createdAt": "2025-03-17T19:03:54.204Z",
+                                "updatedAt": "2025-03-17T19:03:54.204Z"
+                            }
+                        ]
+                    }
+                ],
+                "attributes": []
+            },
+            {
+                "id": "prod040",
+                "name": "Леска Power Pro 0.32",
+                "description": "Сверхпрочная леска.",
+                "categoryId": "cat008",
+                "images": ["img40.jpg"],
+                "discountId": null,
+                "createdAt": "2025-03-17T19:03:54.519Z",
+                "updatedAt": "2025-03-17T19:03:54.519Z",
+                "variants": [
+                    {
+                        "id": "var4001",
+                        "productId": "prod040",
+                        "sku": "PP-032",
+                        "price": "350",
+                        "inStock": 25,
+                        "discountId": null,
+                        "createdAt": "2025-03-17T19:03:54.519Z",
+                        "updatedAt": "2025-03-17T19:03:54.519Z",
+                        "attributes": [
+                            {
+                                "id": "attr40001",
+                                "variantId": "var4001",
+                                "typeId": "vt006",
+                                "value": "0.32 мм",
+                                "createdAt": "2025-03-17T19:03:54.519Z",
+                                "updatedAt": "2025-03-17T19:03:54.519Z"
+                            }
+                        ]
+                    }
+                ],
+                "attributes": []
+            }
+        ],
+        "variantTypes": [
+            {
+                "id": "vt006",
+                "categoryId": "cat008",
+                "name": "Диаметр",
+                "createdAt": "2025-03-17T19:03:41.430Z",
+                "updatedAt": "2025-03-17T19:03:41.430Z",
+                "productAttributes": [],
+                "productVariantAttributes": [
+                    {
+                        "id": "attr36001",
+                        "variantId": "var3601",
+                        "typeId": "vt006",
+                        "value": "0.25 мм",
+                        "createdAt": "2025-03-17T19:03:53.126Z",
+                        "updatedAt": "2025-03-17T19:03:53.126Z"
+                    },
+                    {
+                        "id": "attr37001",
+                        "variantId": "var3701",
+                        "typeId": "vt006",
+                        "value": "0.30 мм",
+                        "createdAt": "2025-03-17T19:03:53.421Z",
+                        "updatedAt": "2025-03-17T19:03:53.421Z"
+                    },
+                    {
+                        "id": "attr38001",
+                        "variantId": "var3801",
+                        "typeId": "vt006",
+                        "value": "0.20 мм",
+                        "createdAt": "2025-03-17T19:03:53.777Z",
+                        "updatedAt": "2025-03-17T19:03:53.777Z"
+                    },
+                    {
+                        "id": "attr39001",
+                        "variantId": "var3901",
+                        "typeId": "vt006",
+                        "value": "0.28 мм",
+                        "createdAt": "2025-03-17T19:03:54.204Z",
+                        "updatedAt": "2025-03-17T19:03:54.204Z"
+                    },
+                    {
+                        "id": "attr40001",
+                        "variantId": "var4001",
+                        "typeId": "vt006",
+                        "value": "0.32 мм",
+                        "createdAt": "2025-03-17T19:03:54.519Z",
+                        "updatedAt": "2025-03-17T19:03:54.519Z"
+                    }
+                ]
+            }
+        ]
     },
     {
         "id": "cat009",
         "name": "Крючки",
         "parentId": null,
-        "createdAt": "2025-03-11T16:49:07.626Z",
-        "updatedAt": "2025-03-11T16:49:07.626Z"
+        "createdAt": "2025-03-17T19:03:41.246Z",
+        "updatedAt": "2025-03-17T19:03:41.246Z",
+        "children": [],
+        "products": [
+            {
+                "id": "prod041",
+                "name": "Крючки Owner Mosquito #2",
+                "description": "Острые крючки.",
+                "categoryId": "cat009",
+                "images": ["img41.jpg"],
+                "discountId": null,
+                "createdAt": "2025-03-17T19:03:54.806Z",
+                "updatedAt": "2025-03-17T19:03:54.806Z",
+                "variants": [
+                    {
+                        "id": "var4101",
+                        "productId": "prod041",
+                        "sku": "OWN-MOS-2",
+                        "price": "150",
+                        "inStock": 100,
+                        "discountId": null,
+                        "createdAt": "2025-03-17T19:03:54.806Z",
+                        "updatedAt": "2025-03-17T19:03:54.806Z",
+                        "attributes": [
+                            {
+                                "id": "attr41001",
+                                "variantId": "var4101",
+                                "typeId": "vt007",
+                                "value": "#2",
+                                "createdAt": "2025-03-17T19:03:54.806Z",
+                                "updatedAt": "2025-03-17T19:03:54.806Z"
+                            }
+                        ]
+                    }
+                ],
+                "attributes": []
+            },
+            {
+                "id": "prod042",
+                "name": "Крючки Gamakatsu LS-531 #4",
+                "description": "Для крупной рыбы.",
+                "categoryId": "cat009",
+                "images": ["img42.jpg"],
+                "discountId": null,
+                "createdAt": "2025-03-17T19:03:55.089Z",
+                "updatedAt": "2025-03-17T19:03:55.089Z",
+                "variants": [
+                    {
+                        "id": "var4201",
+                        "productId": "prod042",
+                        "sku": "GAM-LS-4",
+                        "price": "180",
+                        "inStock": 80,
+                        "discountId": null,
+                        "createdAt": "2025-03-17T19:03:55.089Z",
+                        "updatedAt": "2025-03-17T19:03:55.089Z",
+                        "attributes": [
+                            {
+                                "id": "attr42001",
+                                "variantId": "var4201",
+                                "typeId": "vt007",
+                                "value": "#4",
+                                "createdAt": "2025-03-17T19:03:55.089Z",
+                                "updatedAt": "2025-03-17T19:03:55.089Z"
+                            }
+                        ]
+                    }
+                ],
+                "attributes": []
+            },
+            {
+                "id": "prod043",
+                "name": "Крючки Mustad Classic #6",
+                "description": "Универсальные крючки.",
+                "categoryId": "cat009",
+                "images": ["img43.jpg"],
+                "discountId": null,
+                "createdAt": "2025-03-17T19:03:55.373Z",
+                "updatedAt": "2025-03-17T19:03:55.373Z",
+                "variants": [
+                    {
+                        "id": "var4301",
+                        "productId": "prod043",
+                        "sku": "MUS-CL-6",
+                        "price": "120",
+                        "inStock": 120,
+                        "discountId": null,
+                        "createdAt": "2025-03-17T19:03:55.373Z",
+                        "updatedAt": "2025-03-17T19:03:55.373Z",
+                        "attributes": [
+                            {
+                                "id": "attr43001",
+                                "variantId": "var4301",
+                                "typeId": "vt007",
+                                "value": "#6",
+                                "createdAt": "2025-03-17T19:03:55.373Z",
+                                "updatedAt": "2025-03-17T19:03:55.373Z"
+                            }
+                        ]
+                    }
+                ],
+                "attributes": []
+            },
+            {
+                "id": "prod044",
+                "name": "Крючки Hayabusa 531 #3",
+                "description": "Для приманок.",
+                "categoryId": "cat009",
+                "images": ["img44.jpg"],
+                "discountId": null,
+                "createdAt": "2025-03-17T19:03:55.666Z",
+                "updatedAt": "2025-03-17T19:03:55.666Z",
+                "variants": [
+                    {
+                        "id": "var4401",
+                        "productId": "prod044",
+                        "sku": "HAY-531-3",
+                        "price": "160",
+                        "inStock": 90,
+                        "discountId": null,
+                        "createdAt": "2025-03-17T19:03:55.666Z",
+                        "updatedAt": "2025-03-17T19:03:55.666Z",
+                        "attributes": [
+                            {
+                                "id": "attr44001",
+                                "variantId": "var4401",
+                                "typeId": "vt007",
+                                "value": "#3",
+                                "createdAt": "2025-03-17T19:03:55.666Z",
+                                "updatedAt": "2025-03-17T19:03:55.666Z"
+                            }
+                        ]
+                    }
+                ],
+                "attributes": []
+            },
+            {
+                "id": "prod045",
+                "name": "Крючки VMC 7545 #5",
+                "description": "Прочные крючки.",
+                "categoryId": "cat009",
+                "images": ["img45.jpg"],
+                "discountId": null,
+                "createdAt": "2025-03-17T19:03:56.003Z",
+                "updatedAt": "2025-03-17T19:03:56.003Z",
+                "variants": [
+                    {
+                        "id": "var4501",
+                        "productId": "prod045",
+                        "sku": "VMC-7545-5",
+                        "price": "140",
+                        "inStock": 110,
+                        "discountId": null,
+                        "createdAt": "2025-03-17T19:03:56.003Z",
+                        "updatedAt": "2025-03-17T19:03:56.003Z",
+                        "attributes": [
+                            {
+                                "id": "attr45001",
+                                "variantId": "var4501",
+                                "typeId": "vt007",
+                                "value": "#5",
+                                "createdAt": "2025-03-17T19:03:56.003Z",
+                                "updatedAt": "2025-03-17T19:03:56.003Z"
+                            }
+                        ]
+                    }
+                ],
+                "attributes": []
+            }
+        ],
+        "variantTypes": [
+            {
+                "id": "vt007",
+                "categoryId": "cat009",
+                "name": "Размер крючка",
+                "createdAt": "2025-03-17T19:03:41.430Z",
+                "updatedAt": "2025-03-17T19:03:41.430Z",
+                "productAttributes": [],
+                "productVariantAttributes": [
+                    {
+                        "id": "attr41001",
+                        "variantId": "var4101",
+                        "typeId": "vt007",
+                        "value": "#2",
+                        "createdAt": "2025-03-17T19:03:54.806Z",
+                        "updatedAt": "2025-03-17T19:03:54.806Z"
+                    },
+                    {
+                        "id": "attr42001",
+                        "variantId": "var4201",
+                        "typeId": "vt007",
+                        "value": "#4",
+                        "createdAt": "2025-03-17T19:03:55.089Z",
+                        "updatedAt": "2025-03-17T19:03:55.089Z"
+                    },
+                    {
+                        "id": "attr43001",
+                        "variantId": "var4301",
+                        "typeId": "vt007",
+                        "value": "#6",
+                        "createdAt": "2025-03-17T19:03:55.373Z",
+                        "updatedAt": "2025-03-17T19:03:55.373Z"
+                    },
+                    {
+                        "id": "attr44001",
+                        "variantId": "var4401",
+                        "typeId": "vt007",
+                        "value": "#3",
+                        "createdAt": "2025-03-17T19:03:55.666Z",
+                        "updatedAt": "2025-03-17T19:03:55.666Z"
+                    },
+                    {
+                        "id": "attr45001",
+                        "variantId": "var4501",
+                        "typeId": "vt007",
+                        "value": "#5",
+                        "createdAt": "2025-03-17T19:03:56.003Z",
+                        "updatedAt": "2025-03-17T19:03:56.003Z"
+                    }
+                ]
+            }
+        ]
     },
     {
         "id": "cat010",
         "name": "Снаряжение",
         "parentId": null,
-        "createdAt": "2025-03-11T16:49:07.626Z",
-        "updatedAt": "2025-03-11T16:49:07.626Z"
-    },
-    {
-        "id": "cat001",
-        "name": "Удочки test",
-        "parentId": null,
-        "createdAt": "2025-03-11T16:49:07.626Z",
-        "updatedAt": "2025-03-11T16:49:07.626Z"
-    },
-    {
-        "id": "cat003",
-        "name": "Удочки test2",
-        "parentId": null,
-        "createdAt": "2025-03-11T16:49:07.626Z",
-        "updatedAt": "2025-03-11T16:49:07.626Z"
-    },
-    {
-        "id": "cm893am9k0001ug6wi5uncqtl",
-        "name": "test",
-        "parentId": null,
-        "createdAt": "2025-03-14T18:06:38.648Z",
-        "updatedAt": "2025-03-14T18:06:38.648Z"
-    },
-    {
-        "id": "cm89380bg0001ugjwl79qwy1q",
-        "name": "Удочки test2",
-        "parentId": null,
-        "createdAt": "2025-03-14T18:04:36.889Z",
-        "updatedAt": "2025-03-14T18:08:12.716Z"
+        "createdAt": "2025-03-17T19:03:41.246Z",
+        "updatedAt": "2025-03-17T19:03:41.246Z",
+        "children": [],
+        "products": [
+            {
+                "id": "prod046",
+                "name": "Ящик Plano 3600",
+                "description": "Для снастей.",
+                "categoryId": "cat010",
+                "images": ["img46.jpg"],
+                "discountId": null,
+                "createdAt": "2025-03-17T19:03:56.283Z",
+                "updatedAt": "2025-03-17T19:03:56.283Z",
+                "variants": [
+                    {
+                        "id": "var4601",
+                        "productId": "prod046",
+                        "sku": "PLA-3600",
+                        "price": "1200",
+                        "inStock": 15,
+                        "discountId": null,
+                        "createdAt": "2025-03-17T19:03:56.283Z",
+                        "updatedAt": "2025-03-17T19:03:56.283Z",
+                        "attributes": [
+                            {
+                                "id": "attr46001",
+                                "variantId": "var4601",
+                                "typeId": "vt008",
+                                "value": "Ящик",
+                                "createdAt": "2025-03-17T19:03:56.283Z",
+                                "updatedAt": "2025-03-17T19:03:56.283Z"
+                            }
+                        ]
+                    }
+                ],
+                "attributes": []
+            },
+            {
+                "id": "prod047",
+                "name": "Подставка Shimano Rod Rest",
+                "description": "Для удочек.",
+                "categoryId": "cat010",
+                "images": ["img47.jpg"],
+                "discountId": null,
+                "createdAt": "2025-03-17T19:03:56.567Z",
+                "updatedAt": "2025-03-17T19:03:56.567Z",
+                "variants": [
+                    {
+                        "id": "var4701",
+                        "productId": "prod047",
+                        "sku": "SH-RR",
+                        "price": "800",
+                        "inStock": 20,
+                        "discountId": null,
+                        "createdAt": "2025-03-17T19:03:56.567Z",
+                        "updatedAt": "2025-03-17T19:03:56.567Z",
+                        "attributes": [
+                            {
+                                "id": "attr47001",
+                                "variantId": "var4701",
+                                "typeId": "vt008",
+                                "value": "Подставка",
+                                "createdAt": "2025-03-17T19:03:56.567Z",
+                                "updatedAt": "2025-03-17T19:03:56.567Z"
+                            }
+                        ]
+                    }
+                ],
+                "attributes": []
+            },
+            {
+                "id": "prod048",
+                "name": "Сигнализатор Daiwa Bite",
+                "description": "Электронный сигнализатор.",
+                "categoryId": "cat010",
+                "images": ["img48.jpg"],
+                "discountId": null,
+                "createdAt": "2025-03-17T19:03:56.862Z",
+                "updatedAt": "2025-03-17T19:03:56.862Z",
+                "variants": [
+                    {
+                        "id": "var4801",
+                        "productId": "prod048",
+                        "sku": "DW-BITE",
+                        "price": "1500",
+                        "inStock": 10,
+                        "discountId": null,
+                        "createdAt": "2025-03-17T19:03:56.862Z",
+                        "updatedAt": "2025-03-17T19:03:56.862Z",
+                        "attributes": [
+                            {
+                                "id": "attr48001",
+                                "variantId": "var4801",
+                                "typeId": "vt008",
+                                "value": "Сигнализатор",
+                                "createdAt": "2025-03-17T19:03:56.862Z",
+                                "updatedAt": "2025-03-17T19:03:56.862Z"
+                            }
+                        ]
+                    }
+                ],
+                "attributes": []
+            },
+            {
+                "id": "prod049",
+                "name": "Сумка Salmo Tackle",
+                "description": "Для переноски.",
+                "categoryId": "cat010",
+                "images": ["img49.jpg"],
+                "discountId": null,
+                "createdAt": "2025-03-17T19:03:57.149Z",
+                "updatedAt": "2025-03-17T19:03:57.149Z",
+                "variants": [
+                    {
+                        "id": "var4901",
+                        "productId": "prod049",
+                        "sku": "SAL-TK",
+                        "price": "2000",
+                        "inStock": 8,
+                        "discountId": null,
+                        "createdAt": "2025-03-17T19:03:57.149Z",
+                        "updatedAt": "2025-03-17T19:03:57.149Z",
+                        "attributes": [
+                            {
+                                "id": "attr49001",
+                                "variantId": "var4901",
+                                "typeId": "vt008",
+                                "value": "Сумка",
+                                "createdAt": "2025-03-17T19:03:57.149Z",
+                                "updatedAt": "2025-03-17T19:03:57.149Z"
+                            }
+                        ]
+                    }
+                ],
+                "attributes": []
+            },
+            {
+                "id": "prod050",
+                "name": "Эхолот Lucky FF1108",
+                "description": "Для поиска рыбы.",
+                "categoryId": "cat010",
+                "images": ["img50.jpg"],
+                "discountId": null,
+                "createdAt": "2025-03-17T19:03:57.435Z",
+                "updatedAt": "2025-03-17T19:03:57.435Z",
+                "variants": [
+                    {
+                        "id": "var5001",
+                        "productId": "prod050",
+                        "sku": "LKY-FF1108",
+                        "price": "5000",
+                        "inStock": 5,
+                        "discountId": null,
+                        "createdAt": "2025-03-17T19:03:57.435Z",
+                        "updatedAt": "2025-03-17T19:03:57.435Z",
+                        "attributes": [
+                            {
+                                "id": "attr50001",
+                                "variantId": "var5001",
+                                "typeId": "vt008",
+                                "value": "Эхолот",
+                                "createdAt": "2025-03-17T19:03:57.435Z",
+                                "updatedAt": "2025-03-17T19:03:57.435Z"
+                            }
+                        ]
+                    }
+                ],
+                "attributes": []
+            }
+        ],
+        "variantTypes": [
+            {
+                "id": "vt008",
+                "categoryId": "cat010",
+                "name": "Тип",
+                "createdAt": "2025-03-17T19:03:41.430Z",
+                "updatedAt": "2025-03-17T19:03:41.430Z",
+                "productAttributes": [],
+                "productVariantAttributes": [
+                    {
+                        "id": "attr46001",
+                        "variantId": "var4601",
+                        "typeId": "vt008",
+                        "value": "Ящик",
+                        "createdAt": "2025-03-17T19:03:56.283Z",
+                        "updatedAt": "2025-03-17T19:03:56.283Z"
+                    },
+                    {
+                        "id": "attr47001",
+                        "variantId": "var4701",
+                        "typeId": "vt008",
+                        "value": "Подставка",
+                        "createdAt": "2025-03-17T19:03:56.567Z",
+                        "updatedAt": "2025-03-17T19:03:56.567Z"
+                    },
+                    {
+                        "id": "attr48001",
+                        "variantId": "var4801",
+                        "typeId": "vt008",
+                        "value": "Сигнализатор",
+                        "createdAt": "2025-03-17T19:03:56.862Z",
+                        "updatedAt": "2025-03-17T19:03:56.862Z"
+                    },
+                    {
+                        "id": "attr49001",
+                        "variantId": "var4901",
+                        "typeId": "vt008",
+                        "value": "Сумка",
+                        "createdAt": "2025-03-17T19:03:57.149Z",
+                        "updatedAt": "2025-03-17T19:03:57.149Z"
+                    },
+                    {
+                        "id": "attr50001",
+                        "variantId": "var5001",
+                        "typeId": "vt008",
+                        "value": "Эхолот",
+                        "createdAt": "2025-03-17T19:03:57.435Z",
+                        "updatedAt": "2025-03-17T19:03:57.435Z"
+                    }
+                ]
+            }
+        ]
     }
 ]

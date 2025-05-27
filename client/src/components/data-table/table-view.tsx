@@ -35,6 +35,7 @@ import {
 import {
     ColumnDef,
     ColumnFiltersState,
+    ExpandedState,
     SortingState,
     VisibilityState,
     flexRender,
@@ -47,6 +48,7 @@ import {
     useReactTable,
 } from '@tanstack/react-table';
 import * as React from 'react';
+import { VariantSubTable } from './VariantSubTable';
 import { ColumnType } from './types';
 
 // Компонент таблицы с Customize Columns
@@ -67,6 +69,7 @@ export function TableView({
         pageIndex: 0,
         pageSize: 10,
     });
+    const [expanded, setExpanded] = React.useState<ExpandedState>({});
 
     const table = useReactTable({
         data,
@@ -77,6 +80,7 @@ export function TableView({
             rowSelection,
             columnFilters,
             pagination,
+            expanded,
         },
         getRowId: (row) => row.id,
         enableRowSelection: true,
@@ -85,6 +89,13 @@ export function TableView({
         onColumnFiltersChange: setColumnFilters,
         onColumnVisibilityChange: setColumnVisibility,
         onPaginationChange: setPagination,
+        onExpandedChange: (updater) => {
+            setExpanded((prev) => {
+                const newState =
+                    typeof updater === 'function' ? updater(prev) : updater;
+                return newState;
+            });
+        },
         getCoreRowModel: getCoreRowModel(),
         getFilteredRowModel: getFilteredRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
@@ -162,21 +173,44 @@ export function TableView({
                         <TableBody>
                             {table.getRowModel().rows?.length ? (
                                 table.getRowModel().rows.map((row) => (
-                                    <TableRow
-                                        key={row.id}
-                                        data-state={
-                                            row.getIsSelected() && 'selected'
-                                        }
-                                    >
-                                        {row.getVisibleCells().map((cell) => (
-                                            <TableCell key={cell.id}>
-                                                {flexRender(
-                                                    cell.column.columnDef.cell,
-                                                    cell.getContext(),
-                                                )}
-                                            </TableCell>
-                                        ))}
-                                    </TableRow>
+                                    <React.Fragment key={row.id}>
+                                        <TableRow
+                                            data-state={
+                                                row.getIsSelected() &&
+                                                'selected'
+                                            }
+                                        >
+                                            {row
+                                                .getVisibleCells()
+                                                .map((cell) => (
+                                                    <TableCell key={cell.id}>
+                                                        {flexRender(
+                                                            cell.column
+                                                                .columnDef.cell,
+                                                            cell.getContext(),
+                                                        )}
+                                                    </TableCell>
+                                                ))}
+                                        </TableRow>
+                                        {typeof expanded === 'object' &&
+                                            expanded[row.id] &&
+                                            'variants' in row.original &&
+                                            row.original.variants && (
+                                                <TableRow>
+                                                    <TableCell
+                                                        colSpan={columns.length}
+                                                        className="bg-muted/50 p-4"
+                                                    >
+                                                        <VariantSubTable
+                                                            variants={
+                                                                row.original
+                                                                    .variants
+                                                            }
+                                                        />
+                                                    </TableCell>
+                                                </TableRow>
+                                            )}
+                                    </React.Fragment>
                                 ))
                             ) : (
                                 <TableRow>

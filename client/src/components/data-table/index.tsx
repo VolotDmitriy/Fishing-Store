@@ -1,41 +1,53 @@
 'use client';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import {
+    fetchCategories,
+    fetchDiscounts,
+    fetchProducts,
+} from '@/utils/requests';
 import { ColumnDef } from '@tanstack/react-table';
+import React from 'react';
 import { categoryColumns, discountColumns, productColumns } from './column-def';
 import { TableView } from './table-view';
-// import { ColumnType, DataTableProps } from './types';
-import axios from 'axios';
-import React from 'react';
-import { ColumnType } from './types';
+import { CategoryType, ColumnType, DiscountType, ProductType } from './types';
 
 export function DataTable() {
-    const [categories, setCategories] = React.useState([]);
-    const [products, setProducts] = React.useState([]);
-    const [discounts, setDiscounts] = React.useState([]);
+    const [categories, setCategories] = React.useState<CategoryType[]>([]);
+    const [products, setProducts] = React.useState<ProductType[]>([]);
+    const [discounts, setDiscounts] = React.useState<DiscountType[]>([]);
 
     React.useEffect(() => {
-        try {
-            (async () => {
-                console.log('request!');
-                const dataCategories = await axios
-                    .get('http://localhost:4200/category')
-                    .then((res) => res.data);
+        const loadCategories = async () => {
+            try {
+                const dataCategories = await fetchCategories(false);
                 setCategories(dataCategories);
+            } catch (error) {
+                console.error('Не удалось загрузить категории:', error);
+            }
+        };
 
-                const dataProducts = await axios
-                    .get('http://localhost:4200/product')
-                    .then((res) => res.data);
+        const loadProducts = async () => {
+            try {
+                const dataProducts = await fetchProducts(true);
                 setProducts(dataProducts);
+            } catch (error) {
+                console.error('Не удалось загрузить продукты:', error);
+            }
+        };
 
-                const dataDiscounts = await axios
-                    .get('http://localhost:4200/discount')
-                    .then((res) => res.data);
+        const loadDiscount = async () => {
+            try {
+                const dataDiscounts = await fetchDiscounts(false);
                 setDiscounts(dataDiscounts);
-            })();
-        } catch (error) {
-            console.error(error);
-        }
+            } catch (error) {
+                console.error('Не удалось загрузить скидки:', error);
+            }
+        };
+
+        loadCategories();
+        loadProducts();
+        loadDiscount();
     }, []);
 
     return (
@@ -49,7 +61,6 @@ export function DataTable() {
                     <TabsTrigger value="products">Products</TabsTrigger>
                     <TabsTrigger value="discounts">Discounts</TabsTrigger>
                 </TabsList>
-                {/* Кнопки Customize Columns и Add Item перенесены внутрь TableView */}
             </div>
             <TabsContent value="categories">
                 <TableView

@@ -1,35 +1,26 @@
 'use client';
 
-import {
-    IconCamera,
-    IconChartBar,
-    IconDashboard,
-    IconDatabase,
-    IconFileAi,
-    IconFileDescription,
-    IconFileWord,
-    IconFolder,
-    IconInnerShadowTop,
-    IconListDetails,
-    IconReport,
-    IconSearch,
-    IconSettings,
-} from '@tabler/icons-react';
-import * as React from 'react';
-
 import { NavDocuments } from '@/components/nav-documents';
 import { NavMain } from '@/components/nav-main';
 import { NavSecondary } from '@/components/nav-secondary';
-import { NavUser } from '@/components/nav-user';
 import {
     Sidebar,
     SidebarContent,
-    SidebarFooter,
     SidebarHeader,
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
+import {
+    IconCategory,
+    IconDashboard,
+    IconDiscount,
+    IconFish,
+    IconPackage,
+    IconPlus,
+    IconShoppingCart,
+} from '@tabler/icons-react';
+import * as React from 'react';
 
 const data = {
     user: {
@@ -39,101 +30,38 @@ const data = {
     },
     navMain: [
         {
+            title: 'Create',
+            url: '/create',
+            icon: IconPlus,
+        },
+        {
             title: 'Dashboard',
-            url: '#',
+            url: '/dashboard',
             icon: IconDashboard,
-        },
-        {
-            title: 'Categories',
-            url: '#',
-            icon: IconListDetails,
-        },
-        {
-            title: 'Products',
-            url: '#',
-            icon: IconChartBar,
-        },
-        {
-            title: 'Discount',
-            url: '#',
-            icon: IconFolder,
-        },
-    ],
-    navClouds: [
-        {
-            title: 'Capture',
-            icon: IconCamera,
-            isActive: true,
-            url: '#',
-            items: [
-                {
-                    title: 'Active Proposals',
-                    url: '#',
-                },
-                {
-                    title: 'Archived',
-                    url: '#',
-                },
-            ],
-        },
-        {
-            title: 'Proposal',
-            icon: IconFileDescription,
-            url: '#',
-            items: [
-                {
-                    title: 'Active Proposals',
-                    url: '#',
-                },
-                {
-                    title: 'Archived',
-                    url: '#',
-                },
-            ],
-        },
-        {
-            title: 'Prompts',
-            icon: IconFileAi,
-            url: '#',
-            items: [
-                {
-                    title: 'Active Proposals',
-                    url: '#',
-                },
-                {
-                    title: 'Archived',
-                    url: '#',
-                },
-            ],
         },
     ],
     navSecondary: [
         {
-            title: 'Settings',
-            url: '#',
-            icon: IconSettings,
+            title: 'Products',
+            url: '/dashboard/products',
+            icon: IconPackage,
         },
         {
-            title: 'Search',
-            url: '#',
-            icon: IconSearch,
+            title: 'Categories',
+            url: '/dashboard/categories',
+            icon: IconCategory,
+        },
+        {
+            title: 'Discounts',
+            url: '/dashboard/discounts',
+            icon: IconDiscount,
         },
     ],
     documents: [
         {
-            name: 'Data Library',
-            url: '#',
-            icon: IconDatabase,
-        },
-        {
             name: 'Orders',
-            url: '#',
-            icon: IconReport,
-        },
-        {
-            name: 'Refund',
-            url: '#',
-            icon: IconFileWord,
+            url: '/orders',
+            icon: IconShoppingCart,
         },
     ],
 };
@@ -148,10 +76,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                             asChild
                             className="data-[slot=sidebar-menu-button]:!p-1.5"
                         >
-                            <a href="#">
-                                <IconInnerShadowTop className="!size-5" />
+                            <a href="/create">
+                                <IconFish className="!size-5" />
                                 <span className="text-base font-semibold">
-                                    Acme Inc.
+                                    Fishing Store Admin Panel
                                 </span>
                             </a>
                         </SidebarMenuButton>
@@ -160,12 +88,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             </SidebarHeader>
             <SidebarContent>
                 <NavMain items={data.navMain} />
+                <NavSecondary items={data.navSecondary} />
                 <NavDocuments items={data.documents} />
-                <NavSecondary items={data.navSecondary} className="mt-auto" />
             </SidebarContent>
-            <SidebarFooter>
-                <NavUser user={data.user} />
-            </SidebarFooter>
         </Sidebar>
     );
 }
